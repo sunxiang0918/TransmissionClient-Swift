@@ -16,13 +16,10 @@ class RootViewController: UITableViewController {
         //界面加载前,从存储中获取已经保存了的站点信息.
         let defaultCache=NSUserDefaults.standardUserDefaults()
         
-        let siteInfos=defaultCache.objectForKey("siteInfo") as? [NSData]
+        let siteInfos=defaultCache.arrayModelForKey("siteInfo") as? [SiteInfoVO]
         
         if let _siteInfos = siteInfos {
-            for tmp in _siteInfos {
-                let myModel = NSKeyedUnarchiver.unarchiveObjectWithData(tmp) as! SiteInfoVO
-                self.siteInfos.append(myModel)
-            }
+            self.siteInfos = _siteInfos
         }
         
     }

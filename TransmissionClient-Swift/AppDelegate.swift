@@ -19,14 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let defaultCache=NSUserDefaults.standardUserDefaults()
         
-        let siteInfos=defaultCache.objectForKey("siteInfo") as? [NSData]
+        var siteInfos=defaultCache.objectForKey("siteInfo") as? [SiteInfoVO]
         
         if  siteInfos == nil {
-            var siteInfos:[NSData] = []
+            siteInfos = []
             let site = SiteInfoVO(url: "10.0.0.7:9091")
-            let modelData:NSData = NSKeyedArchiver.archivedDataWithRootObject(site)
-            siteInfos.append(modelData)
-            defaultCache.setObject(siteInfos, forKey: "siteInfo")
+            siteInfos!.append(site)
+            defaultCache.setArrayModels(siteInfos, forKey: "siteInfo")
         }
         
         return true
