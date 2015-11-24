@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		1524E84E591D220EAEA0E119 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8802B13EEE0EA093B197BCC7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C095C71C034DA30071F729 /* AppDelegate.swift */; };
-		A4C095CA1C034DA30071F729 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C095C91C034DA30071F729 /* ViewController.swift */; };
 		A4C095CD1C034DA30071F729 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4C095CB1C034DA30071F729 /* Main.storyboard */; };
 		A4C095CF1C034DA30071F729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4C095CE1C034DA30071F729 /* Assets.xcassets */; };
 		A4C095D21C034DA30071F729 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4C095D01C034DA30071F729 /* LaunchScreen.storyboard */; };
+		A4C714B01C035B900080C353 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714AF1C035B900080C353 /* Constant.swift */; };
+		A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714B21C03FA3F0080C353 /* RootViewController.swift */; };
+		A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714B41C0403560080C353 /* TaskListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,11 +22,13 @@
 		9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A4C095C41C034DA30071F729 /* TransmissionClient-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TransmissionClient-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4C095C71C034DA30071F729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A4C095C91C034DA30071F729 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A4C095CC1C034DA30071F729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A4C095CE1C034DA30071F729 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4C095D11C034DA30071F729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4C095D31C034DA30071F729 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4C714AF1C035B900080C353 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		A4C714B21C03FA3F0080C353 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		A4C714B41C0403560080C353 /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		DC4054C4EA62FDF7F5E733B4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,11 +74,13 @@
 			isa = PBXGroup;
 			children = (
 				A4C095C71C034DA30071F729 /* AppDelegate.swift */,
-				A4C095C91C034DA30071F729 /* ViewController.swift */,
 				A4C095CB1C034DA30071F729 /* Main.storyboard */,
 				A4C095CE1C034DA30071F729 /* Assets.xcassets */,
 				A4C095D01C034DA30071F729 /* LaunchScreen.storyboard */,
 				A4C095D31C034DA30071F729 /* Info.plist */,
+				A4C714AF1C035B900080C353 /* Constant.swift */,
+				A4C714B21C03FA3F0080C353 /* RootViewController.swift */,
+				A4C714B41C0403560080C353 /* TaskListViewController.swift */,
 			);
 			path = "TransmissionClient-Swift";
 			sourceTree = "<group>";
@@ -211,8 +217,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4C095CA1C034DA30071F729 /* ViewController.swift in Sources */,
 				A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */,
+				A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */,
+				A4C714B01C035B900080C353 /* Constant.swift in Sources */,
+				A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
