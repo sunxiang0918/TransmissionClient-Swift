@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1524E84E591D220EAEA0E119 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8802B13EEE0EA093B197BCC7 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A4967E4F1C040B43000ADF88 /* SiteInfoVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */; };
 		A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C095C71C034DA30071F729 /* AppDelegate.swift */; };
 		A4C095CD1C034DA30071F729 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4C095CB1C034DA30071F729 /* Main.storyboard */; };
 		A4C095CF1C034DA30071F729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4C095CE1C034DA30071F729 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		8802B13EEE0EA093B197BCC7 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteInfoVO.swift; sourceTree = "<group>"; };
 		A4C095C41C034DA30071F729 /* TransmissionClient-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TransmissionClient-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4C095C71C034DA30071F729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4C095CC1C034DA30071F729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -52,6 +54,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A4967E4B1C040A18000ADF88 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				A4C714B21C03FA3F0080C353 /* RootViewController.swift */,
+				A4C714B41C0403560080C353 /* TaskListViewController.swift */,
+			);
+			name = controller;
+			sourceTree = "<group>";
+		};
+		A4967E4C1C040A26000ADF88 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				A4C714AF1C035B900080C353 /* Constant.swift */,
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
+		A4967E4D1C040A31000ADF88 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
 		A4C095BB1C034DA30071F729 = {
 			isa = PBXGroup;
 			children = (
@@ -73,14 +100,14 @@
 		A4C095C61C034DA30071F729 /* TransmissionClient-Swift */ = {
 			isa = PBXGroup;
 			children = (
+				A4967E4D1C040A31000ADF88 /* models */,
+				A4967E4C1C040A26000ADF88 /* util */,
+				A4967E4B1C040A18000ADF88 /* controller */,
 				A4C095C71C034DA30071F729 /* AppDelegate.swift */,
 				A4C095CB1C034DA30071F729 /* Main.storyboard */,
 				A4C095CE1C034DA30071F729 /* Assets.xcassets */,
 				A4C095D01C034DA30071F729 /* LaunchScreen.storyboard */,
 				A4C095D31C034DA30071F729 /* Info.plist */,
-				A4C714AF1C035B900080C353 /* Constant.swift */,
-				A4C714B21C03FA3F0080C353 /* RootViewController.swift */,
-				A4C714B41C0403560080C353 /* TaskListViewController.swift */,
 			);
 			path = "TransmissionClient-Swift";
 			sourceTree = "<group>";
@@ -221,6 +248,7 @@
 				A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */,
 				A4C714B01C035B900080C353 /* Constant.swift in Sources */,
 				A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */,
+				A4967E4F1C040B43000ADF88 /* SiteInfoVO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

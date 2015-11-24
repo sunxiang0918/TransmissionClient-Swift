@@ -10,8 +10,25 @@ import UIKit
 
 class RootViewController: UITableViewController {
     
+    var siteInfos:[SiteInfoVO] = []
+    
+    override func viewDidLoad() {
+        //界面加载前,从存储中获取已经保存了的站点信息.
+        let defaultCache=NSUserDefaults.standardUserDefaults()
+        
+        let siteInfos=defaultCache.objectForKey("siteInfo") as? [NSData]
+        
+        if let _siteInfos = siteInfos {
+            for tmp in _siteInfos {
+                let myModel = NSKeyedUnarchiver.unarchiveObjectWithData(tmp) as! SiteInfoVO
+                self.siteInfos.append(myModel)
+            }
+        }
+        
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.siteInfos.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -21,6 +38,8 @@ class RootViewController: UITableViewController {
         if (tmp == nil) {
             tmp = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "rootTableViewCell")
         }
+        
+        tmp?.textLabel?.text = self.siteInfos[indexPath.row].url
         
         return tmp!
     }

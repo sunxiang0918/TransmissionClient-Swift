@@ -16,6 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let defaultCache=NSUserDefaults.standardUserDefaults()
+        
+        let siteInfos=defaultCache.objectForKey("siteInfo") as? [NSData]
+        
+        if  siteInfos == nil {
+            var siteInfos:[NSData] = []
+            let site = SiteInfoVO(url: "10.0.0.7:9091")
+            let modelData:NSData = NSKeyedArchiver.archivedDataWithRootObject(site)
+            siteInfos.append(modelData)
+            defaultCache.setObject(siteInfos, forKey: "siteInfo")
+        }
+        
         return true
     }
 
