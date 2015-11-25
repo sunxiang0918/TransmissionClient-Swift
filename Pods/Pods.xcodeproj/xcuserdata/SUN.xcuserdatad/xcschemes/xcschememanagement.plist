@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CNPPopupController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>651B0BDA8043238CCAD30D1FBB417232</key>
+		<key>3F438F5AEAA03C1DEF800C3D5C94EC86</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>915B2524EAF3B8FA71FC2D21E9DAA30B</key>
+		<key>8C9D6B8BE2319DAE4CBCA6B835FD0FF8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B9A04D3C9B208813656510FDA8ADAE02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DBE230437EEE7E9A0F25B638E473AA86</key>
 		<dict>
 			<key>primary</key>
 			<true/>

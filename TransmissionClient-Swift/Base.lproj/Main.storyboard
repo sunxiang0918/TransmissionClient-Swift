@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
@@ -78,7 +79,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="10.0.0.7:9091" id="dUq-fx-HFD">
-                        <barButtonItem key="rightBarButtonItem" title="+" id="OCt-JB-oHm"/>
+                        <rightBarButtonItems>
+                            <barButtonItem title="+" id="OCt-JB-oHm"/>
+                            <barButtonItem title="状态" id="YuM-j6-jfu">
+                                <connections>
+                                    <action selector="doStatusAction:" destination="WWZ-g1-zTW" id="exL-Hv-sFX"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tq-EH-1UG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -124,6 +132,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kGz-tQ-NE1"/>
+        <segue reference="tlQ-iB-k7W"/>
     </inferredMetricsTieBreakers>
 </document>

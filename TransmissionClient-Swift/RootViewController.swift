@@ -15,7 +15,6 @@ class RootViewController: UITableViewController {
     override func viewDidLoad() {
         //界面加载前,从存储中获取已经保存了的站点信息.
         let defaultCache=NSUserDefaults.standardUserDefaults()
-        
         let siteInfos=defaultCache.arrayModelForKey("siteInfo") as? [SiteInfoVO]
         
         if let _siteInfos = siteInfos {
@@ -43,9 +42,81 @@ class RootViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        self.performSegueWithIdentifier("showTaskListSegue", sender: nil)
+        let siteInfo = self.siteInfos[indexPath.row]
+        let author = self.generateAuthorizationString(siteInfo.userName, userPassword: siteInfo.password)
+        let sessionId = getSessionID(siteInfo.url,author: author )
+        
+        if sessionId == nil {
+            //TODO 报错
+        }
+        
+        self.performSegueWithIdentifier("showTaskListSegue", sender: SiteInfo(sessionId: sessionId!, url: siteInfo.url, author: author))
+    }
+    
+    /**
+     获取Session的ID
+     */
+    func getSessionID(var url:String,author:String?) -> String?{
+        if  !url.lowercaseStringWithLocale(NSLocale.currentLocale()).hasPrefix("http://") {
+            url = "http://" + url
+        }
+        let request = NSMutableURLRequest(URL: NSURL(string: url+BASE_URL)!)
+        if let _author = author{
+            request.addValue(_author, forHTTPHeaderField: "Authorization")
+        }
+        request.HTTPMethod = "GET"
+        
+        var response:NSURLResponse? = nil
+        
+        do {
+            try NSURLSession.sharedSession().sendSynchronousDataTaskWithRequest(request, returningResponse: &response)
+        } catch _ {
+            return nil
+        }
+        
+        let result = response as? NSHTTPURLResponse
+        
+        return result?.allHeaderFields["X-Transmission-Session-Id"] as? String
+        
+    }
+    
+    /**
+     生成Base64的 认证字符串. 格式为  (userName:password) --> base64
+     
+     - parameter userName:
+     - parameter userPassword:
+     
+     - returns:
+     */
+    private func generateAuthorizationString(userName:String?,userPassword:String?) -> String? {
+        guard let _userName = userName else {
+            return nil
+        }
+        
+        let s = _userName + ":" + (userPassword==nil ? "" : userPassword!)
+        
+        let data = s.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return "Basic " + data!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
     }
 
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showTaskListSegue" {
+            let taskListViewController = segue.destinationViewController as! TaskListViewController
+            
+            let siteInfo = sender as? SiteInfo
+            
+            taskListViewController.author = siteInfo?.author
+            taskListViewController.sessionId = siteInfo?.sessionId
+            var url : String = (siteInfo?.url)!
+            
+            if  !url.lowercaseStringWithLocale(NSLocale.currentLocale()).hasPrefix("http://") {
+                url = "http://" + url
+            }
+            taskListViewController.siteUrl = url
+        }
+    }
     
     //    @IBAction func doAction(sender: UIButton) {
     //
@@ -70,4 +141,17 @@ class RootViewController: UITableViewController {
     //        }
     //    }
 
+}
+
+private class SiteInfo : NSObject {
+    
+    let sessionId:String
+    let url:String
+    let author:String?
+    
+    init(sessionId:String,url:String,author:String?){
+        self.url = url
+        self.sessionId = sessionId
+        self.author = author
+    }
 }

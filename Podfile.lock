@@ -1,13 +1,16 @@
 PODS:
   - Alamofire (2.0.2)
+  - CNPPopupController (0.3.1)
   - SwiftyJSON (2.3.0)
 
 DEPENDENCIES:
   - Alamofire
+  - CNPPopupController
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
+  CNPPopupController: 67dc2ca5a3f88cd49a27bb1b0aeb78a24d423d79
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
 
 COCOAPODS: 0.38.2
