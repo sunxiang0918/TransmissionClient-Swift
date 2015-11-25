@@ -21,6 +21,8 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     var sessionId:String!
     
+    @IBOutlet weak var infoToolbarItem: UIBarButtonItem!        //底部的站点sessionInfo信息
+    
     private var popupController : CNPPopupController?
     
     private var tasks : [TaskVO] = []
@@ -48,13 +50,53 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         self.navigationController?.setToolbarHidden(false, animated: true)
         
+        loadSessionInfo()
+        loadTaskList()
+    }
+    
+    /**
+     加载会话的总体状态
+     */
+    private func loadSessionInfo(){
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
         
         if let _author = author {
             headers["Authorization"] = _author
         }
-
+        
+        var parameter:[String:String] = [:]
+        parameter["method"] = "session-stats"
+        
+        Alamofire.Manager.sharedInstance.request(Method.GET, siteUrl + BASE_URL, parameters: parameter, encoding: ParameterEncoding.URL, headers: headers).responseJSON { (_, response, data) -> Void in
+            if response?.statusCode == 200 {
+                if  let result = data.value {
+                    let json = JSON(result)
+                    
+                    let torrentCount = json["arguments"]["torrentCount"].intValue
+                    let downloadSpeed = json["arguments"]["downloadSpeed"].intValue
+                    let uploadSpeed = json["arguments"]["uploadSpeed"].intValue
+                    
+                    self.infoToolbarItem.title = "一共\(torrentCount)个任务 - ↓\(SpeedStringFormatter.formatSpeedToString(downloadSpeed))/s  ↑\(SpeedStringFormatter.formatSpeedToString(uploadSpeed))/s"
+                    
+                    self.infoToolbarItem.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFontOfSize(12),NSForegroundColorAttributeName:UIColor.blackColor()], forState: UIControlState.Normal)
+                    
+                }
+            }
+        }
+    }
+    
+    /**
+     加载任务列表
+     */
+    private func loadTaskList(){
+        var headers:[String:String] = [:]
+        headers["X-Transmission-Session-Id"] = sessionId
+        
+        if let _author = author {
+            headers["Authorization"] = _author
+        }
+        
         
         Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
             /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
@@ -66,7 +108,6 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 self.tasks.removeAll()
                 if  let result = data.value {
                     let json = JSON(result)
-                    print("data:\(json)")
                     let torrents = json["arguments"]["torrents"].array
                     
                     for torrent in torrents! {
@@ -77,7 +118,6 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             }
             
         }
-        
     }
     
     /**
@@ -204,6 +244,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         self.popupController?.presentPopupControllerAnimated(true)
     }
     
+    @IBAction func doRefreshAction(sender: UIBarButtonItem) {
+        
+        loadSessionInfo()
+        loadTaskList()
+    }
     //========================CNPPopupControllerDelegate的实现================================================
     
     //========================CNPPopupControllerDelegate的实现================================================

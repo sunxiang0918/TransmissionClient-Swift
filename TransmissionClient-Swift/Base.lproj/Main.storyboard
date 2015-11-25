@@ -90,12 +90,19 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="jWF-zr-eng"/>
-                        <barButtonItem systemItem="refresh" id="lCO-Vw-Spf"/>
+                        <barButtonItem enabled="NO" title="Info" id="vW4-Jr-RSF"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="4R6-gy-FBK"/>
+                        <barButtonItem systemItem="refresh" id="lCO-Vw-Spf">
+                            <connections>
+                                <action selector="doRefreshAction:" destination="WWZ-g1-zTW" id="0uj-o8-vtr"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="10.0.0.7:9091" id="dUq-fx-HFD">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OCt-JB-oHm"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="infoToolbarItem" destination="vW4-Jr-RSF" id="hC3-ox-Lxb"/>
                         <outlet property="searchBar" destination="Yi3-k4-yQx" id="KFp-vI-syF"/>
                     </connections>
                 </tableViewController>
