@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
@@ -58,9 +57,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="Yi3-k4-yQx">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TaskListTableViewCell" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="Cuv-33-y5H">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cuv-33-y5H" id="yRi-OO-HwG">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -78,15 +83,17 @@
                             <outlet property="delegate" destination="WWZ-g1-zTW" id="HoM-2s-4aQ"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="状态" id="98Z-Vh-fwt">
+                            <connections>
+                                <action selector="doStatusAction:" destination="WWZ-g1-zTW" id="oH6-H0-GxY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="jWF-zr-eng"/>
+                        <barButtonItem title="Item" id="lCO-Vw-Spf"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="10.0.0.7:9091" id="dUq-fx-HFD">
-                        <rightBarButtonItems>
-                            <barButtonItem title="+" id="OCt-JB-oHm"/>
-                            <barButtonItem title="状态" id="YuM-j6-jfu">
-                                <connections>
-                                    <action selector="doStatusAction:" destination="WWZ-g1-zTW" id="exL-Hv-sFX"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="+" id="OCt-JB-oHm"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tq-EH-1UG" userLabel="First Responder" sceneMemberID="firstResponder"/>

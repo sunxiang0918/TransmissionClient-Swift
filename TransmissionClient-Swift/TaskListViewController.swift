@@ -28,7 +28,13 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
         initPopupController()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
     override func viewWillAppear(animated: Bool) {
+        
+        self.navigationController?.setToolbarHidden(false, animated: true)
         
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
