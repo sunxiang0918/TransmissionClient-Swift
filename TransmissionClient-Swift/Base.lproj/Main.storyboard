@@ -40,7 +40,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="首页" id="ZkH-2X-Zzk">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QSe-q9-AF6"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QSe-q9-AF6">
+                            <connections>
+                                <action selector="addSiteAction:" destination="eDE-c9-uO3" id="CJ4-Z2-DWl"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>

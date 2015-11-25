@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import CNPPopupController
 
-class RootViewController: UITableViewController {
+class RootViewController: UITableViewController,CNPPopupControllerDelegate {
     
     var siteInfos:[SiteInfoVO] = []
+    
+    private var popupController : CNPPopupController?
     
     override func viewDidLoad() {
         //界面加载前,从存储中获取已经保存了的站点信息.
@@ -20,6 +23,39 @@ class RootViewController: UITableViewController {
         if let _siteInfos = siteInfos {
             self.siteInfos = _siteInfos
         }
+        
+        //实例化 popupController
+        initPopupController()
+    }
+    
+    private func initPopupController(){
+        
+        /// 实例化SharePopupView 弹出视图
+        let view = UINib(nibName: "AddSitePopupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? AddSitePopupView
+        /// 设置弹出视图的大小
+        view?.frame = CGRectMake(0, 0, self.view.frame.width, 200)
+        
+        /// 设置弹出视图中 取消操作的 动作闭包
+        view?.cancelHandel = {self.popupController?.dismissPopupControllerAnimated(true)}
+        view?.addActionHandel = {(site:SiteInfoVO)->Bool in
+            self.siteInfos.append(site)
+            NSUserDefaults.standardUserDefaults().setArrayModels(self.siteInfos, forKey: "siteInfo")
+            self.tableView.reloadData()
+            return true
+        }
+        
+        /// 实例化弹出控制器
+        self.popupController = CNPPopupController(contents: [view!])
+        self.popupController!.theme = CNPPopupTheme.defaultTheme()
+        /// 设置点击背景取消弹出视图
+        self.popupController!.theme.shouldDismissOnBackgroundTouch = true
+        self.popupController!.theme.popupStyle = CNPPopupStyle.Centered
+        self.popupController!.theme.presentationStyle = CNPPopupPresentationStyle.SlideInFromTop
+        //设置最大宽度,否则可能会在IPAD上出现只显示一半的情况,因为默认就只有300宽
+        self.popupController!.theme.maxPopupWidth = self.view.frame.width
+        /// 设置视图的边框
+        self.popupController!.theme.popupContentInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.popupController!.delegate = self;
         
     }
     
@@ -51,6 +87,15 @@ class RootViewController: UITableViewController {
         }
         
         self.performSegueWithIdentifier("showTaskListSegue", sender: SiteInfo(sessionId: sessionId!, url: siteInfo.url, author: author))
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if  editingStyle == UITableViewCellEditingStyle.Delete {
+            
+            self.siteInfos.removeAtIndex(indexPath.row)
+            NSUserDefaults.standardUserDefaults().setArrayModels(self.siteInfos, forKey: "siteInfo")
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     /**
@@ -118,29 +163,10 @@ class RootViewController: UITableViewController {
         }
     }
     
-    //    @IBAction func doAction(sender: UIButton) {
-    //
-    //        var parameters:[String:AnyObject] = [:]
-    //        parameters["method"] = "session-stats"
-    //
-    //        var headers:[String:String] = [:]
-    //        headers["Authorization"] = "Basic YWRtaW46c2V2LUl6LWtFaXQtYW4tZg=="
-    //        headers["X-Transmission-Session-Id"] = "Q4n3g8KN9OqcmHUNQFmLowecG3wo72wBWAXrkC76O250IaQL"
-    //
-    //        Alamofire.Manager.sharedInstance.request(Method.GET, "http://10.0.0.7:9091/transmission/rpc", parameters: parameters, encoding: ParameterEncoding.URL, headers: headers).responseJSON { (_, response, data) -> Void in
-    //            print("status:\(response?.statusCode)")
-    //
-    //            if  let result = data.value {
-    //                let json = JSON(result)
-    //                print("data:\(json)")
-    //
-    //                self.result.text = json.string
-    //            }
-    //            
-    //            
-    //        }
-    //    }
-
+    @IBAction func addSiteAction(sender: UIBarButtonItem) {
+        self.popupController?.presentPopupControllerAnimated(true)
+    }
+    
 }
 
 private class SiteInfo : NSObject {

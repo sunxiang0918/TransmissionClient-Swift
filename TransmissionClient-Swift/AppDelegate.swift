@@ -17,19 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        let defaultCache=NSUserDefaults.standardUserDefaults()
-        
-        var siteInfos=defaultCache.objectForKey("siteInfo") as? [SiteInfoVO]
-        
-//        if  siteInfos == nil {
-            siteInfos = []
-            let site = SiteInfoVO(url: "171.216.65.7:9091")
-            site.userName = "admin"
-            site.password = "sev-Iz-kEit-an-f"
-            siteInfos!.append(site)
-            defaultCache.setArrayModels(siteInfos, forKey: "siteInfo")
-//        }
-        
         return true
     }
     
