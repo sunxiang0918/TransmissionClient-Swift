@@ -134,13 +134,13 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         if task.error > 0 {
             desc = task.errorString!
-            status = ""
+            status = "文件大小\(SpeedStringFormatter.formatSpeedToString(task.totalSize)),已上传\(SpeedStringFormatter.formatSpeedToString(task.uploadedEver)) (比率 \(task.uploadRatio))"
             tmp?.descLabel.textColor = UIColor.redColor()
             tmp?.progressView.progressTintColor = UIColor.grayColor()
         }else {
             tmp?.descLabel.textColor = UIColor.grayColor()
             switch task.status {
-            case 4 :
+            case 3,4 :
                 //下载
                 tmp?.progressView.progressTintColor = UIColor.blueColor()
                 desc = "从\(task.peersConnected)个peers进行下载 - ↓\(SpeedStringFormatter.formatSpeedToString(task.rateDownload))/s ↑\(SpeedStringFormatter.formatSpeedToString(task.rateUpload))/s"
