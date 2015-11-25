@@ -66,7 +66,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
     private func initPopupController(){
         
         /// 实例化SharePopupView 弹出视图
-        let view = UINib(nibName: "PopupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? PopupView
+        let view = UINib(nibName: "StatusPopupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? StatusPopupView
         /// 设置弹出视图的大小
         view?.frame = CGRectMake(0, 0, self.view.frame.width, 100)
         

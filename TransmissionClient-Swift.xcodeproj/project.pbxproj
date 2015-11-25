@@ -17,8 +17,8 @@
 		A4C714B01C035B900080C353 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714AF1C035B900080C353 /* Constant.swift */; };
 		A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714B21C03FA3F0080C353 /* RootViewController.swift */; };
 		A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714B41C0403560080C353 /* TaskListViewController.swift */; };
-		A4D93BF01C04A4640019A068 /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D93BEF1C04A4640019A068 /* PopupView.xib */; };
-		A4D93BF31C04A4930019A068 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BF21C04A4930019A068 /* PopupView.swift */; };
+		A4D93BF01C04A4640019A068 /* StatusPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */; };
+		A4D93BF31C04A4930019A068 /* StatusPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BF21C04A4930019A068 /* StatusPopupView.swift */; };
 		A4D93BF71C04B2E20019A068 /* NSURLSession+SynchronousTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BF61C04B2E20019A068 /* NSURLSession+SynchronousTask.swift */; };
 		A4D93BF91C04B2FC0019A068 /* AppException.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BF81C04B2FC0019A068 /* AppException.swift */; };
 /* End PBXBuildFile section */
@@ -37,8 +37,8 @@
 		A4C714AF1C035B900080C353 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A4C714B21C03FA3F0080C353 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		A4C714B41C0403560080C353 /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
-		A4D93BEF1C04A4640019A068 /* PopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
-		A4D93BF21C04A4930019A068 /* PopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusPopupView.xib; sourceTree = "<group>"; };
+		A4D93BF21C04A4930019A068 /* StatusPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusPopupView.swift; sourceTree = "<group>"; };
 		A4D93BF61C04B2E20019A068 /* NSURLSession+SynchronousTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+SynchronousTask.swift"; sourceTree = "<group>"; };
 		A4D93BF81C04B2FC0019A068 /* AppException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppException.swift; sourceTree = "<group>"; };
 		DC4054C4EA62FDF7F5E733B4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				A4D93BF11C04A4700019A068 /* xib */,
-				A4D93BF21C04A4930019A068 /* PopupView.swift */,
+				A4D93BF21C04A4930019A068 /* StatusPopupView.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -138,7 +138,7 @@
 		A4D93BF11C04A4700019A068 /* xib */ = {
 			isa = PBXGroup;
 			children = (
-				A4D93BEF1C04A4640019A068 /* PopupView.xib */,
+				A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -215,7 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4C095D21C034DA30071F729 /* LaunchScreen.storyboard in Resources */,
-				A4D93BF01C04A4640019A068 /* PopupView.xib in Resources */,
+				A4D93BF01C04A4640019A068 /* StatusPopupView.xib in Resources */,
 				A4C095CF1C034DA30071F729 /* Assets.xcassets in Resources */,
 				A4C095CD1C034DA30071F729 /* Main.storyboard in Resources */,
 			);
@@ -276,7 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4D93BF31C04A4930019A068 /* PopupView.swift in Sources */,
+				A4D93BF31C04A4930019A068 /* StatusPopupView.swift in Sources */,
 				A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */,
 				A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */,
 				A4C714B01C035B900080C353 /* Constant.swift in Sources */,

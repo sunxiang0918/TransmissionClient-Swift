@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PopupView:UIView {
+class StatusPopupView:UIView {
     
     /// 取消处理的 闭包.由外部来定义操作
     var cancelHandel:(()->Void)?
