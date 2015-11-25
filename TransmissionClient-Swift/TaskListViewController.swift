@@ -21,9 +21,13 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
     
     private var popupController : CNPPopupController?
     
-    private var tasks : [String] = []
+    private var tasks : [TaskVO] = []
     
     override func viewDidLoad() {
+        
+        let nib=UINib(nibName: "TaskListTableViewCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "taskListTableViewCell")
+        
         //实例化 popupController
         initPopupController()
     }
@@ -47,7 +51,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
         Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
             /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
             let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\"]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\",\"rateDownload\",\"rateUpload\",\"leftUntilDone\"]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
             return (mutableRequest, nil)
         }), headers: headers).responseJSON { (_, response, data) -> Void in
             if response?.statusCode == 200 {
@@ -58,15 +62,44 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
                     let torrents = json["arguments"]["torrents"].array
                     
                     for torrent in torrents! {
-                        self.tasks.append(torrent["name"].string!)
+                        self.tasks.append(self.convertJson2TaskVO(torrent))
                     }
-                    
                 }
                 self.tableView.reloadData()
             }
             
         }
         
+    }
+    
+    /**
+     把JSON对象转换成为TaskVO
+     
+     - parameter json:
+     
+     - returns:
+     */
+    private func convertJson2TaskVO(json:JSON) -> TaskVO {
+        let id = json["id"].intValue
+        let name = json["name"].stringValue
+        
+        let task = TaskVO(id: id, name: name)
+        
+        task.error = json["error"].intValue
+        task.errorString = json["errorString"].stringValue
+        task.peersConnected = json["peersConnected"].intValue
+        task.peersGettingFromUs = json["peersGettingFromUs"].intValue
+        task.percentDone = json["percentDone"].floatValue
+        task.sizeWhenDon = json["sizeWhenDon"].intValue
+        task.totalSize = json["totalSize"].intValue
+        task.status = json["status"].intValue
+        task.uploadRatio = json["uploadRatio"].floatValue
+        task.uploadedEver = json["uploadedEver"].intValue
+        task.rateDownload = json["rateDownload"].intValue
+        task.rateUpload = json["rateUpload"].intValue
+        task.leftUntilDone = json["leftUntilDone"].intValue
+        
+        return task
     }
     
     private func initPopupController(){
@@ -100,16 +133,56 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var tmp = tableView.dequeueReusableCellWithIdentifier("taskListTableViewCell")
+        var tmp = tableView.dequeueReusableCellWithIdentifier("taskListTableViewCell") as? TaskListTableViewCell
         
         if (tmp == nil) {
-            tmp = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskListTableViewCell")
+            tmp = TaskListTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskListTableViewCell")
         }
         
-        tmp?.textLabel?.text = tasks[indexPath.row]
+        let task = tasks[indexPath.row]
+        
+        tmp?.nameLabel.text = task.name
+        
+        var desc:String
+        var status:String
+        
+        if task.error > 0 {
+            desc = task.errorString!
+            status = ""
+            tmp?.descLabel.textColor = UIColor.redColor()
+            tmp?.progressView.progressTintColor = UIColor.grayColor()
+        }else {
+            tmp?.descLabel.textColor = UIColor.grayColor()
+            switch task.status {
+            case 4 :
+                //下载
+                tmp?.progressView.progressTintColor = UIColor.blueColor()
+                desc = "从\(task.peersConnected)个peers进行下载 - ↓\(SpeedStringFormatter.formatSpeedToString(task.rateDownload))/s ↑\(SpeedStringFormatter.formatSpeedToString(task.rateUpload))/s"
+                status = "已下载\(SpeedStringFormatter.formatSpeedToString(task.sizeWhenDon-task.leftUntilDone)),总共大小\(SpeedStringFormatter.formatSpeedToString(task.sizeWhenDon))(\(task.percentDone)%) - 预计剩余\(SpeedStringFormatter.clcaultHoursToString(task.leftUntilDone, speed: task.rateDownload))"
+            default :
+                tmp?.progressView.progressTintColor = UIColor(red: 0.173, green: 0.698, blue: 0.212, alpha: 1.000)
+                desc = "为\(task.peersConnected)个Peers做种中 - ↑\(SpeedStringFormatter.formatSpeedToString(task.rateUpload))/s"
+                status = "文件大小\(SpeedStringFormatter.formatSpeedToString(task.totalSize)),已上传\(SpeedStringFormatter.formatSpeedToString(task.uploadedEver)) (比率 \(task.uploadRatio))"
+            }
+        }
+        
+        tmp?.descLabel.text = desc
+        tmp?.progressView.progress = task.percentDone
+        tmp?.statusLabel.text = status
         
         return tmp!
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
+    }
+    
+//    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        if  section == 0 {
+//            return 60
+//        }
+//        return 60
+//    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
