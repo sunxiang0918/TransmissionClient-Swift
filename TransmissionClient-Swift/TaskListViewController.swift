@@ -31,7 +31,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     private var filtered : [TaskVO] = []
     
-    var searchActive : Bool = false
+    private var searchActive : Bool = false
+    
+    private var statusFilter : ((TaskVO)->Bool)?
+    
+    @IBOutlet weak var statusButton: UIBarButtonItem!
     
     // MARK: - View初始化
     
@@ -68,6 +72,26 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         /// 设置弹出视图中 取消操作的 动作闭包
         view?.cancelHandel = {self.popupController?.dismissPopupControllerAnimated(true)}
         
+        view?.doFilterStatusHandel = {(oper:(TaskVO)->Bool,title:String) ->Void in
+            //界面点了过滤后的处理
+            
+            //首先把界面的字给改了
+            self.statusButton.title = title
+            
+            //然后开始过滤
+            if  title == "全部" {
+                self.statusFilter = nil
+            }else {
+                self.statusFilter = oper
+                self.filtered = self.tasks.filter { (taskVO) -> Bool in
+                    return oper(taskVO)
+                }
+            }
+            
+            self.loadSessionInfo()
+            self.tableView.reloadData()
+        }
+        
         /// 实例化弹出控制器
         self.popupController = CNPPopupController(contents: [view!])
         self.popupController!.theme = CNPPopupTheme.defaultTheme()
@@ -87,7 +111,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     //========================UITableViewDelegate的实现================================================
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(searchActive) {
+        if(searchActive || statusFilter != nil) {
             return filtered.count
         }
         return tasks.count
@@ -101,7 +125,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             tmp = TaskListTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskListTableViewCell")
         }
         
-        let task = searchActive ? filtered[indexPath.row] : tasks[indexPath.row]
+        let task = (searchActive || statusFilter != nil)  ? filtered[indexPath.row] : tasks[indexPath.row]
         
         tmp?.nameLabel.text = task.name
         
@@ -148,7 +172,8 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         if  editingStyle == UITableViewCellEditingStyle.Delete {
             
             //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
-            removeTaskFromView(tasks[indexPath.row], indexPath: indexPath)
+            let task = (self.searchActive || self.statusFilter != nil) ? filtered[indexPath.row] : tasks[indexPath.row]
+            removeTaskFromView(task, indexPath: indexPath)
         }
     }
     
@@ -174,7 +199,17 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             if response?.statusCode == 200 {
                 //表示删除成功
                 //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
-                self.tasks.removeAtIndex(indexPath.row)
+                if (self.searchActive || self.statusFilter != nil) {
+                    self.filtered.removeAtIndex(indexPath.row)
+                    let index = self.tasks.indexOf({ (t:TaskVO) -> Bool in
+                        return t.id == task.id
+                    })
+                    if index != nil {
+                        self.tasks.removeAtIndex(index!)
+                    }
+                }else{
+                    self.tasks.removeAtIndex(indexPath.row)
+                }
                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                 //重新加载一次sessionInfo
                 self.loadSessionInfo()
@@ -203,9 +238,14 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 if  let result = data.value {
                     let json = JSON(result)
                     
-                    let torrentCount = json["arguments"]["torrentCount"].intValue
+                    var torrentCount = json["arguments"]["torrentCount"].intValue
                     let downloadSpeed = json["arguments"]["downloadSpeed"].intValue
                     let uploadSpeed = json["arguments"]["uploadSpeed"].intValue
+                    
+                    if self.statusFilter != nil {
+                        //表示有状态过滤
+                        torrentCount = self.filtered.count
+                    }
                     
                     self.infoToolbarItem.title = "一共\(torrentCount)个任务 - ↓\(SpeedStringFormatter.formatSpeedToString(downloadSpeed))/s  ↑\(SpeedStringFormatter.formatSpeedToString(uploadSpeed))/s"
                     
@@ -231,7 +271,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
             /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
             let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\",\"rateDownload\",\"rateUpload\",\"leftUntilDone\"]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"isFinished\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\",\"rateDownload\",\"rateUpload\",\"leftUntilDone\"]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
             return (mutableRequest, nil)
         }), headers: headers).responseJSON { (_, response, data) -> Void in
             if response?.statusCode == 200 {
@@ -244,6 +284,13 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                         self.tasks.append(self.convertJson2TaskVO(torrent))
                     }
                 }
+                
+                if self.statusFilter != nil {
+                    self.filtered = self.tasks.filter { (taskVO) -> Bool in
+                        return self.statusFilter!(taskVO)
+                    }
+                }
+                
                 self.tableView.reloadData()
             }
             
@@ -276,6 +323,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         task.rateDownload = json["rateDownload"].intValue
         task.rateUpload = json["rateUpload"].intValue
         task.leftUntilDone = json["leftUntilDone"].intValue
+        task.isFinished = json["isFinished"].boolValue
         
         return task
     }

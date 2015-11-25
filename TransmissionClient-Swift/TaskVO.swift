@@ -40,6 +40,8 @@ class TaskVO {
     
     var rateUpload:Int = 0      //上传速度
     
+    var isFinished:Bool = false     //是否结束
+    
     init(id:Int,name:String) {
         self.id = id
         self.name = name

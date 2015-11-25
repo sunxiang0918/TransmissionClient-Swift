@@ -108,6 +108,7 @@
                     <connections>
                         <outlet property="infoToolbarItem" destination="vW4-Jr-RSF" id="hC3-ox-Lxb"/>
                         <outlet property="searchBar" destination="Yi3-k4-yQx" id="KFp-vI-syF"/>
+                        <outlet property="statusButton" destination="98Z-Vh-fwt" id="ujp-2P-Zqf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tq-EH-1UG" userLabel="First Responder" sceneMemberID="firstResponder"/>

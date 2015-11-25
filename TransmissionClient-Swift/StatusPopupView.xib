@@ -29,6 +29,9 @@
                         <constraint firstAttribute="width" constant="30" id="y9N-NG-jTC"/>
                     </constraints>
                     <state key="normal" title="全部"/>
+                    <connections>
+                        <action selector="doFilteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="2WP-tw-Mnt"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgz-l2-OxU">
                     <rect key="frame" x="84" y="60" width="54" height="21"/>
@@ -48,6 +51,9 @@
                         <constraint firstAttribute="width" constant="30" id="pdZ-1h-hOn"/>
                     </constraints>
                     <state key="normal" title="活动"/>
+                    <connections>
+                        <action selector="doFilteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="gH8-P1-KNz"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jt9-EK-rtq">
                     <rect key="frame" x="168" y="60" width="54" height="21"/>
@@ -67,6 +73,9 @@
                         <constraint firstAttribute="width" constant="30" id="dkz-eh-P38"/>
                     </constraints>
                     <state key="normal" title="下载"/>
+                    <connections>
+                        <action selector="doFilteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="mK7-Pd-gec"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VoE-4H-kl8">
                     <rect key="frame" x="252" y="60" width="54" height="21"/>
@@ -86,6 +95,9 @@
                         <constraint firstAttribute="width" constant="30" id="t8y-5v-bvC"/>
                     </constraints>
                     <state key="normal" title="做种"/>
+                    <connections>
+                        <action selector="doFilteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="XDh-5l-ebL"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbC-op-tcx">
                     <rect key="frame" x="336" y="60" width="54" height="21"/>
@@ -105,6 +117,9 @@
                         <constraint firstAttribute="width" constant="30" id="laK-xA-ZK0"/>
                     </constraints>
                     <state key="normal" title="暂停"/>
+                    <connections>
+                        <action selector="doFilteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="phO-R3-TFd"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQA-gq-yL7">
                     <rect key="frame" x="420" y="60" width="54" height="21"/>
@@ -124,6 +139,9 @@
                         <constraint firstAttribute="width" constant="30" id="SsU-xE-944"/>
                     </constraints>
                     <state key="normal" title="完成"/>
+                    <connections>
+                        <action selector="doFilteAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="tt8-YX-5o7"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sOe-IF-cxb">
                     <rect key="frame" x="504" y="60" width="54" height="21"/>
