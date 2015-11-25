@@ -88,7 +88,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="状态" id="98Z-Vh-fwt">
+                        <barButtonItem title="全部" id="98Z-Vh-fwt">
                             <connections>
                                 <action selector="doStatusAction:" destination="WWZ-g1-zTW" id="oH6-H0-GxY"/>
                             </connections>
