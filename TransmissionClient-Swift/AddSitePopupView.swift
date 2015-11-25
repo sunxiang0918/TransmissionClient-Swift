@@ -35,6 +35,14 @@ class AddSitePopupView:UIView {
         let url = urlField.text
         
         if let _url = url {
+            if _url == "" {
+                urlField.layer.borderWidth = 1
+                urlField.layer.borderColor = UIColor.redColor().CGColor
+                return
+            }else{
+                urlField.layer.borderWidth = 0
+                urlField.layer.borderColor = UIColor.clearColor().CGColor
+            }
             let site = SiteInfoVO(url: _url)
             site.userName = userNameField.text == "" ? nil : userNameField.text
             site.password = passwordField.text == "" ? nil : passwordField.text
