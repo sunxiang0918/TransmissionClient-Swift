@@ -175,6 +175,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
     }
     
+    //========================UITableViewDelegate的实现================================================
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(searchActive) {
             return filtered.count
@@ -228,18 +229,52 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         return 100
     }
     
-//    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        if  section == 0 {
-//            return 60
-//        }
-//        return 60
-//    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         self.performSegueWithIdentifier("showTaskDetailSegue", sender: nil)
     }
     
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if  editingStyle == UITableViewCellEditingStyle.Delete {
+            
+            //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
+            removeTaskFromView(tasks[indexPath.row], indexPath: indexPath)
+        }
+    }
+    
+    //========================UITableViewDelegate的实现================================================
+    
+    //=======================私有方法的实现=======================================================
+    private func removeTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
+        var headers:[String:String] = [:]
+        headers["X-Transmission-Session-Id"] = sessionId
+        
+        if let _author = author {
+            headers["Authorization"] = _author
+        }
+        
+        
+        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
+            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
+            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
+            mutableRequest.HTTPBody = "{\"arguments\": {\"ids\": [ \(task.id) ],\"delete-local-data\":true},\"method\": \"torrent-remove\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            return (mutableRequest, nil)
+        }), headers: headers).responseJSON { (_, response, data) -> Void in
+            if response?.statusCode == 200 {
+                //表示删除成功
+                //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
+                self.tasks.removeAtIndex(indexPath.row)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                //重新加载一次sessionInfo
+                self.loadSessionInfo()
+            }else{
+                //删除失败
+            }
+        }
+    }
+    //=======================私有方法的实现=======================================================
+    
+    //========================UIButtonAction的实现================================================
     @IBAction func doStatusAction(sender: UIBarButtonItem) {
         self.popupController?.presentPopupControllerAnimated(true)
     }
@@ -249,6 +284,9 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         loadSessionInfo()
         loadTaskList()
     }
+    //========================UIButtonAction的实现================================================
+    
+    
     //========================CNPPopupControllerDelegate的实现================================================
     
     //========================CNPPopupControllerDelegate的实现================================================
