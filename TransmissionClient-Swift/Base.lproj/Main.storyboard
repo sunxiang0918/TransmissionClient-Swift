@@ -40,7 +40,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="首页" id="ZkH-2X-Zzk">
-                        <barButtonItem key="rightBarButtonItem" title="+" id="QSe-q9-AF6"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QSe-q9-AF6"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
@@ -90,11 +90,14 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="jWF-zr-eng"/>
-                        <barButtonItem title="Item" id="lCO-Vw-Spf"/>
+                        <barButtonItem systemItem="refresh" id="lCO-Vw-Spf"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="10.0.0.7:9091" id="dUq-fx-HFD">
-                        <barButtonItem key="rightBarButtonItem" title="+" id="OCt-JB-oHm"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="OCt-JB-oHm"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="Yi3-k4-yQx" id="KFp-vI-syF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tq-EH-1UG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -11,7 +11,9 @@ import CNPPopupController
 import Alamofire
 import SwiftyJSON
 
-class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
+class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,UISearchBarDelegate {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var siteUrl:String!
     
@@ -23,10 +25,16 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
     
     private var tasks : [TaskVO] = []
     
+    private var filtered : [TaskVO] = []
+    
+    var searchActive : Bool = false
+    
     override func viewDidLoad() {
         
         let nib=UINib(nibName: "TaskListTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "taskListTableViewCell")
+        
+        searchBar.delegate = self
         
         //实例化 popupController
         initPopupController()
@@ -128,6 +136,9 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(searchActive) {
+            return filtered.count
+        }
         return tasks.count
     }
     
@@ -139,7 +150,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
             tmp = TaskListTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskListTableViewCell")
         }
         
-        let task = tasks[indexPath.row]
+        let task = searchActive ? filtered[indexPath.row] : tasks[indexPath.row]
         
         tmp?.nameLabel.text = task.name
         
@@ -197,4 +208,44 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate {
     
     //========================CNPPopupControllerDelegate的实现================================================
     
+    //========================UISearchBarDelegate的实现================================================
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+        self.tableView.reloadData()
+    }
+    
+//    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+//        searchActive = false;
+//    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if  "" == searchText {
+            searchActive = false
+            self.tableView.reloadData()
+            return
+        }
+        
+        filtered = tasks.filter { (taskVO) -> Bool in
+            let tmp = taskVO.name
+            return tmp.containsString(searchText)
+        }
+        
+//        if(filtered.count == 0){
+//            searchActive = false
+//        } else {
+//            searchActive = true
+//        }
+        searchActive = true
+        self.tableView.reloadData()
+    }
+    //========================UISearchBarDelegate的实现================================================
 }
