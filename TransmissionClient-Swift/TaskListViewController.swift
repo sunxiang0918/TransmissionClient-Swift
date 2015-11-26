@@ -56,6 +56,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     override func viewWillAppear(animated: Bool) {
         
+        self.navigationItem.title = siteUrl
         self.navigationController?.setToolbarHidden(false, animated: true)
         
         loadSessionInfo()
