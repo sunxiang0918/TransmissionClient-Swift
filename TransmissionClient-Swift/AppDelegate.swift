@@ -13,6 +13,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    /**
+     这个方法就是用来 当从其他三方的程序通过"打开其他..." 打开这个程序时调用的方法
+     
+     - parameter application:
+     - parameter url:
+     - parameter sourceApplication:
+     - parameter annotation:
+     
+     - returns:
+     */
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
+        let encrypteddata = NSData(contentsOfURL: url)
+        
+        let base64 = encrypteddata!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        //这个值就是种子文件的内容
+        
+        let defaultCache=NSUserDefaults.standardUserDefaults()
+        defaultCache.setObject(base64, forKey: "metainfo")
+        
+        do {
+            //尝试删除文件
+            try NSFileManager.defaultManager().removeItemAtURL(url)
+        } catch let e {
+            print(e)
+        }
+        
+        
+        return true
+    }
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

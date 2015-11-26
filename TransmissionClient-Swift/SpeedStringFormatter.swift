@@ -51,7 +51,7 @@ class SpeedStringFormatter {
      - returns:
      */
     static func clcaultHoursToString(size:Int,speed:Int) -> String {
-        let s = size / speed
+        let s = size / (speed + 1)
         
         let second:Float = Float(s)
         

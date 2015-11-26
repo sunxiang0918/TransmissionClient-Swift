@@ -23,6 +23,8 @@ class NewTaskController : UIViewController {
     
     var freeSpace:Int = 0
     
+    var torrentFile:String?
+    
     @IBOutlet weak var urlTextField: UITextField!
     
     @IBOutlet weak var destDirTextField: UITextField!
@@ -35,10 +37,19 @@ class NewTaskController : UIViewController {
         
         destDirTextField.text = downloadDir
         
-        
         freeSpaceLabel.text = "剩余空间:\(SpeedStringFormatter.formatSpeedToString(freeSpace))"
         
         startWhenAddedSwitch.selected = true
+        
+        let defaultCache=NSUserDefaults.standardUserDefaults()
+        torrentFile = defaultCache.objectForKey("metainfo") as? String
+        
+        if let _ = torrentFile{
+            //如果存在拷贝的文件的话,这里就直接显示file://
+            urlTextField.text = "已从其他程序拷贝torrent文件"
+        }else {
+            urlTextField.text = ""
+        }
     }
     
     @IBAction func doAddTaskAction(sender: UIButton) {
@@ -65,10 +76,24 @@ class NewTaskController : UIViewController {
         Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
             /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
             let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"method\":\"torrent-add\",\"arguments\":{\"download-dir\":\"\(path)\",\"filename\":\"\(filename)\",\"paused\":\(paused)}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            
+            var body = "{\"method\":\"torrent-add\",\"arguments\":{\"download-dir\":\"\(path)\",\"paused\":\(paused)"
+            if  filename == "已从其他程序拷贝torrent文件" && self.torrentFile != nil {
+                body = body + ",\"metainfo\":\"\(self.torrentFile!)\""
+            }else {
+                body = body + ",\"filename\":\"\(filename)\""
+            }
+            body = body + "}}"
+            
+            mutableRequest.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
             return (mutableRequest, nil)
         }), headers: headers).responseJSON { (_, response, data) -> Void in
             if response?.statusCode == 200 {
+                if  filename == "已从其他程序拷贝torrent文件" {
+                    self.torrentFile = nil
+                    let defaultCache=NSUserDefaults.standardUserDefaults()
+                    defaultCache.removeObjectForKey("metainfo")
+                }
                 //表示添加成功
                 self.navigationController?.popViewControllerAnimated(true)
             }else {
