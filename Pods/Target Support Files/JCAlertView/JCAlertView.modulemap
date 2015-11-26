@@ -1,0 +1,6 @@
+framework module JCAlertView {
+  umbrella header "JCAlertView-umbrella.h"
+
+  export *
+  module * { export * }
+}

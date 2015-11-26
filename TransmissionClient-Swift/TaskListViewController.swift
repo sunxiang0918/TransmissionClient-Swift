@@ -117,6 +117,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         return tasks.count
     }
     
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var tmp = tableView.dequeueReusableCellWithIdentifier("taskListTableViewCell") as? TaskListTableViewCell

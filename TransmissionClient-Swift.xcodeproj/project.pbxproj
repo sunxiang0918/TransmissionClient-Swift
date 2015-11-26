@@ -34,6 +34,7 @@
 		9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A42A24E41C05F4B5001D0B5F /* AddSitePopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddSitePopupView.xib; sourceTree = "<group>"; };
 		A42A24E61C05F4EB001D0B5F /* AddSitePopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSitePopupView.swift; sourceTree = "<group>"; };
+		A42BA3841C06ABDA0062BC78 /* ObjectiveCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveCBridge.h; sourceTree = "<group>"; };
 		A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteInfoVO.swift; sourceTree = "<group>"; };
 		A4967E501C0412B7000ADF88 /* NSUserDefaults+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Model.swift"; sourceTree = "<group>"; };
 		A4C095C41C034DA30071F729 /* TransmissionClient-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TransmissionClient-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +75,15 @@
 				8802B13EEE0EA093B197BCC7 /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A42BA3831C06ABAF0062BC78 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A4C095D31C034DA30071F729 /* Info.plist */,
+				A42BA3841C06ABDA0062BC78 /* ObjectiveCBridge.h */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		A4967E4B1C040A18000ADF88 /* controller */ = {
@@ -135,7 +145,7 @@
 				A4C095CB1C034DA30071F729 /* Main.storyboard */,
 				A4C095CE1C034DA30071F729 /* Assets.xcassets */,
 				A4C095D01C034DA30071F729 /* LaunchScreen.storyboard */,
-				A4C095D31C034DA30071F729 /* Info.plist */,
+				A42BA3831C06ABAF0062BC78 /* Supporting Files */,
 			);
 			path = "TransmissionClient-Swift";
 			sourceTree = "<group>";
@@ -427,6 +437,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.sunxiang0918.TransmissionClient-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TransmissionClient-Swift/ObjectiveCBridge.h";
 			};
 			name = Debug;
 		};
@@ -440,6 +451,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.sunxiang0918.TransmissionClient-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TransmissionClient-Swift/ObjectiveCBridge.h";
 			};
 			name = Release;
 		};

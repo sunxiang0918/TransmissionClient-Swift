@@ -18,13 +18,14 @@ extension NSURLSession {
     
     func sendSynchronousDataTaskWithRequest(request:NSURLRequest,inout returningResponse response:NSURLResponse?) throws -> NSData?{
         
+        
         let semaphore:dispatch_semaphore_t = dispatch_semaphore_create(0)
         
         var data:NSData? = nil
         
         var error:NSError? = nil
         
-        NSURLSession.sharedSession().dataTaskWithRequest(request) { (taskData, taskResponse, taskError) -> Void in
+        self.dataTaskWithRequest(request) { (taskData, taskResponse, taskError) -> Void in
             data = taskData
             
             if let _response = taskResponse {
@@ -61,7 +62,7 @@ extension NSURLSession {
         
         var error:NSError? = nil
         
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (taskData, taskResponse, taskError) -> Void in
+        self.dataTaskWithURL(url) { (taskData, taskResponse, taskError) -> Void in
             data = taskData
             if let _response = taskResponse {
                 response = _response

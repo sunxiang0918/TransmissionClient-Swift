@@ -8,6 +8,7 @@
 
 import UIKit
 import CNPPopupController
+import JCAlertView
 
 class RootViewController: UITableViewController,CNPPopupControllerDelegate {
     
@@ -83,7 +84,9 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
         let sessionId = getSessionID(siteInfo.url,author: author )
         
         if sessionId == nil {
-            //TODO 报错
+            JCAlertView.showOneButtonWithTitle("错误", message: "无法访问\(siteInfo.url)服务器", buttonType: JCAlertViewButtonType.Default, buttonTitle: "button",click: nil)
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            return
         }
         
         self.performSegueWithIdentifier("showTaskListSegue", sender: SiteInfo(sessionId: sessionId!, url: siteInfo.url, author: author))
@@ -114,7 +117,10 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
         var response:NSURLResponse? = nil
         
         do {
-            try NSURLSession.sharedSession().sendSynchronousDataTaskWithRequest(request, returningResponse: &response)
+            // 设置默认的超时时间为20秒
+            let config = NSURLSessionConfiguration.defaultSessionConfiguration()//默认配置
+            config.timeoutIntervalForRequest = 10 //连接超时时间
+            try NSURLSession(configuration: config).sendSynchronousDataTaskWithRequest(request, returningResponse: &response)
         } catch _ {
             return nil
         }

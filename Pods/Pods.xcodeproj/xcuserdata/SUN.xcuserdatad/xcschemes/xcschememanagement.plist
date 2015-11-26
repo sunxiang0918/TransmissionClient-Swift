@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JCAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,12 +32,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3F438F5AEAA03C1DEF800C3D5C94EC86</key>
+		<key>545A7AD7F33AEE20BB0F9963C25AD4C3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8C9D6B8BE2319DAE4CBCA6B835FD0FF8</key>
+		<key>60C263375D025B060AE0F922DCDE3267</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>903458DB0A9B7AA3DAEEDA3205B1CC56</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,7 +52,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DBE230437EEE7E9A0F25B638E473AA86</key>
+		<key>CDE3D66DAD7F149AD640FD5F29855D40</key>
 		<dict>
 			<key>primary</key>
 			<true/>
