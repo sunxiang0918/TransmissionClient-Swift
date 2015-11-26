@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
@@ -105,7 +106,7 @@
                     <navigationItem key="navigationItem" id="dUq-fx-HFD">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OCt-JB-oHm">
                             <connections>
-                                <segue destination="boW-nZ-dy3" kind="show" id="hGB-XO-dAt"/>
+                                <action selector="doAddAction:" destination="WWZ-g1-zTW" id="6ax-DS-zZc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -113,6 +114,7 @@
                         <outlet property="infoToolbarItem" destination="vW4-Jr-RSF" id="hC3-ox-Lxb"/>
                         <outlet property="searchBar" destination="Yi3-k4-yQx" id="KFp-vI-syF"/>
                         <outlet property="statusButton" destination="98Z-Vh-fwt" id="ujp-2P-Zqf"/>
+                        <segue destination="boW-nZ-dy3" kind="push" identifier="addTaskSegue" id="cSG-Gm-LYZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tq-EH-1UG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -139,25 +141,120 @@
             </objects>
             <point key="canvasLocation" x="2470" y="184"/>
         </scene>
-        <!--View Controller-->
+        <!--新增Torrent-->
         <scene sceneID="izl-SN-yEb">
             <objects>
-                <viewController id="boW-nZ-dy3" sceneMemberID="viewController">
+                <viewController id="boW-nZ-dy3" customClass="NewTaskController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wj3-p5-wsj"/>
                         <viewControllerLayoutGuide type="bottom" id="hMr-TU-dAk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GH9-0a-zyn">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qv5-VC-E2t">
+                                <rect key="frame" x="10" y="142" width="32.5" height="20.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目标路径" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifv-h7-w11">
+                                <rect key="frame" x="10" y="197" width="68" height="20.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Koy-2O-Agl">
+                                <rect key="frame" x="56.5" y="138" width="302.5" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="43g-x7-4fi">
+                                <rect key="frame" x="86" y="193" width="273" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="dirChangeAction:" destination="boW-nZ-dy3" eventType="editingDidEnd" id="IHc-AU-lVd"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="空间剩余" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJ1-fW-wUr">
+                                <rect key="frame" x="86" y="231" width="198" height="17"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bH9-Y9-vMt">
+                                <rect key="frame" x="99" y="267" width="51" height="31"/>
+                                <animations/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="立即开始" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdR-7X-E1q">
+                                <rect key="frame" x="10" y="272" width="77" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="XXb-or-im0"/>
+                                    <constraint firstAttribute="width" constant="77" id="ewV-K6-8wW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCb-95-LvK">
+                                <rect key="frame" x="14" y="319" width="347" height="41"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.066666666669999999" green="0.47843137250000001" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="347" id="Iuk-k8-lMD"/>
+                                    <constraint firstAttribute="height" constant="41" id="qvf-uF-A2E"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="增加任务"/>
+                                <connections>
+                                    <action selector="doAddTaskAction:" destination="boW-nZ-dy3" eventType="touchUpInside" id="nGQ-ra-FMS"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UJ1-fW-wUr" firstAttribute="top" secondItem="43g-x7-4fi" secondAttribute="bottom" constant="8" id="001-3u-0Nu"/>
+                            <constraint firstItem="bH9-Y9-vMt" firstAttribute="top" secondItem="UJ1-fW-wUr" secondAttribute="bottom" constant="19" id="3vf-Im-d3m"/>
+                            <constraint firstItem="Koy-2O-Agl" firstAttribute="top" secondItem="Wj3-p5-wsj" secondAttribute="bottom" constant="74" id="82a-3n-cnK"/>
+                            <constraint firstItem="Qv5-VC-E2t" firstAttribute="top" secondItem="Wj3-p5-wsj" secondAttribute="bottom" constant="78" id="9ww-Lo-6o1"/>
+                            <constraint firstItem="Ifv-h7-w11" firstAttribute="top" secondItem="Qv5-VC-E2t" secondAttribute="bottom" constant="34" id="M3e-Sa-Dr1"/>
+                            <constraint firstItem="43g-x7-4fi" firstAttribute="leading" secondItem="Ifv-h7-w11" secondAttribute="trailing" constant="8" id="PHP-C1-T6D"/>
+                            <constraint firstItem="jdR-7X-E1q" firstAttribute="top" secondItem="Ifv-h7-w11" secondAttribute="bottom" constant="54.5" id="Pi3-uG-mtv"/>
+                            <constraint firstItem="Ifv-h7-w11" firstAttribute="leading" secondItem="GH9-0a-zyn" secondAttribute="leadingMargin" constant="-6" id="Pk9-Wv-0QT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UJ1-fW-wUr" secondAttribute="trailing" constant="75" id="QCY-xv-XPV"/>
+                            <constraint firstItem="43g-x7-4fi" firstAttribute="top" secondItem="Koy-2O-Agl" secondAttribute="bottom" constant="25" id="UVB-2H-4EG"/>
+                            <constraint firstItem="bH9-Y9-vMt" firstAttribute="leading" secondItem="jdR-7X-E1q" secondAttribute="trailing" constant="12" id="YGv-9j-fwp"/>
+                            <constraint firstItem="zCb-95-LvK" firstAttribute="centerX" secondItem="GH9-0a-zyn" secondAttribute="centerX" id="c7o-mW-qSf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="43g-x7-4fi" secondAttribute="trailing" id="fvx-9G-p63"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Koy-2O-Agl" secondAttribute="trailing" id="hhI-VR-wmv"/>
+                            <constraint firstItem="Koy-2O-Agl" firstAttribute="leading" secondItem="Qv5-VC-E2t" secondAttribute="trailing" constant="14" id="i5c-PI-axL"/>
+                            <constraint firstItem="Qv5-VC-E2t" firstAttribute="leading" secondItem="GH9-0a-zyn" secondAttribute="leadingMargin" constant="-6" id="o6V-Ct-53g"/>
+                            <constraint firstItem="UJ1-fW-wUr" firstAttribute="leading" secondItem="GH9-0a-zyn" secondAttribute="leadingMargin" constant="70" id="qzN-LM-CbC"/>
+                            <constraint firstItem="jdR-7X-E1q" firstAttribute="leading" secondItem="GH9-0a-zyn" secondAttribute="leadingMargin" constant="-6" id="wbT-h2-ZEy"/>
+                            <constraint firstItem="zCb-95-LvK" firstAttribute="top" secondItem="bH9-Y9-vMt" secondAttribute="bottom" constant="21" id="yyw-UE-j8o"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ose-ca-Ppi"/>
+                    <navigationItem key="navigationItem" title="新增Torrent" id="ose-ca-Ppi"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="destDirTextField" destination="43g-x7-4fi" id="yTg-2w-vJm"/>
+                        <outlet property="freeSpaceLabel" destination="UJ1-fW-wUr" id="2C9-Nr-mQA"/>
+                        <outlet property="startWhenAddedSwitch" destination="bH9-Y9-vMt" id="ckj-kx-Grj"/>
+                        <outlet property="urlTextField" destination="Koy-2O-Agl" id="cod-xk-geL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kZg-nI-9uG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2169" y="1039"/>
+            <point key="canvasLocation" x="2168.5" y="1038.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kye-2x-f6n">

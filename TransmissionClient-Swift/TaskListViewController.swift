@@ -146,7 +146,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 //下载
                 tmp?.progressView.progressTintColor = UIColor.blueColor()
                 desc = "从\(task.peersConnected)个peers进行下载 - ↓\(SpeedStringFormatter.formatSpeedToString(task.rateDownload))/s ↑\(SpeedStringFormatter.formatSpeedToString(task.rateUpload))/s"
-                status = "已下载\(SpeedStringFormatter.formatSpeedToString(task.sizeWhenDon-task.leftUntilDone)),总共大小\(SpeedStringFormatter.formatSpeedToString(task.sizeWhenDon))(\(task.percentDone)%) - 预计剩余\(SpeedStringFormatter.clcaultHoursToString(task.leftUntilDone, speed: task.rateDownload))"
+                status = "已下载\(SpeedStringFormatter.formatSpeedToString(task.totalSize-task.leftUntilDone)),总共大小\(SpeedStringFormatter.formatSpeedToString(task.totalSize))(\(task.percentDone*100)%) - 预计剩余\(SpeedStringFormatter.clcaultHoursToString(task.leftUntilDone, speed: task.rateDownload))"
             default :
                 tmp?.progressView.progressTintColor = UIColor(red: 0.173, green: 0.698, blue: 0.212, alpha: 1.000)
                 desc = "为\(task.peersConnected)个Peers做种中 - ↑\(SpeedStringFormatter.formatSpeedToString(task.rateUpload))/s"
@@ -343,7 +343,51 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         loadSessionInfo()
         loadTaskList()
     }
+    
+    @IBAction func doAddAction(sender: UIBarButtonItem) {
+        
+        //这个地方的逻辑是查询一次当前磁盘的剩余,以及默认目标路径
+        var headers:[String:String] = [:]
+        headers["X-Transmission-Session-Id"] = sessionId
+        
+        if let _author = author {
+            headers["Authorization"] = _author
+        }
+        
+        var parameter:[String:String] = [:]
+        parameter["method"] = "session-get"
+        
+        Alamofire.Manager.sharedInstance.request(Method.GET, siteUrl + BASE_URL, parameters: parameter, encoding: ParameterEncoding.URL, headers: headers).responseJSON { (_, response, data) -> Void in
+            if response?.statusCode == 200 {
+                if  let result = data.value {
+                    let json = JSON(result)
+                    
+                    let downloadDir = json["arguments"]["download-dir"].stringValue
+                    let freeSpace = json["arguments"]["download-dir-free-space"].intValue
+                    
+                    self.performSegueWithIdentifier("addTaskSegue", sender: DefaultDownloadInfo(downloadDir: downloadDir, freeSpace: freeSpace))
+                }
+            }else{
+                //TODO 抛出异常
+            }
+        }
+    }
+    
     //========================UIButtonAction的实现================================================
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "addTaskSegue" {
+            let newTaskController = segue.destinationViewController as! NewTaskController
+            let downloadInfo = sender as! DefaultDownloadInfo
+            
+            newTaskController.siteUrl = siteUrl
+            newTaskController.author = author
+            newTaskController.sessionId = sessionId
+            newTaskController.downloadDir = downloadInfo.downloadDir
+            newTaskController.freeSpace = downloadInfo.freeSpace
+        }
+
+    }
     
     // MARK: - CNPPopupControllerDelegate实现
     //========================CNPPopupControllerDelegate的实现================================================
@@ -391,4 +435,14 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         self.tableView.reloadData()
     }
     //========================UISearchBarDelegate的实现================================================
+}
+
+private class DefaultDownloadInfo : NSObject {
+    var downloadDir:String
+    var freeSpace:Int
+    
+    init(downloadDir:String,freeSpace:Int = 0){
+        self.downloadDir = downloadDir
+        self.freeSpace = freeSpace
+    }
 }
