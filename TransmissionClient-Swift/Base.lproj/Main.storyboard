@@ -69,17 +69,17 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TaskListTableViewCell" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="Cuv-33-y5H">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TaskListTableViewCell" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" id="Cuv-33-y5H">
                                 <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cuv-33-y5H" id="yRi-OO-HwG">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
-                                    <segue destination="WEe-aS-SDS" kind="push" identifier="showTaskDetailSegue" id="ChO-gB-pPg"/>
+                                    <segue destination="3ni-b6-i8j" kind="push" identifier="showTaskDetailSegue" trigger="accessoryAction" id="cgk-hq-S4r"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -121,25 +121,131 @@
             </objects>
             <point key="canvasLocation" x="1714" y="192"/>
         </scene>
-        <!--任务详情-->
-        <scene sceneID="KxW-kz-qa7">
+        <!--Peers-->
+        <scene sceneID="CNK-iD-bpP">
             <objects>
-                <viewController id="WEe-aS-SDS" userLabel="任务详情" sceneMemberID="viewController">
+                <tableViewController id="OOj-dh-hhG" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="p4g-dE-eag">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="rAk-HL-Udh">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rAk-HL-Udh" id="ysQ-n7-jjw">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OOj-dh-hhG" id="omQ-qh-MVE"/>
+                            <outlet property="delegate" destination="OOj-dh-hhG" id="8h2-ZH-cgT"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Peers" image="Windows-8-Login-128" id="wcp-Rz-Ih5"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rsZ-3H-gw9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2747" y="1256"/>
+        </scene>
+        <!--Files-->
+        <scene sceneID="KBt-vc-svp">
+            <objects>
+                <tableViewController id="oa7-qu-FtT" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="r5B-gH-71C">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="nix-Et-kx7">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nix-Et-kx7" id="zbf-dX-W7N">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="oa7-qu-FtT" id="kl9-Zu-gO4"/>
+                            <outlet property="delegate" destination="oa7-qu-FtT" id="z3C-Ex-Qdv"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Files" image="Documents-02-128" id="HH0-2d-PXv"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f5u-BW-Cg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3520" y="1245"/>
+        </scene>
+        <!--Trackers-->
+        <scene sceneID="JSa-yv-vhP">
+            <objects>
+                <viewController id="fV0-xn-XdN" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1Oo-iU-Lck"/>
-                        <viewControllerLayoutGuide type="bottom" id="sRq-Ri-f6W"/>
+                        <viewControllerLayoutGuide type="top" id="a3d-ub-mbj"/>
+                        <viewControllerLayoutGuide type="bottom" id="X74-kX-qlK"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rq6-EG-nf7">
+                    <view key="view" contentMode="scaleToFill" id="1pe-eD-7Ns">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Kdd-hI-JxA"/>
+                    <tabBarItem key="tabBarItem" title="Trackers" image="Publish-128" id="xqV-g5-662"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="weP-Tt-fI7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Wh-FE-v3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2470" y="184"/>
+            <point key="canvasLocation" x="3520" y="500"/>
+        </scene>
+        <!--详细信息-->
+        <scene sceneID="O3a-Uf-vDb">
+            <objects>
+                <viewController id="af4-UD-D8x" userLabel="详细信息" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zem-9p-Lip"/>
+                        <viewControllerLayoutGuide type="bottom" id="QhN-Fz-8qE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X6Z-tB-Ldq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Infos" image="Data-Defragmentation-128" id="agB-jJ-UhE"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EHo-PM-gY3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3520" y="-161"/>
+        </scene>
+        <!--任务详情View-->
+        <scene sceneID="2rf-fe-aWS">
+            <objects>
+                <tabBarController id="3ni-b6-i8j" userLabel="任务详情View" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="U6I-0a-ylE"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="EFy-SX-7Ms">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="af4-UD-D8x" kind="relationship" relationship="viewControllers" id="awj-1o-fUB"/>
+                        <segue destination="OOj-dh-hhG" kind="relationship" relationship="viewControllers" id="2FP-XS-A2k"/>
+                        <segue destination="fV0-xn-XdN" kind="relationship" relationship="viewControllers" id="CXa-8r-2Bp"/>
+                        <segue destination="oa7-qu-FtT" kind="relationship" relationship="viewControllers" id="Ah8-NS-zG9"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tp2-MK-GOX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2756" y="184"/>
         </scene>
         <!--新增Torrent-->
         <scene sceneID="izl-SN-yEb">
@@ -274,6 +380,12 @@
             <point key="canvasLocation" x="47" y="184"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Data-Defragmentation-128" width="64" height="64"/>
+        <image name="Documents-02-128" width="64" height="64"/>
+        <image name="Publish-128" width="64" height="64"/>
+        <image name="Windows-8-Login-128" width="64" height="64"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tlQ-iB-k7W"/>
     </inferredMetricsTieBreakers>
