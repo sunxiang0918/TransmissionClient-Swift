@@ -6,19 +6,19 @@
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
-    <dict>
-        <key>LSItemContentTypes</key>
-        <array>
-            <string>com.pryvateBeta.crypt.pvt</string>
-        </array>
-        <key>CFBundleTypeRole</key>
-        <string>Viewer</string>
-        <key>CFBundleTypeName</key>
-        <string>pvt file</string>
-        <key>LSHandlerRank</key>
-        <string>Owner</string>
-    </dict>
-</array>
+		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>cn.sunxiang0918.transmission.torrent</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleTypeName</key>
+			<string>pvt file</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -65,21 +65,21 @@
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
-    <dict>
-        <key>UTTypeConformsTo</key>
-        <array>
-            <string>public.data</string>
-        </array>
-        <key>UTTypeIdentifier</key>
-        <string>com.pryvateBeta.crypt.pvt</string>
-        <key>UTTypeTagSpecification</key>
-        <dict>
-            <key>public.mime-type</key>
-            <string>application/torrent</string>
-            <key>public.filename-extension</key>
-            <string>torrent</string>
-        </dict>
-    </dict>
-</array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>cn.sunxiang0918.transmission.torrent</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.mime-type</key>
+				<string>application/torrent</string>
+				<key>public.filename-extension</key>
+				<string>torrent</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
