@@ -10,6 +10,7 @@ import UIKit
 import CNPPopupController
 import Alamofire
 import SwiftyJSON
+import JCAlertView
 
 class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,UISearchBarDelegate {
     
@@ -142,6 +143,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         }else {
             tmp?.descLabel.textColor = UIColor.grayColor()
             switch task.status {
+            case 0 :
+                //暂停
+                tmp?.progressView.progressTintColor = UIColor.grayColor()
+                desc = "已暂停"
+                status = "已暂停"
             case 3,4 :
                 //下载
                 tmp?.progressView.progressTintColor = UIColor.blueColor()
@@ -170,19 +176,97 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         self.performSegueWithIdentifier("showTaskDetailSegue", sender: nil)
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if  editingStyle == UITableViewCellEditingStyle.Delete {
-            
+    /**
+     定义一行左滑动的事件, 这里增加了两个按钮,一个是暂停,一个是删除
+     
+     - parameter tableView:
+     - parameter indexPath:
+     
+     - returns:
+     */
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        
+        let task = (self.searchActive || self.statusFilter != nil) ? self.filtered[indexPath.row] : self.tasks[indexPath.row]
+        
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "删除") { (action, indexPath) -> Void in
             //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
-            let task = (self.searchActive || self.statusFilter != nil) ? filtered[indexPath.row] : tasks[indexPath.row]
-            removeTaskFromView(task, indexPath: indexPath)
+            self.removeTaskFromView(task, indexPath: indexPath)
         }
+        
+        var action:UITableViewRowAction
+        if task.status == 0 {
+            //已经暂停了,那就是启动
+            action = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "恢复") { (action, indexPath) -> Void in
+                self.startTaskFromView(task, indexPath: indexPath)
+            }
+        }else{
+            //其他状态就是暂停
+            action = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "暂停") { (action, indexPath) -> Void in
+                self.pauseTaskFromView(task, indexPath: indexPath)
+            }
+        }
+        
+        return [deleteAction,action]
     }
     
     //========================UITableViewDelegate的实现================================================
     
     // MARK: - 私有方法实现
     //=======================私有方法的实现=======================================================
+    private func pauseTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
+        var headers:[String:String] = [:]
+        headers["X-Transmission-Session-Id"] = sessionId
+        
+        if let _author = author {
+            headers["Authorization"] = _author
+        }
+        
+        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
+            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
+            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
+            mutableRequest.HTTPBody = "{\"arguments\": {\"ids\": [ \(task.id) ]},\"method\": \"torrent-stop\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            return (mutableRequest, nil)
+        }), headers: headers).responseJSON { (_, response, data) -> Void in
+            if response?.statusCode == 200 {
+                //表示暂停成功
+                self.loadSessionInfo()
+                
+                //由于服务器是异步的,所以这里要适当的Sleep一下,否则任务状态还没有更新
+                NSThread.sleepForTimeInterval(0.5)
+                self.loadTaskList()
+            }else{
+                //暂停失败
+                JCAlertView.showOneButtonWithTitle("错误", message: "暂停任务\(task.name) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定", click: nil)
+            }
+        }
+    }
+    
+    private func startTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
+        var headers:[String:String] = [:]
+        headers["X-Transmission-Session-Id"] = sessionId
+        
+        if let _author = author {
+            headers["Authorization"] = _author
+        }
+        
+        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
+            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
+            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
+            mutableRequest.HTTPBody = "{\"arguments\": {\"ids\": [ \(task.id) ]},\"method\": \"torrent-start\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            return (mutableRequest, nil)
+        }), headers: headers).responseJSON { (_, response, data) -> Void in
+            if response?.statusCode == 200 {
+                //表示暂停成功
+                self.loadSessionInfo()
+                self.loadTaskList()
+            }else{
+                //暂停失败
+                JCAlertView.showOneButtonWithTitle("错误", message: "启动任务\(task.name) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定", click: nil)
+            }
+        }
+    }
+    
+    
     private func removeTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
@@ -217,6 +301,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 self.loadSessionInfo()
             }else{
                 //删除失败
+                JCAlertView.showOneButtonWithTitle("错误", message: "删除任务\(task.name) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定", click: nil)
             }
         }
     }
