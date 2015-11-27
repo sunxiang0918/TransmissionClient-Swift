@@ -55,7 +55,7 @@ class NewTaskController : UIViewController {
     @IBAction func doAddTaskAction(sender: UIButton) {
         
         if urlTextField.text == nil || "" == urlTextField.text! {
-            JCAlertView.showOneButtonWithTitle("错误", message: "没有填写Torrent的URL路径,无法添加", buttonType: JCAlertViewButtonType.Default, buttonTitle: "button",click: nil)
+            JCAlertView.showOneButtonWithTitle("错误", message: "没有填写Torrent的URL路径,无法添加", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定",click: nil)
             return
         }
         
@@ -98,7 +98,7 @@ class NewTaskController : UIViewController {
                 self.navigationController?.popViewControllerAnimated(true)
             }else {
                 //表示失败
-                JCAlertView.showOneButtonWithTitle("错误", message: "添加Torrent:\(filename) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "button",click: nil)
+                JCAlertView.showOneButtonWithTitle("错误", message: "添加Torrent:\(filename) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定",click: nil)
             }
         }
         

@@ -84,7 +84,7 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
         let sessionId = getSessionID(siteInfo.url,author: author )
         
         if sessionId == nil {
-            JCAlertView.showOneButtonWithTitle("错误", message: "无法访问\(siteInfo.url)服务器", buttonType: JCAlertViewButtonType.Default, buttonTitle: "button",click: nil)
+            JCAlertView.showOneButtonWithTitle("错误", message: "无法访问\(siteInfo.url)服务器", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定",click: nil)
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             return
         }

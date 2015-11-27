@@ -4,21 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>cn.sunxiang0918.transmission.torrent</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleTypeName</key>
-			<string>pvt file</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
-		</dict>
-	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -62,6 +47,21 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>cn.sunxiang0918.transmission.torrent</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleTypeName</key>
+			<string>pvt file</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+		</dict>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>

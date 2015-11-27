@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(e)
         }
         
-        
         return true
     }
     
