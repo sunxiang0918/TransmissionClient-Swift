@@ -125,6 +125,8 @@ class TaskDetailVO : NSObject {
         pieceCount = torrent["pieceCount"].intValue
         pieceSize = torrent["pieceSize"].intValue
         _startDate = torrent["startDate"].intValue
+        
+        peers = PeerVO.generatePeerVOs(torrent)
     }
 }
 
@@ -152,6 +154,33 @@ class PeerVO : NSObject{
         self.port = port
     }
     
+    static func generatePeerVOs(json:JSON) -> [PeerVO]? {
+        
+        let _peers=json["peers"].array
+        
+        guard let peers = _peers else {
+            return nil
+        }
+        
+        var peerVOs:[PeerVO] = []
+        
+        for peer in peers {
+            let clientName = peer["clientName"].stringValue
+            let address = peer["address"].stringValue
+            let port = peer["port"].intValue
+            
+            let peerVO = PeerVO(clientName: clientName, address: address, port: port)
+            peerVOs.append(peerVO)
+            
+            peerVO.flagStr = peer["flagStr"].stringValue
+            peerVO.progress = peer["progress"].floatValue
+            peerVO.rateToClient = peer["rateToClient"].intValue
+            peerVO.rateToPeer = peer["rateToPeer"].intValue
+            
+        }
+        
+        return peerVOs
+    }
 }
 
 class TrackerStatVO : NSObject{

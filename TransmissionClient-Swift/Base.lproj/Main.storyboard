@@ -186,24 +186,36 @@
             <point key="canvasLocation" x="3413" y="1328"/>
         </scene>
         <!--Trackers-->
-        <scene sceneID="JSa-yv-vhP">
+        <scene sceneID="lXG-mz-gmb">
             <objects>
-                <viewController id="fV0-xn-XdN" customClass="TaskDetailTrackerViewController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="a3d-ub-mbj"/>
-                        <viewControllerLayoutGuide type="bottom" id="X74-kX-qlK"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="1pe-eD-7Ns">
+                <tableViewController id="Vsw-zW-P32" customClass="TaskDetailTrackerViewController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="0Z9-7u-vhY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Trackers" image="Publish-128" id="xqV-g5-662"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4Wh-FE-v3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7b1-ea-mgH">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7b1-ea-mgH" id="jFc-4A-53e">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Vsw-zW-P32" id="H0z-v6-jwj"/>
+                            <outlet property="delegate" destination="Vsw-zW-P32" id="g0Y-90-psD"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Trackers" image="Publish-128" id="D1i-3f-f5J"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DT3-zD-EQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3623" y="544"/>
+            <point key="canvasLocation" x="3802" y="578"/>
         </scene>
         <!--详细信息-->
         <scene sceneID="O3a-Uf-vDb">
@@ -833,7 +845,7 @@
                     <connections>
                         <segue destination="af4-UD-D8x" kind="relationship" relationship="viewControllers" id="awj-1o-fUB"/>
                         <segue destination="OOj-dh-hhG" kind="relationship" relationship="viewControllers" id="2FP-XS-A2k"/>
-                        <segue destination="fV0-xn-XdN" kind="relationship" relationship="viewControllers" id="CXa-8r-2Bp"/>
+                        <segue destination="Vsw-zW-P32" kind="relationship" relationship="viewControllers" id="xmg-Lf-ANb"/>
                         <segue destination="oa7-qu-FtT" kind="relationship" relationship="viewControllers" id="Ah8-NS-zG9"/>
                     </connections>
                 </tabBarController>

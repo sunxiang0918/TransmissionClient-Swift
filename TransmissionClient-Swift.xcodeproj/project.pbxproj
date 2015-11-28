@@ -26,6 +26,8 @@
 		A4C755121C09A45D00BA29BC /* TaskDetailTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755111C09A45D00BA29BC /* TaskDetailTrackerViewController.swift */; };
 		A4C755141C09A48B00BA29BC /* TaskDetailPeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755131C09A48B00BA29BC /* TaskDetailPeerViewController.swift */; };
 		A4C755161C09A4B800BA29BC /* TaskDetailFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755151C09A4B800BA29BC /* TaskDetailFileViewController.swift */; };
+		A4C755181C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4C755171C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib */; };
+		A4C7551A1C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755191C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift */; };
 		A4D0CFFA1C0991FF007D18EC /* TaskDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */; };
 		A4D0CFFC1C09943F007D18EC /* TaskDetailVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */; };
 		A4D93BF01C04A4640019A068 /* StatusPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */; };
@@ -62,6 +64,8 @@
 		A4C755111C09A45D00BA29BC /* TaskDetailTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTrackerViewController.swift; sourceTree = "<group>"; };
 		A4C755131C09A48B00BA29BC /* TaskDetailPeerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPeerViewController.swift; sourceTree = "<group>"; };
 		A4C755151C09A4B800BA29BC /* TaskDetailFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailFileViewController.swift; sourceTree = "<group>"; };
+		A4C755171C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailPeerTableViewCell.xib; sourceTree = "<group>"; };
+		A4C755191C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPeerTableViewCell.swift; sourceTree = "<group>"; };
 		A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailInfoViewController.swift; sourceTree = "<group>"; };
 		A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailVO.swift; sourceTree = "<group>"; };
 		A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusPopupView.xib; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 				A4D93BF21C04A4930019A068 /* StatusPopupView.swift */,
 				A42A24E61C05F4EB001D0B5F /* AddSitePopupView.swift */,
 				A4D93BFC1C054B1A0019A068 /* TaskListTableViewCell.swift */,
+				A4C755191C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */,
 				A4D93BFA1C054AED0019A068 /* TaskListTableViewCell.xib */,
 				A42A24E41C05F4B5001D0B5F /* AddSitePopupView.xib */,
+				A4C755171C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -282,6 +288,7 @@
 				A4C095CF1C034DA30071F729 /* Assets.xcassets in Resources */,
 				A4D93BFB1C054AED0019A068 /* TaskListTableViewCell.xib in Resources */,
 				A49E1E9F1C0803A9004E50E6 /* JCAlertView.bundle in Resources */,
+				A4C755181C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib in Resources */,
 				A42A24E51C05F4B5001D0B5F /* AddSitePopupView.xib in Resources */,
 				A4C095CD1C034DA30071F729 /* Main.storyboard in Resources */,
 			);
@@ -359,6 +366,7 @@
 				A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */,
 				A4C755141C09A48B00BA29BC /* TaskDetailPeerViewController.swift in Sources */,
 				A4C7550F1C099FDF00BA29BC /* TaskDetailProtocol.swift in Sources */,
+				A4C7551A1C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift in Sources */,
 				A4D93BF71C04B2E20019A068 /* NSURLSession+SynchronousTask.swift in Sources */,
 				A4D93BF91C04B2FC0019A068 /* AppException.swift in Sources */,
 				A4D93BFD1C054B1A0019A068 /* TaskListTableViewCell.swift in Sources */,

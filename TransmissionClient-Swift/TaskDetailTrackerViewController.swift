@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskDetailTrackerViewController : UIViewController,TaskDetailProtocol {
+class TaskDetailTrackerViewController : UITableViewController,TaskDetailProtocol {
     
     private var _taskDetail:TaskDetailVO!
     
