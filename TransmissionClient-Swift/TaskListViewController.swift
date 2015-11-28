@@ -194,7 +194,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         }
         
         var action:UITableViewRowAction
-        if task.status == 0 {
+        if task.status == 0 || task.error > 0 {
             //已经暂停了,那就是启动
             action = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "恢复") { (action, indexPath) -> Void in
                 self.startTaskFromView(task, indexPath: indexPath)
