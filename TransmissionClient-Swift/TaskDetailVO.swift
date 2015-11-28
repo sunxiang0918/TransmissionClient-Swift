@@ -127,6 +127,7 @@ class TaskDetailVO : NSObject {
         _startDate = torrent["startDate"].intValue
         
         peers = PeerVO.generatePeerVOs(torrent)
+        trackerStats = TrackerStatVO.generateTrackerVOs(torrent)
     }
 }
 
@@ -227,12 +228,55 @@ class TrackerStatVO : NSObject{
         }
     }
     
+    var _lastScrapeStartTime:Int?
+    var lastScrapeStartTime:NSDate {
+        if let date = _lastScrapeStartTime {
+            return NSDate(timeIntervalSince1970: Double(date))
+        }else{
+            return NSDate(timeIntervalSince1970: 0)
+        }
+    }
+    
     var tier:Int = 0
     
     init(id:Int,host:String,announce:String){
         self.id = id
         self.host = host
         self.announce = announce
+    }
+    
+    static func generateTrackerVOs(json:JSON) -> [TrackerStatVO]? {
+        
+        let _trackerStats=json["trackerStats"].array
+        
+        guard let trackerStats = _trackerStats else {
+            return nil
+        }
+        
+        var trackerStatVOs:[TrackerStatVO] = []
+        
+        for trackerStat in trackerStats {
+            let id = trackerStat["id"].intValue
+            let host = trackerStat["host"].stringValue
+            let announce = trackerStat["announce"].stringValue
+            
+            let trackerStatVO = TrackerStatVO(id: id, host: host, announce: announce)
+            trackerStatVOs.append(trackerStatVO)
+            
+            trackerStatVO._lastAnnounceTime = trackerStat["lastAnnounceTime"].intValue
+            trackerStatVO.lastAnnounceSucceeded = trackerStat["lastAnnounceSucceeded"].boolValue
+            trackerStatVO.lastAnnouncePeerCount = trackerStat["lastAnnouncePeerCount"].intValue
+            
+            trackerStatVO._nextAnnounceTime = trackerStat["nextAnnounceTime"].intValue
+            trackerStatVO._lastScrapeStartTime = trackerStat["lastScrapeStartTime"].intValue
+            
+            trackerStatVO.seederCount = trackerStat["seederCount"].intValue
+            trackerStatVO.leecherCount = trackerStat["leecherCount"].intValue
+            trackerStatVO.downloadCount = trackerStat["downloadCount"].intValue
+        }
+        
+        return trackerStatVOs
+        
     }
     
 }
