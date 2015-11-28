@@ -43,6 +43,28 @@ class SpeedStringFormatter {
     }
     
     /**
+     根据秒数,获取时间字符串
+     
+     - parameter second:
+     
+     - returns:
+     */
+    static func clcaultTimesToString(second:Float) -> String {
+        
+        if (second >= DAY) {
+            return String(format: "%.2f天", second / DAY)
+        } else if (second >= HOUR) {
+            let fa = second / HOUR;
+            return String(format: fa > 6 ? "%.0f小时" : "%.2f小时", fa)
+        } else if (second >= MIN) {
+            let f = second / MIN;
+            return String(format: f > 6 ? "%.0f分钟" : "%.1f分钟", f);
+        } else {
+            return "\(Int(second))秒";
+        }
+    }
+    
+    /**
      通过大小和速度,计算剩余时间
      
      - parameter size:
@@ -55,17 +77,8 @@ class SpeedStringFormatter {
         
         let second:Float = Float(s)
         
-        if (second >= DAY) {
-            return String(format: "%.2f天", second / DAY)
-        } else if (second >= HOUR) {
-            let fa = second / HOUR;
-            return String(format: fa > 6 ? "%.0f小时" : "%.2f小时", fa)
-        } else if (second >= MIN) {
-            let f = second / MIN;
-            return String(format: f > 6 ? "%.0f分钟" : "%.1f分钟", f);
-        } else {
-            return "\(s)秒";
-        }
+        return clcaultTimesToString(second)
+        
     }
     
 }

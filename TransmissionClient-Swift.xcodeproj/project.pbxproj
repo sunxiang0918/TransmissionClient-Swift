@@ -21,7 +21,13 @@
 		A4C714B01C035B900080C353 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714AF1C035B900080C353 /* Constant.swift */; };
 		A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714B21C03FA3F0080C353 /* RootViewController.swift */; };
 		A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C714B41C0403560080C353 /* TaskListViewController.swift */; };
+		A4C7550D1C099CFD00BA29BC /* TaskDetailTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C7550C1C099CFD00BA29BC /* TaskDetailTabbarController.swift */; };
+		A4C7550F1C099FDF00BA29BC /* TaskDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C7550E1C099FDF00BA29BC /* TaskDetailProtocol.swift */; };
+		A4C755121C09A45D00BA29BC /* TaskDetailTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755111C09A45D00BA29BC /* TaskDetailTrackerViewController.swift */; };
+		A4C755141C09A48B00BA29BC /* TaskDetailPeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755131C09A48B00BA29BC /* TaskDetailPeerViewController.swift */; };
+		A4C755161C09A4B800BA29BC /* TaskDetailFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755151C09A4B800BA29BC /* TaskDetailFileViewController.swift */; };
 		A4D0CFFA1C0991FF007D18EC /* TaskDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */; };
+		A4D0CFFC1C09943F007D18EC /* TaskDetailVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */; };
 		A4D93BF01C04A4640019A068 /* StatusPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */; };
 		A4D93BF31C04A4930019A068 /* StatusPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BF21C04A4930019A068 /* StatusPopupView.swift */; };
 		A4D93BF71C04B2E20019A068 /* NSURLSession+SynchronousTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BF61C04B2E20019A068 /* NSURLSession+SynchronousTask.swift */; };
@@ -51,7 +57,13 @@
 		A4C714AF1C035B900080C353 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A4C714B21C03FA3F0080C353 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		A4C714B41C0403560080C353 /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
+		A4C7550C1C099CFD00BA29BC /* TaskDetailTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTabbarController.swift; sourceTree = "<group>"; };
+		A4C7550E1C099FDF00BA29BC /* TaskDetailProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailProtocol.swift; sourceTree = "<group>"; };
+		A4C755111C09A45D00BA29BC /* TaskDetailTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTrackerViewController.swift; sourceTree = "<group>"; };
+		A4C755131C09A48B00BA29BC /* TaskDetailPeerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPeerViewController.swift; sourceTree = "<group>"; };
+		A4C755151C09A4B800BA29BC /* TaskDetailFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailFileViewController.swift; sourceTree = "<group>"; };
 		A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailInfoViewController.swift; sourceTree = "<group>"; };
+		A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailVO.swift; sourceTree = "<group>"; };
 		A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusPopupView.xib; sourceTree = "<group>"; };
 		A4D93BF21C04A4930019A068 /* StatusPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusPopupView.swift; sourceTree = "<group>"; };
 		A4D93BF61C04B2E20019A068 /* NSURLSession+SynchronousTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+SynchronousTask.swift"; sourceTree = "<group>"; };
@@ -100,6 +112,10 @@
 				A4C714B41C0403560080C353 /* TaskListViewController.swift */,
 				A42620EB1C07533A009D5BA6 /* NewTaskController.swift */,
 				A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */,
+				A4C7550C1C099CFD00BA29BC /* TaskDetailTabbarController.swift */,
+				A4C755111C09A45D00BA29BC /* TaskDetailTrackerViewController.swift */,
+				A4C755131C09A48B00BA29BC /* TaskDetailPeerViewController.swift */,
+				A4C755151C09A4B800BA29BC /* TaskDetailFileViewController.swift */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -121,6 +137,7 @@
 			children = (
 				A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */,
 				A4D93BFE1C0550DA0019A068 /* TaskVO.swift */,
+				A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -146,6 +163,7 @@
 		A4C095C61C034DA30071F729 /* TransmissionClient-Swift */ = {
 			isa = PBXGroup;
 			children = (
+				A4C755101C099FEE00BA29BC /* control */,
 				A4D93BEE1C04A3F80019A068 /* view */,
 				A4967E4D1C040A31000ADF88 /* models */,
 				A4967E4C1C040A26000ADF88 /* util */,
@@ -157,6 +175,14 @@
 				A42BA3831C06ABAF0062BC78 /* Supporting Files */,
 			);
 			path = "TransmissionClient-Swift";
+			sourceTree = "<group>";
+		};
+		A4C755101C099FEE00BA29BC /* control */ = {
+			isa = PBXGroup;
+			children = (
+				A4C7550E1C099FDF00BA29BC /* TaskDetailProtocol.swift */,
+			);
+			name = control;
 			sourceTree = "<group>";
 		};
 		A4D93BEE1C04A3F80019A068 /* view */ = {
@@ -319,14 +345,20 @@
 				A4D93BF31C04A4930019A068 /* StatusPopupView.swift in Sources */,
 				A4D93C011C0556C00019A068 /* SpeedStringFormatter.swift in Sources */,
 				A4D93BFF1C0550DA0019A068 /* TaskVO.swift in Sources */,
+				A4C755121C09A45D00BA29BC /* TaskDetailTrackerViewController.swift in Sources */,
 				A42620EC1C07533A009D5BA6 /* NewTaskController.swift in Sources */,
 				A4D0CFFA1C0991FF007D18EC /* TaskDetailInfoViewController.swift in Sources */,
 				A42A24E71C05F4EB001D0B5F /* AddSitePopupView.swift in Sources */,
 				A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */,
+				A4C755161C09A4B800BA29BC /* TaskDetailFileViewController.swift in Sources */,
 				A4C714B31C03FA3F0080C353 /* RootViewController.swift in Sources */,
+				A4D0CFFC1C09943F007D18EC /* TaskDetailVO.swift in Sources */,
+				A4C7550D1C099CFD00BA29BC /* TaskDetailTabbarController.swift in Sources */,
 				A4C714B01C035B900080C353 /* Constant.swift in Sources */,
 				A4967E511C0412B7000ADF88 /* NSUserDefaults+Model.swift in Sources */,
 				A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */,
+				A4C755141C09A48B00BA29BC /* TaskDetailPeerViewController.swift in Sources */,
+				A4C7550F1C099FDF00BA29BC /* TaskDetailProtocol.swift in Sources */,
 				A4D93BF71C04B2E20019A068 /* NSURLSession+SynchronousTask.swift in Sources */,
 				A4D93BF91C04B2FC0019A068 /* AppException.swift in Sources */,
 				A4D93BFD1C054B1A0019A068 /* TaskListTableViewCell.swift in Sources */,

@@ -124,7 +124,7 @@
         <!--Peers-->
         <scene sceneID="CNK-iD-bpP">
             <objects>
-                <tableViewController id="OOj-dh-hhG" sceneMemberID="viewController">
+                <tableViewController id="OOj-dh-hhG" customClass="TaskDetailPeerViewController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="p4g-dE-eag">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -151,12 +151,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rsZ-3H-gw9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2747" y="1256"/>
+            <point key="canvasLocation" x="2756" y="1289"/>
         </scene>
         <!--Files-->
         <scene sceneID="KBt-vc-svp">
             <objects>
-                <tableViewController id="oa7-qu-FtT" sceneMemberID="viewController">
+                <tableViewController id="oa7-qu-FtT" customClass="TaskDetailFileViewController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="r5B-gH-71C">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -183,12 +183,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5u-BW-Cg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3520" y="1245"/>
+            <point key="canvasLocation" x="3413" y="1328"/>
         </scene>
         <!--Trackers-->
         <scene sceneID="JSa-yv-vhP">
             <objects>
-                <viewController id="fV0-xn-XdN" sceneMemberID="viewController">
+                <viewController id="fV0-xn-XdN" customClass="TaskDetailTrackerViewController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a3d-ub-mbj"/>
                         <viewControllerLayoutGuide type="bottom" id="X74-kX-qlK"/>
@@ -203,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Wh-FE-v3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3512" y="832"/>
+            <point key="canvasLocation" x="3623" y="544"/>
         </scene>
         <!--详细信息-->
         <scene sceneID="O3a-Uf-vDb">
@@ -251,7 +251,7 @@
                                                     <constraint firstAttribute="width" constant="58" id="LYL-iG-Lql"/>
                                                     <constraint firstAttribute="height" constant="21" id="k0t-d1-fdb"/>
                                                 </constraints>
-                                                <string key="text">Have:
+                                                <string key="text">id:
 </string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -795,6 +795,25 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Infos" image="Data-Defragmentation-128" id="agB-jJ-UhE"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="avaliabilityLabel" destination="XPO-R5-Zes" id="z0h-y6-O3F"/>
+                        <outlet property="commentLabel" destination="idl-Le-wc0" id="96b-BD-LUT"/>
+                        <outlet property="downloadedLabel" destination="SQ5-vD-ngr" id="sGU-cp-LWu"/>
+                        <outlet property="errorLabel" destination="2yw-fT-dYn" id="ozx-IL-B3s"/>
+                        <outlet property="hashTextView" destination="YPK-eN-lWg" id="rgU-i8-Rvk"/>
+                        <outlet property="haveLabel" destination="k4V-J7-cfh" id="z0P-2J-3Ni"/>
+                        <outlet property="idLabel" destination="4QA-FW-bz5" id="fnc-Oy-7kI"/>
+                        <outlet property="lastActivityLabel" destination="MKl-TX-YLB" id="tw2-wF-ala"/>
+                        <outlet property="locationLabel" destination="Fz1-DZ-x8J" id="pdD-pG-h7X"/>
+                        <outlet property="nameLabel" destination="RWt-5U-FF3" id="cw2-8L-FiL"/>
+                        <outlet property="originLabel" destination="vKU-vK-HzW" id="B4H-ek-N9w"/>
+                        <outlet property="privacyLabel" destination="OIJ-yL-SUl" id="Jtp-EK-oBM"/>
+                        <outlet property="remainingTimeLabel" destination="hin-55-GNC" id="KrP-se-bRe"/>
+                        <outlet property="runTimeLabel" destination="SSR-PJ-jPh" id="JDU-zI-duj"/>
+                        <outlet property="sizeLabel" destination="PlK-Ek-H50" id="Uh0-Q8-Rve"/>
+                        <outlet property="stateLabel" destination="Vdd-1Q-XW6" id="S45-Aq-tfp"/>
+                        <outlet property="uploadedLabel" destination="qDM-xx-imf" id="HGP-NT-6rG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHo-PM-gY3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -803,7 +822,7 @@
         <!--任务详情View-->
         <scene sceneID="2rf-fe-aWS">
             <objects>
-                <tabBarController id="3ni-b6-i8j" userLabel="任务详情View" sceneMemberID="viewController">
+                <tabBarController id="3ni-b6-i8j" userLabel="任务详情View" customClass="TaskDetailTabbarController" customModule="TransmissionClient_Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="U6I-0a-ylE"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="EFy-SX-7Ms">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>

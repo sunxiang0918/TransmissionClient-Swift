@@ -172,8 +172,9 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let task = (self.searchActive || self.statusFilter != nil) ? self.filtered[indexPath.row] : self.tasks[indexPath.row]
         
-        self.performSegueWithIdentifier("showTaskDetailSegue", sender: nil)
+        loadTaskDetailAndPerformSegue(task)
     }
     
     /**
@@ -384,6 +385,34 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         }
     }
     
+    private func loadTaskDetailAndPerformSegue(taskVO:TaskVO) {
+        
+        var headers:[String:String] = [:]
+        headers["X-Transmission-Session-Id"] = sessionId
+        
+        if let _author = author {
+            headers["Authorization"] = _author
+        }
+        
+        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
+            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
+            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
+            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"activityDate\",\"corruptEver\",\"desiredAvailable\",\"downloadedEver\",\"fileStats\",\"haveUnchecked\",\"haveValid\",\"peers\",\"startDate\",\"trackerStats\",\"comment\",\"creator\",\"dateCreated\",\"files\",\"hashString\",\"isPrivate\",\"pieceCount\",\"pieceSize\",\"downloadDir\",\"name\",\"rateDownload\",\"uploadedEver\"],\"ids\":[\(taskVO.id)]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+            return (mutableRequest, nil)
+        }), headers: headers).responseJSON { (_, response, data) -> Void in
+            if response?.statusCode == 200 {
+                if  let result = data.value {
+                    let json = JSON(result)
+                    let taskDetail = TaskDetailVO(json: json,size:taskVO.totalSize,state: taskVO.status, error: taskVO.errorString)
+                    self.performSegueWithIdentifier("showTaskDetailSegue", sender: taskDetail)
+                }
+            }else{
+                //TODO 抛出异常
+            }
+        }
+        
+    }
+    
     /**
      把JSON对象转换成为TaskVO
      
@@ -411,7 +440,6 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         task.rateUpload = json["rateUpload"].intValue
         task.leftUntilDone = json["leftUntilDone"].intValue
         task.isFinished = json["isFinished"].boolValue
-        
         return task
     }
     
@@ -470,6 +498,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             newTaskController.sessionId = sessionId
             newTaskController.downloadDir = downloadInfo.downloadDir
             newTaskController.freeSpace = downloadInfo.freeSpace
+        }else if segue.identifier == "showTaskDetailSegue" {
+            let taskDetailTabbarController = segue.destinationViewController as! TaskDetailTabbarController
+            
+            let taskDetail = sender as! TaskDetailVO
+            taskDetailTabbarController.taskDetail = taskDetail
         }
 
     }
