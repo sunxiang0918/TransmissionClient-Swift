@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      - returns:
      */
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        
         let encrypteddata = NSData(contentsOfURL: url)
         
         let base64 = encrypteddata!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))

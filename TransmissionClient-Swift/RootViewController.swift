@@ -9,6 +9,7 @@
 import UIKit
 import CNPPopupController
 import JCAlertView
+import OnePasswordExtension
 
 class RootViewController: UITableViewController,CNPPopupControllerDelegate {
     
@@ -43,6 +44,23 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
             NSUserDefaults.standardUserDefaults().setArrayModels(self.siteInfos, forKey: "siteInfo")
             self.tableView.reloadData()
             return true
+        }
+        view?.onepasswordActionHandel = {(sender:UIButton)->Void in
+            OnePasswordExtension.sharedExtension().findLoginForURLString("", forViewController: self, sender: sender) { (_loginDictionary, error) -> Void in
+                guard let loginDictionary = _loginDictionary else {
+                    return
+                }
+                if loginDictionary.count == 0 {
+                    if error!.code != Int(AppExtensionErrorCodeCancelledByUser) {
+                        //TODO
+                    }
+                    return
+                }
+                
+                view?.userNameField.text = loginDictionary[AppExtensionUsernameKey] as? String
+                view?.passwordField.text = loginDictionary[AppExtensionPasswordKey] as? String
+                
+            }
         }
         
         /// 实例化弹出控制器

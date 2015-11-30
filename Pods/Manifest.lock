@@ -1,16 +1,19 @@
 PODS:
+  - 1PasswordExtension (1.6.1)
   - Alamofire (2.0.2)
   - CNPPopupController (0.3.1)
   - JCAlertView (1.1.3)
   - SwiftyJSON (2.3.0)
 
 DEPENDENCIES:
+  - 1PasswordExtension
   - Alamofire
   - CNPPopupController
   - JCAlertView
   - SwiftyJSON
 
 SPEC CHECKSUMS:
+  1PasswordExtension: 42b79b7ac6d8e7468b22b7a651fc0b445bcdbd3e
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   CNPPopupController: 67dc2ca5a3f88cd49a27bb1b0aeb78a24d423d79
   JCAlertView: d93dc51c09e94a14dcd31656c7a74af13b183c9e

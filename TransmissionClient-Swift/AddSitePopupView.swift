@@ -24,11 +24,15 @@ class AddSitePopupView:UIView {
     
     @IBOutlet weak var passwordField: UITextField!
     
+    @IBOutlet weak var onePasswordButton: UIButton!
+    
     /// 取消处理的 闭包.由外部来定义操作
     var cancelHandel:(()->Void)?
     
     /// 增加站点处理的闭包
     var addActionHandel:((SiteInfoVO)->Bool)!
+    
+    var onepasswordActionHandel:((UIButton)->Void)?
     
     @IBAction func doAddAction(sender: UIButton) {
         
@@ -55,6 +59,12 @@ class AddSitePopupView:UIView {
                 cancelHandel?()
             }
         }
+        
+    }
+    
+    @IBAction func doOnepasswordAction(sender: UIButton) {
+        
+        onepasswordActionHandel?(sender)
         
     }
 }
