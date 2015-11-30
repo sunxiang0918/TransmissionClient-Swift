@@ -128,6 +128,7 @@ class TaskDetailVO : NSObject {
         
         peers = PeerVO.generatePeerVOs(torrent)
         trackerStats = TrackerStatVO.generateTrackerVOs(torrent)
+        files = FileVO.generateFileVOs(torrent)
     }
 }
 
@@ -282,14 +283,43 @@ class TrackerStatVO : NSObject{
 }
 
 class FileVO : NSObject{
+    var layer:Int = 0       //层次
     var bytesCompleted:Int = 0
     var length:Int
     var name:String
     var priority:Int = 0
     var wanted:Bool = true
     
-    init(name:String,length:Int){
+    init(layer:Int = 0,name:String,length:Int){
+        self.layer = layer
         self.name = name
         self.length = length
+    }
+    
+    static func generateFileVOs(json:JSON) -> [FileVO]? {
+        
+        let _files=json["files"].array
+        
+        let _fileStats=json["fileStats"].array
+        
+        guard let files = _files,fileStats = _fileStats else {
+            return nil
+        }
+
+        var fileVOs:[FileVO] = []
+        
+        for (index,file) in files.enumerate() {
+            let name = file["name"].stringValue
+            let length = file["length"].intValue
+            
+            let fileVO = FileVO(name: name, length: length)
+            fileVOs.append(fileVO)
+            
+            fileVO.bytesCompleted = file["bytesCompleted"].intValue
+            fileVO.priority = fileStats[index]["priority"].intValue
+            fileVO.wanted = fileStats[index]["wanted"].boolValue
+        }
+        
+        return fileVOs
     }
 }
