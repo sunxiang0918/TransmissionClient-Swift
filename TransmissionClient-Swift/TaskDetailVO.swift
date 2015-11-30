@@ -283,7 +283,11 @@ class TrackerStatVO : NSObject{
 }
 
 class FileVO : NSObject{
+    var id:Int = 0
+    var pid:Int = 0
     var layer:Int = 0       //层次
+    var expand:Bool = true  //是否展开
+    var isLeaf:Bool = true      //是否是叶子节点
     var bytesCompleted:Int = 0
     var length:Int
     var name:String

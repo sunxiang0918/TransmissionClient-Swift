@@ -18,8 +18,20 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         }
         set(newValue){
             _taskDetail = newValue
+            let _files = newValue.files
+            
+            if let files = _files {
+                showFiles = []
+                for file in files {
+                    if file.expand {
+                        showFiles?.append(file)
+                    }
+                }
+            }
         }
     }
+    
+    var showFiles:[FileVO]?    //显示的部分数据
     
     override func viewDidLoad() {
         let nib=UINib(nibName: "TaskDetailFileTavleViewCell", bundle: nil)
@@ -27,7 +39,7 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let _files = _taskDetail.files
+        let _files = showFiles
         
         guard let files = _files else {
             return 0
@@ -43,7 +55,7 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
             tmp = TaskDetailFileTavleViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskDetailFileTavleViewCell")
         }
         
-        let _file = _taskDetail.files?[indexPath.row]
+        let _file = showFiles?[indexPath.row]
         
         guard let file = _file else {
             return tmp!
@@ -97,5 +109,83 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         return 100
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let parentNode = (showFiles?[indexPath.row])!
+        
+        if  parentNode.isLeaf {
+            //如果是叶子节点就直接返回了,既不能展开也不能收缩
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            return
+        }
+        
+        //如果不是叶子节点,那么就能展开或收缩了
+        let startPosition = indexPath.row+1;
+        var endPosition = startPosition;
+        
+        var expand = false;
+        
+        let files = (_taskDetail.files)!
+        
+        for (index,file) in files.enumerate() {
+            if  file.pid == parentNode.id {
+                file.expand = !file.expand
+                
+                if  file.expand {
+                    showFiles?.insert(file, atIndex: endPosition)
+                    expand = true
+                    endPosition++
+                }else {
+                    expand = false
+                    endPosition = removeAllNodesAtParentNode(parentNode)
+                }
+            }
+        }
+        
+        //获得需要修正的indexPath
+        var indexPathArray:[NSIndexPath] = []
+        for var i=startPosition;i<endPosition;i++ {
+            let tempIndexPath = NSIndexPath(forRow: i, inSection: 0)
+            indexPathArray.append(tempIndexPath)
+        }
+        
+        //插入或者删除相关节点
+        if (expand) {
+            self.tableView.insertRowsAtIndexPaths(indexPathArray, withRowAnimation: .None)
+        }else{
+            self.tableView.deleteRowsAtIndexPaths(indexPathArray, withRowAnimation: .None)
+        }
+    }
+    
+    /**
+    *  删除该父节点下的所有子节点（包括孙子节点）
+    *
+    *  @param parentNode 父节点
+    *
+    *  @return 邻接父节点的位置距离该父节点的长度，也就是该父节点下面所有的子孙节点的数量
+    */
+    private func removeAllNodesAtParentNode(parentNode:FileVO) -> Int{
+        
+        guard var showFiles = self.showFiles else {
+            return 0
+        }
+        
+        let startPosition = (showFiles.indexOf(parentNode))!
+        var endPosition = startPosition
+        
+        for file in showFiles[startPosition+1..<showFiles.count] {
+            endPosition++
+            if  file.layer == parentNode.layer {
+                break
+            }
+            file.expand = false;
+        }
+        
+        if (endPosition>startPosition) {
+            showFiles.removeRange(Range<Int>(start: startPosition+1,end: endPosition-startPosition-1))
+        }
+        return endPosition
+        
+    }
     
 }
