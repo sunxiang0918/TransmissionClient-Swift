@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eB-al-vLH">
-                        <rect key="frame" x="8" y="8" width="419" height="66.5"/>
+                        <rect key="frame" x="46" y="8" width="381" height="66.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
@@ -52,7 +52,7 @@
                         <state key="selected" image="Arrowhead-Down-128"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzY-CD-isp">
-                        <rect key="frame" x="8" y="76" width="419" height="14"/>
+                        <rect key="frame" x="46" y="76" width="381" height="14"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="1rM-UB-Tpe"/>
@@ -61,6 +61,14 @@
                         <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Document-01-128" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-1O-D1N">
+                        <rect key="frame" x="8" y="24" width="30" height="30"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="W7J-7x-V8E"/>
+                            <constraint firstAttribute="height" constant="30" id="cLK-EM-ANh"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <constraints>
@@ -70,19 +78,31 @@
                     <constraint firstAttribute="trailingMargin" secondItem="dzv-G7-xcd" secondAttribute="trailing" constant="4" id="HrQ-td-4MN"/>
                     <constraint firstAttribute="leadingMargin" secondItem="LzY-CD-isp" secondAttribute="leading" id="Ipr-Co-zD7"/>
                     <constraint firstAttribute="leadingMargin" secondItem="3eB-al-vLH" secondAttribute="leading" id="KfE-h5-08f"/>
+                    <constraint firstItem="LzY-CD-isp" firstAttribute="leading" secondItem="T0R-1O-D1N" secondAttribute="trailing" constant="8" id="NwR-rm-7nB"/>
+                    <constraint firstItem="T0R-1O-D1N" firstAttribute="top" secondItem="CGj-DF-yTF" secondAttribute="topMargin" constant="16" id="P3c-wG-Lpj"/>
                     <constraint firstAttribute="topMargin" secondItem="dzv-G7-xcd" secondAttribute="top" id="bBu-eO-f1e"/>
                     <constraint firstAttribute="trailingMargin" secondItem="8ML-d8-Uv8" secondAttribute="trailing" constant="4" id="cVx-gd-PFH"/>
                     <constraint firstAttribute="topMargin" secondItem="3eB-al-vLH" secondAttribute="top" id="dds-n5-bgr"/>
+                    <constraint firstItem="3eB-al-vLH" firstAttribute="leading" secondItem="T0R-1O-D1N" secondAttribute="trailing" constant="8" id="eDt-eH-YMG"/>
                     <constraint firstItem="dzv-G7-xcd" firstAttribute="leading" secondItem="3eB-al-vLH" secondAttribute="trailing" constant="4" id="i1r-Sm-wJv"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="T0R-1O-D1N" secondAttribute="leading" id="q2x-TL-CRa"/>
                     <constraint firstItem="mAp-YL-0jF" firstAttribute="top" secondItem="8ML-d8-Uv8" secondAttribute="bottom" constant="1" id="r1J-cN-4dp"/>
                     <constraint firstItem="8ML-d8-Uv8" firstAttribute="top" secondItem="dzv-G7-xcd" secondAttribute="bottom" constant="4" id="sCa-Kl-7Jo"/>
                     <constraint firstItem="mAp-YL-0jF" firstAttribute="leading" secondItem="LzY-CD-isp" secondAttribute="trailing" constant="4" id="ypb-WR-A5N"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="KfE-h5-08f"/>
+                        <exclude reference="Ipr-Co-zD7"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <animations/>
             <connections>
                 <outlet property="downButton" destination="mAp-YL-0jF" id="5n7-gv-jZ3"/>
                 <outlet property="fileNameLabel" destination="3eB-al-vLH" id="icP-LN-Myb"/>
+                <outlet property="images" destination="T0R-1O-D1N" id="OIc-Wj-uEo"/>
+                <outlet property="leadingDocument" destination="q2x-TL-CRa" id="jXz-ob-d3x"/>
                 <outlet property="norButton" destination="8ML-d8-Uv8" id="dzB-oK-RKx"/>
                 <outlet property="statusLabel" destination="LzY-CD-isp" id="typ-i6-ZGY"/>
                 <outlet property="upButton" destination="dzv-G7-xcd" id="1c7-GQ-8ai"/>
@@ -95,6 +115,7 @@
         <image name="Arrowhead-Down-128-2" width="128" height="128"/>
         <image name="Arrowhead-Up-128" width="128" height="128"/>
         <image name="Arrowhead-Up-128-2" width="128" height="128"/>
+        <image name="Document-01-128" width="128" height="128"/>
         <image name="Minus-128" width="128" height="128"/>
         <image name="Minus-128-2" width="128" height="128"/>
     </resources>

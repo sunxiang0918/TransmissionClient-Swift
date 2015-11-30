@@ -61,14 +61,15 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
             return tmp!
         }
         
+        tmp?.leadingDocument.constant = CGFloat((file.layer-1) * -20)
         
-        var name = ""
-        for _ in 0..<file.layer {
-            name = name + "    "
+        if file.isLeaf {
+            tmp?.images?.image = UIImage(named: "Document-01-128-2")
+        }else {
+            tmp?.images?.image = UIImage(named: "Folder-New-01-128-2")
         }
-        name = name + file.name
         
-        tmp?.fileNameLabel.text = name
+        tmp?.fileNameLabel.text = file.name
         
         //1.20 GB of 1.20 GB (100%)
         tmp?.statusLabel.text = "\(SpeedStringFormatter.formatSpeedToString(file.bytesCompleted)) of \(SpeedStringFormatter.formatSpeedToString(file.length)) (\(Float(file.bytesCompleted)/Float(file.length) * 100)%)"
@@ -123,12 +124,12 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         let startPosition = indexPath.row+1;
         var endPosition = startPosition;
         
-        var expand = false;
+        var expand = false
         
         let files = (_taskDetail.files)!
         
-        for (index,file) in files.enumerate() {
-            if  file.pid == parentNode.id {
+        for (_,file) in files.enumerate() {
+            if  (file.pid != nil) && (file.pid == parentNode.id) {
                 file.expand = !file.expand
                 
                 if  file.expand {
@@ -138,6 +139,7 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
                 }else {
                     expand = false
                     endPosition = removeAllNodesAtParentNode(parentNode)
+                    break
                 }
             }
         }
@@ -149,12 +151,13 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
             indexPathArray.append(tempIndexPath)
         }
         
-        //插入或者删除相关节点
+//        //插入或者删除相关节点
         if (expand) {
             self.tableView.insertRowsAtIndexPaths(indexPathArray, withRowAnimation: .None)
         }else{
             self.tableView.deleteRowsAtIndexPaths(indexPathArray, withRowAnimation: .None)
         }
+        
     }
     
     /**
@@ -175,14 +178,21 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         
         for file in showFiles[startPosition+1..<showFiles.count] {
             endPosition++
-            if  file.layer == parentNode.layer {
+            if  file.layer <= parentNode.layer {
                 break
             }
-            file.expand = false;
+            
+            if  endPosition == showFiles.count-1 {
+                endPosition++
+                file.expand = false
+                break
+            }
+            
+            file.expand = false
         }
         
         if (endPosition>startPosition) {
-            showFiles.removeRange(Range<Int>(start: startPosition+1,end: endPosition-startPosition-1))
+            self.showFiles?.removeRange(startPosition+1 ..< endPosition)
         }
         return endPosition
         

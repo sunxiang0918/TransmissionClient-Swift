@@ -20,6 +20,10 @@ class TaskDetailFileTavleViewCell: UITableViewCell {
     
     @IBOutlet weak var downButton: UIButton!
     
+    @IBOutlet weak var images: UIImageView!
+    
+    @IBOutlet weak var leadingDocument: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -283,10 +283,10 @@ class TrackerStatVO : NSObject{
 }
 
 class FileVO : NSObject{
-    var id:Int = 0
-    var pid:Int = 0
+    var id:String = ""
+    var pid:String?
     var layer:Int = 0       //层次
-    var expand:Bool = true  //是否展开
+    var expand:Bool = false  //是否展开
     var isLeaf:Bool = true      //是否是叶子节点
     var bytesCompleted:Int = 0
     var length:Int
@@ -315,15 +315,94 @@ class FileVO : NSObject{
         for (index,file) in files.enumerate() {
             let name = file["name"].stringValue
             let length = file["length"].intValue
+            let splits = name.componentsSeparatedByString("/")
             
-            let fileVO = FileVO(name: name, length: length)
+            var pid:String?
+            if  splits.count > 1 {
+                var tmpFile:FileVO? = nil
+                for var i = 0;i < splits.count-1;i++ {
+                    let sp = splits[i]
+                    var find = false
+                    for tmp in fileVOs {
+                        if  tmp.name == sp {
+                            //表示有这个了
+                            find = true
+                            pid = tmp.id
+                            tmpFile = tmp
+                            break
+                        }
+                    }
+                    if !find {
+                        //如果没有找到,那么就要新增这个节点
+                        tmpFile = createFileNode(sp, parentNode: tmpFile)
+                        fileVOs.append(tmpFile!)
+                        pid = tmpFile!.id
+                    }
+                }
+            }
+            
+            let fileVO = FileVO(name: splits.last!, length: length)
             fileVOs.append(fileVO)
             
+            fileVO.id = NSUUID().UUIDString
+            fileVO.pid = pid
+            fileVO.layer = splits.count
+            fileVO.isLeaf = true
             fileVO.bytesCompleted = file["bytesCompleted"].intValue
             fileVO.priority = fileStats[index]["priority"].intValue
             fileVO.wanted = fileStats[index]["wanted"].boolValue
         }
         
+        //这里还要递归的修正父节点的大小和状态
+        if fileVOs.count > 0 {
+            calcuateFileSize(fileVOs[0], files: fileVOs)
+        }
+        
         return fileVOs
+    }
+    
+    /**
+     递归计算文件夹的大小
+     
+     - parameter file:
+     - parameter files:
+     
+     - returns: 元组, 第一个是TotalLength,第二个是已下载大小
+     */
+    private static func calcuateFileSize(file:FileVO,files:[FileVO]) -> (Int,Int,Bool) {
+        
+        if  file.isLeaf {
+            return (file.length,file.bytesCompleted,file.wanted)
+        }
+        
+        var (length,bytesCompleted,wanted):(Int,Int,Bool) = (0,0,true)
+        
+        for f in files {
+            if f.pid == file.id {
+                //找到子
+                let (a,b,c) = calcuateFileSize(f, files: files)
+                length = length + a
+                bytesCompleted = bytesCompleted + b
+                wanted = wanted || c
+            }
+        }
+        
+        file.length = length
+        file.bytesCompleted = bytesCompleted
+        file.wanted = wanted
+        
+        return (length,bytesCompleted,wanted)
+    }
+    
+    private static func createFileNode(name:String,parentNode:FileVO?) ->FileVO{
+        
+        let fileVO = FileVO(name: name, length: -1)
+        fileVO.id = NSUUID().UUIDString
+        fileVO.pid = parentNode?.id
+        fileVO.isLeaf = false
+        fileVO.layer = parentNode==nil ? 1 : (parentNode!.layer + 1)
+        fileVO.expand = parentNode==nil ? true : false
+        
+        return fileVO
     }
 }
