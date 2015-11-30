@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      
      - returns:
      */
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         let encrypteddata = NSData(contentsOfURL: url)
         
         let base64 = encrypteddata!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
@@ -42,7 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
