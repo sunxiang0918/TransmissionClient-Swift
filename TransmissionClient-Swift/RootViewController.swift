@@ -45,6 +45,7 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
             self.tableView.reloadData()
             return true
         }
+        view?.onePasswordButton.hidden = !OnePasswordExtension.sharedExtension().isAppExtensionAvailable()
         view?.onepasswordActionHandel = {(sender:UIButton)->Void in
             OnePasswordExtension.sharedExtension().findLoginForURLString("", forViewController: self, sender: sender) { (_loginDictionary, error) -> Void in
                 guard let loginDictionary = _loginDictionary else {

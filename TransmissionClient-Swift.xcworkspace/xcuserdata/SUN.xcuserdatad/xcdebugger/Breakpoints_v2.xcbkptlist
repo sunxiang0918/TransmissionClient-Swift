@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TransmissionClient-Swift/RootViewController.swift"
-            timestampString = "470567591.653799"
+            timestampString = "470568063.052423"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "initPopupController()"
             landmarkType = "5">
          </BreakpointContent>
