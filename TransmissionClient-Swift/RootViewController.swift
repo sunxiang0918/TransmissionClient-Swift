@@ -11,11 +11,9 @@ import CNPPopupController
 import JCAlertView
 import OnePasswordExtension
 
-class RootViewController: UITableViewController,CNPPopupControllerDelegate {
+class RootViewController: UITableViewController{
     
     var siteInfos:[SiteInfoVO] = []
-    
-    private var popupController : CNPPopupController?
     
     override func viewDidLoad() {
         //界面加载前,从存储中获取已经保存了的站点信息.
@@ -26,27 +24,20 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
             self.siteInfos = _siteInfos
         }
         
-        //实例化 popupController
-        initPopupController()
     }
     
-    private func initPopupController(){
-        
-        /// 实例化SharePopupView 弹出视图
-        let view = UINib(nibName: "AddSitePopupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? AddSitePopupView
-        /// 设置弹出视图的大小
-        view?.frame = CGRectMake(0, 0, self.view.frame.width, 200)
+    private func initAddSiteViewController(addSiteViewController:AddSiteViewController){
         
         /// 设置弹出视图中 取消操作的 动作闭包
-        view?.cancelHandel = {self.popupController?.dismissPopupControllerAnimated(true)}
-        view?.addActionHandel = {(site:SiteInfoVO)->Bool in
+//        addSiteViewController.cancelHandel = {}
+        addSiteViewController.addActionHandel = {(site:SiteInfoVO)->Bool in
             self.siteInfos.append(site)
             NSUserDefaults.standardUserDefaults().setArrayModels(self.siteInfos, forKey: "siteInfo")
             self.tableView.reloadData()
             return true
         }
-        view?.onePasswordButton.hidden = !OnePasswordExtension.sharedExtension().isAppExtensionAvailable()
-        view?.onepasswordActionHandel = {(sender:UIButton)->Void in
+        
+        addSiteViewController.onepasswordActionHandel = {(sender:UIButton)->Void in
             OnePasswordExtension.sharedExtension().findLoginForURLString("", forViewController: self, sender: sender) { (_loginDictionary, error) -> Void in
                 guard let loginDictionary = _loginDictionary else {
                     return
@@ -58,25 +49,11 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
                     return
                 }
                 
-                view?.userNameField.text = loginDictionary[AppExtensionUsernameKey] as? String
-                view?.passwordField.text = loginDictionary[AppExtensionPasswordKey] as? String
+                addSiteViewController.userNameTextField.text = loginDictionary[AppExtensionUsernameKey] as? String
+                addSiteViewController.passwordTextField.text = loginDictionary[AppExtensionPasswordKey] as? String
                 
             }
         }
-        
-        /// 实例化弹出控制器
-        self.popupController = CNPPopupController(contents: [view!])
-        self.popupController!.theme = CNPPopupTheme.defaultTheme()
-        /// 设置点击背景取消弹出视图
-        self.popupController!.theme.shouldDismissOnBackgroundTouch = true
-        self.popupController!.theme.popupStyle = CNPPopupStyle.Centered
-        self.popupController!.theme.presentationStyle = CNPPopupPresentationStyle.SlideInFromTop
-        //设置最大宽度,否则可能会在IPAD上出现只显示一半的情况,因为默认就只有300宽
-        self.popupController!.theme.maxPopupWidth = self.view.frame.width
-        /// 设置视图的边框
-        self.popupController!.theme.popupContentInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        self.popupController!.delegate = self;
-        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -185,11 +162,18 @@ class RootViewController: UITableViewController,CNPPopupControllerDelegate {
                 url = "http://" + url
             }
             taskListViewController.siteUrl = url
+        }else if segue.identifier == "addSiteSegue" {
+            let addSiteViewController = segue.destinationViewController as! AddSiteViewController
+            
+            if addSiteViewController.onepasswordActionHandel == nil || addSiteViewController.addActionHandel == nil {
+                initAddSiteViewController(addSiteViewController)
+            }
         }
     }
     
     @IBAction func addSiteAction(sender: UIBarButtonItem) {
-        self.popupController?.presentPopupControllerAnimated(true)
+        
+        self.performSegueWithIdentifier("addSiteSegue", sender: nil)
     }
     
 }

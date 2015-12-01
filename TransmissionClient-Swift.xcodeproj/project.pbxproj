@@ -9,11 +9,10 @@
 /* Begin PBXBuildFile section */
 		1524E84E591D220EAEA0E119 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8802B13EEE0EA093B197BCC7 /* Pods.framework */; };
 		A42620EC1C07533A009D5BA6 /* NewTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42620EB1C07533A009D5BA6 /* NewTaskController.swift */; };
-		A42A24E51C05F4B5001D0B5F /* AddSitePopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A42A24E41C05F4B5001D0B5F /* AddSitePopupView.xib */; };
-		A42A24E71C05F4EB001D0B5F /* AddSitePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42A24E61C05F4EB001D0B5F /* AddSitePopupView.swift */; };
 		A4967E4F1C040B43000ADF88 /* SiteInfoVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */; };
 		A4967E511C0412B7000ADF88 /* NSUserDefaults+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4967E501C0412B7000ADF88 /* NSUserDefaults+Model.swift */; };
 		A49E1E9F1C0803A9004E50E6 /* JCAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49E1E9E1C0803A9004E50E6 /* JCAlertView.bundle */; };
+		A4ADECD61C0DE8EF000C9E96 /* AddSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4ADECD51C0DE8EF000C9E96 /* AddSiteViewController.swift */; };
 		A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C095C71C034DA30071F729 /* AppDelegate.swift */; };
 		A4C095CD1C034DA30071F729 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4C095CB1C034DA30071F729 /* Main.storyboard */; };
 		A4C095CF1C034DA30071F729 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4C095CE1C034DA30071F729 /* Assets.xcassets */; };
@@ -48,12 +47,11 @@
 		8802B13EEE0EA093B197BCC7 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A42620EB1C07533A009D5BA6 /* NewTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTaskController.swift; sourceTree = "<group>"; };
-		A42A24E41C05F4B5001D0B5F /* AddSitePopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddSitePopupView.xib; sourceTree = "<group>"; };
-		A42A24E61C05F4EB001D0B5F /* AddSitePopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSitePopupView.swift; sourceTree = "<group>"; };
 		A42BA3841C06ABDA0062BC78 /* ObjectiveCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveCBridge.h; sourceTree = "<group>"; };
 		A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteInfoVO.swift; sourceTree = "<group>"; };
 		A4967E501C0412B7000ADF88 /* NSUserDefaults+Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Model.swift"; sourceTree = "<group>"; };
 		A49E1E9E1C0803A9004E50E6 /* JCAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JCAlertView.bundle; sourceTree = "<group>"; };
+		A4ADECD51C0DE8EF000C9E96 /* AddSiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSiteViewController.swift; sourceTree = "<group>"; };
 		A4C095C41C034DA30071F729 /* TransmissionClient-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TransmissionClient-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4C095C71C034DA30071F729 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4C095CC1C034DA30071F729 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -128,6 +126,7 @@
 				A4C755111C09A45D00BA29BC /* TaskDetailTrackerViewController.swift */,
 				A4C755131C09A48B00BA29BC /* TaskDetailPeerViewController.swift */,
 				A4C755151C09A4B800BA29BC /* TaskDetailFileViewController.swift */,
+				A4ADECD51C0DE8EF000C9E96 /* AddSiteViewController.swift */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -202,7 +201,6 @@
 			children = (
 				A4D93BF11C04A4700019A068 /* xib */,
 				A4D93BF21C04A4930019A068 /* StatusPopupView.swift */,
-				A42A24E61C05F4EB001D0B5F /* AddSitePopupView.swift */,
 				A4D93BFC1C054B1A0019A068 /* TaskListTableViewCell.swift */,
 				A4C755191C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift */,
 				A4C7551D1C09F31D00BA29BC /* TaskDetailTrackerTableViewCell.swift */,
@@ -216,7 +214,6 @@
 			children = (
 				A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */,
 				A4D93BFA1C054AED0019A068 /* TaskListTableViewCell.xib */,
-				A42A24E41C05F4B5001D0B5F /* AddSitePopupView.xib */,
 				A4C755171C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib */,
 				A4C7551B1C09F30D00BA29BC /* TaskDetailTrackerTableViewCell.xib */,
 				A4C7551F1C09FEEF00BA29BC /* TaskDetailFileTavleViewCell.xib */,
@@ -302,7 +299,6 @@
 				A4D93BFB1C054AED0019A068 /* TaskListTableViewCell.xib in Resources */,
 				A49E1E9F1C0803A9004E50E6 /* JCAlertView.bundle in Resources */,
 				A4C755181C09E5E700BA29BC /* TaskDetailPeerTableViewCell.xib in Resources */,
-				A42A24E51C05F4B5001D0B5F /* AddSitePopupView.xib in Resources */,
 				A4C7551C1C09F30D00BA29BC /* TaskDetailTrackerTableViewCell.xib in Resources */,
 				A4C095CD1C034DA30071F729 /* Main.storyboard in Resources */,
 			);
@@ -369,7 +365,6 @@
 				A4C755121C09A45D00BA29BC /* TaskDetailTrackerViewController.swift in Sources */,
 				A42620EC1C07533A009D5BA6 /* NewTaskController.swift in Sources */,
 				A4D0CFFA1C0991FF007D18EC /* TaskDetailInfoViewController.swift in Sources */,
-				A42A24E71C05F4EB001D0B5F /* AddSitePopupView.swift in Sources */,
 				A4C095C81C034DA30071F729 /* AppDelegate.swift in Sources */,
 				A4C755161C09A4B800BA29BC /* TaskDetailFileViewController.swift in Sources */,
 				A4C7551E1C09F31D00BA29BC /* TaskDetailTrackerTableViewCell.swift in Sources */,
@@ -377,6 +372,7 @@
 				A4C755221C09FEFB00BA29BC /* TaskDetailFileTavleViewCell.swift in Sources */,
 				A4D0CFFC1C09943F007D18EC /* TaskDetailVO.swift in Sources */,
 				A4C7550D1C099CFD00BA29BC /* TaskDetailTabbarController.swift in Sources */,
+				A4ADECD61C0DE8EF000C9E96 /* AddSiteViewController.swift in Sources */,
 				A4C714B01C035B900080C353 /* Constant.swift in Sources */,
 				A4967E511C0412B7000ADF88 /* NSUserDefaults+Model.swift in Sources */,
 				A4C714B51C0403560080C353 /* TaskListViewController.swift in Sources */,
