@@ -41,6 +41,7 @@
 		A4D93BFD1C054B1A0019A068 /* TaskListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BFC1C054B1A0019A068 /* TaskListTableViewCell.swift */; };
 		A4D93BFF1C0550DA0019A068 /* TaskVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93BFE1C0550DA0019A068 /* TaskVO.swift */; };
 		A4D93C011C0556C00019A068 /* SpeedStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D93C001C0556C00019A068 /* SpeedStringFormatter.swift */; };
+		A4FD00401C1479C300792256 /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FD003F1C1479C300792256 /* ServiceAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		A4D93BFC1C054B1A0019A068 /* TaskListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListTableViewCell.swift; sourceTree = "<group>"; };
 		A4D93BFE1C0550DA0019A068 /* TaskVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskVO.swift; sourceTree = "<group>"; };
 		A4D93C001C0556C00019A068 /* SpeedStringFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedStringFormatter.swift; sourceTree = "<group>"; };
+		A4FD003F1C1479C300792256 /* ServiceAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		DC4054C4EA62FDF7F5E733B4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +141,7 @@
 				A4D93BF61C04B2E20019A068 /* NSURLSession+SynchronousTask.swift */,
 				A4D93BF81C04B2FC0019A068 /* AppException.swift */,
 				A4D93C001C0556C00019A068 /* SpeedStringFormatter.swift */,
+				A4FD003F1C1479C300792256 /* ServiceAPI.swift */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				A4C755141C09A48B00BA29BC /* TaskDetailPeerViewController.swift in Sources */,
 				A4C7550F1C099FDF00BA29BC /* TaskDetailProtocol.swift in Sources */,
 				A4C7551A1C09E9E100BA29BC /* TaskDetailPeerTableViewCell.swift in Sources */,
+				A4FD00401C1479C300792256 /* ServiceAPI.swift in Sources */,
 				A4D93BF71C04B2E20019A068 /* NSURLSession+SynchronousTask.swift in Sources */,
 				A4D93BF91C04B2FC0019A068 /* AppException.swift in Sources */,
 				A4D93BFD1C054B1A0019A068 /* TaskListTableViewCell.swift in Sources */,

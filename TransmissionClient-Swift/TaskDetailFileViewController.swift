@@ -135,7 +135,7 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
                 if  file.expand {
                     showFiles?.insert(file, atIndex: endPosition)
                     expand = true
-                    endPosition++
+                    endPosition += 1
                 }else {
                     expand = false
                     endPosition = removeAllNodesAtParentNode(parentNode)
@@ -146,7 +146,7 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         
         //获得需要修正的indexPath
         var indexPathArray:[NSIndexPath] = []
-        for var i=startPosition;i<endPosition;i++ {
+        for i in startPosition ..< endPosition {
             let tempIndexPath = NSIndexPath(forRow: i, inSection: 0)
             indexPathArray.append(tempIndexPath)
         }
@@ -177,13 +177,13 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         var endPosition = startPosition
         
         for file in showFiles[startPosition+1..<showFiles.count] {
-            endPosition++
+            endPosition += 1
             if  file.layer <= parentNode.layer {
                 break
             }
             
             if  endPosition == showFiles.count-1 {
-                endPosition++
+                endPosition += 1
                 file.expand = false
                 break
             }

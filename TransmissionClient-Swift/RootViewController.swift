@@ -100,11 +100,12 @@ class RootViewController: UITableViewController{
     /**
      获取Session的ID
      */
-    func getSessionID(var url:String,author:String?) -> String?{
-        if  !url.lowercaseStringWithLocale(NSLocale.currentLocale()).hasPrefix("http://") {
-            url = "http://" + url
+    func getSessionID(url:String,author:String?) -> String?{
+        var u = url
+        if  !u.lowercaseStringWithLocale(NSLocale.currentLocale()).hasPrefix("http://") {
+            u = "http://" + u
         }
-        let request = NSMutableURLRequest(URL: NSURL(string: url+BASE_URL)!)
+        let request = NSMutableURLRequest(URL: NSURL(string: u+BASE_URL)!)
         if let _author = author{
             request.addValue(_author, forHTTPHeaderField: "Authorization")
         }

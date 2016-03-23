@@ -12,7 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     /**
      这个方法就是用来 当从其他三方的程序通过"打开其他..." 打开这个程序时调用的方法
      
@@ -25,13 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         let encrypteddata = NSData(contentsOfURL: url)
-        
+        UIApplicationDidBecomeActiveNotification
         let base64 = encrypteddata!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
         //这个值就是种子文件的内容
         
         let defaultCache=NSUserDefaults.standardUserDefaults()
         defaultCache.setObject(base64, forKey: "metainfo")
-        
         do {
             //尝试删除文件
             try NSFileManager.defaultManager().removeItemAtURL(url)

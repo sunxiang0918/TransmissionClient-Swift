@@ -320,7 +320,7 @@ class FileVO : NSObject{
             var pid:String?
             if  splits.count > 1 {
                 var tmpFile:FileVO? = nil
-                for var i = 0;i < splits.count-1;i++ {
+                for i in 0 ..< (splits.count-1 < 0 ? 0 : splits.count-1) {
                     let sp = splits[i]
                     var find = false
                     for tmp in fileVOs {
