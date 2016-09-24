@@ -117,16 +117,13 @@ class NewTaskController : UIViewController {
         
         Alamofire.request(siteUrl + BASE_URL,method:.post, encoding: CustomParameterEncoding.default("{\"method\":\"free-space\",\"arguments\":{\"path\":\"\(path)\"}}"), headers: headers).responseJSON { response -> Void in
             
-            switch(response.result) {
-            case .success(let result):
+            if case let .success(result) = response.result {
                 let json = JSON(result)
                 
                 let size = json["arguments"]["size-bytes"].intValue
                 
                 self.freeSpaceLabel.text = "剩余空间:\(SpeedStringFormatter.formatSpeedToString(size))"
-                break
-            case .failure(_):
-                break
+
             }
         }
         

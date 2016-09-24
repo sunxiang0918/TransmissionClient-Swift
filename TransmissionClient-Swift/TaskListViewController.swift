@@ -318,8 +318,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         Alamofire.request(siteUrl + BASE_URL,parameters:parameter,headers: headers).responseJSON { response -> Void in
             
-            switch response.result {
-            case .success(let result):
+            if case let .success(result) = response.result {
                 let json = JSON(result)
             
                 var torrentCount = json["arguments"]["torrentCount"].intValue
@@ -334,10 +333,6 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 self.infoToolbarItem.title = "一共\(torrentCount)个任务 - ↓\(SpeedStringFormatter.formatSpeedToString(downloadSpeed))/s  ↑\(SpeedStringFormatter.formatSpeedToString(uploadSpeed))/s"
                 
                 self.infoToolbarItem.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFont(ofSize: 12),NSForegroundColorAttributeName:UIColor.black], for: UIControlState.normal)
-                 break
-            case .failure(let error) :
-                print("\(error.localizedDescription)")
-                break
             }
         }
     }
@@ -355,8 +350,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         Alamofire.request(siteUrl + BASE_URL, method: .post, encoding: CustomParameterEncoding.default("{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"isFinished\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\",\"rateDownload\",\"rateUpload\",\"leftUntilDone\"]}}"), headers: headers).responseJSON { response -> Void in
             
-            switch(response.result) {
-            case .success(let result):
+            if case let .success(result) = response.result {
                 self.tasks.removeAll()
                 
                 let json = JSON(result)
@@ -373,9 +367,6 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 }
                 
                 self.tableView.reloadData()
-                break
-            case .failure(_):
-                break
             }
         }
     }
@@ -390,15 +381,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         }
         
         Alamofire.request(siteUrl + BASE_URL,method: .post, encoding: CustomParameterEncoding.default("{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"activityDate\",\"corruptEver\",\"desiredAvailable\",\"downloadedEver\",\"fileStats\",\"haveUnchecked\",\"haveValid\",\"peers\",\"startDate\",\"trackerStats\",\"comment\",\"creator\",\"dateCreated\",\"files\",\"hashString\",\"isPrivate\",\"pieceCount\",\"pieceSize\",\"downloadDir\",\"name\",\"rateDownload\",\"uploadedEver\"],\"ids\":[\(taskVO.id)]}}"), headers: headers).responseJSON { response -> Void in
-            switch(response.result) {
-            case .success(let result):
+            
+            if case let .success(result) = response.result {
                 let json = JSON(result)
                 let taskDetail = TaskDetailVO(json: json,size:taskVO.totalSize,state: taskVO.status, error: taskVO.errorString)
                 self.performSegue(withIdentifier: "showTaskDetailSegue", sender: taskDetail)
-                break
-            case .failure(_):
-                //TODO 抛出异常
-                break
             }
         }
         
@@ -463,16 +450,14 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         Alamofire.request(siteUrl + BASE_URL,parameters:parameter,headers: headers).responseJSON { response -> Void in
             
-            switch response.result {
-            case .success(let result) :
+            /// 忽略faild的情况下,可以使用 if case 来替代 switch
+            if case let .success(result) = response.result {
                 let json = JSON(result)
                 
                 let downloadDir = json["arguments"]["download-dir"].stringValue
                 let freeSpace = json["arguments"]["download-dir-free-space"].intValue
                 
                 self.performSegue(withIdentifier: "addTaskSegue", sender: DefaultDownloadInfo(downloadDir: downloadDir, freeSpace: freeSpace))
-                break
-            case .failure(_):break
             }
         }
     }
