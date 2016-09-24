@@ -13,10 +13,11 @@
 
 @interface CNPPopupController : NSObject
 
-@property (nonatomic, strong) CNPPopupTheme *theme;
-@property (nonatomic, weak) id <CNPPopupControllerDelegate> delegate;
+@property (nonatomic, strong) CNPPopupTheme *_Nonnull theme;
+@property (nonatomic, weak) id <CNPPopupControllerDelegate> _Nullable delegate;
 
-- (instancetype)initWithContents:(NSArray *)contents;
+- (nonnull instancetype) init __attribute__((unavailable("You cannot initialize through init - please use initWithContents:")));
+- (nonnull instancetype)initWithContents:(nonnull NSArray<UIView *> *)contents NS_DESIGNATED_INITIALIZER;
 
 - (void)presentPopupControllerAnimated:(BOOL)flag;
 - (void)dismissPopupControllerAnimated:(BOOL)flag;
@@ -26,18 +27,18 @@
 @protocol CNPPopupControllerDelegate <NSObject>
 
 @optional
-- (void)popupControllerWillPresent:(CNPPopupController *)controller;
-- (void)popupControllerDidPresent:(CNPPopupController *)controller;
-- (void)popupControllerWillDismiss:(CNPPopupController *)controller;
-- (void)popupControllerDidDismiss:(CNPPopupController *)controller;
+- (void)popupControllerWillPresent:(nonnull CNPPopupController *)controller;
+- (void)popupControllerDidPresent:(nonnull CNPPopupController *)controller;
+- (void)popupControllerWillDismiss:(nonnull CNPPopupController *)controller;
+- (void)popupControllerDidDismiss:(nonnull CNPPopupController *)controller;
 
 @end
 
-typedef void(^SelectionHandler) (CNPPopupButton *button);
+typedef void(^SelectionHandler) (CNPPopupButton *_Nonnull button);
 
 @interface CNPPopupButton : UIButton
 
-@property (nonatomic, strong) SelectionHandler selectionHandler;
+@property (nonatomic, copy) SelectionHandler _Nullable selectionHandler;
 
 @end
 
@@ -63,6 +64,7 @@ typedef NS_ENUM(NSInteger, CNPPopupMaskType) {
     CNPPopupMaskTypeDimmed
 };
 
+NS_ASSUME_NONNULL_BEGIN
 @interface CNPPopupTheme : NSObject
 
 @property (nonatomic, strong) UIColor *backgroundColor; // Background color of the popup content view (Default white)
@@ -76,8 +78,10 @@ typedef NS_ENUM(NSInteger, CNPPopupMaskType) {
 @property (nonatomic, assign) BOOL movesAboveKeyboard; // Popup should move up when the keyboard appears (Default yes)
 @property (nonatomic, assign) CGFloat contentVerticalPadding; // Spacing between each vertical element (Default 12.0)
 @property (nonatomic, assign) CGFloat maxPopupWidth; // Maxiumum width that the popup should be (Default 300)
+@property (nonatomic, assign) CGFloat animationDuration; // Duration of presentation animations (Default 0.3s)
 
 // Factory method to help build a default theme
 + (CNPPopupTheme *)defaultTheme;
 
 @end
+NS_ASSUME_NONNULL_END

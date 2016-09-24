@@ -25,7 +25,7 @@ class SpeedStringFormatter {
      
      - returns:
      */
-    static func formatSpeedToString(sp:Int) -> String {
+    static func formatSpeedToString(_ sp:Int) -> String {
         
         let speed:Float = Float(sp)
         
@@ -49,7 +49,7 @@ class SpeedStringFormatter {
      
      - returns:
      */
-    static func clcaultTimesToString(second:Float) -> String {
+    static func clcaultTimesToString(_ second:Float) -> String {
         
         if (second >= DAY) {
             return String(format: "%.2f天", second / DAY)
@@ -72,7 +72,7 @@ class SpeedStringFormatter {
      
      - returns:
      */
-    static func clcaultHoursToString(size:Int,speed:Int) -> String {
+    static func clcaultHoursToString(_ size:Int,speed:Int) -> String {
         let s = size / (speed + 1)
         
         let second:Float = Float(s)

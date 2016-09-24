@@ -8,57 +8,57 @@
 
 import Foundation
 
-public extension NSUserDefaults {
+public extension UserDefaults {
     
-    public func modelForKey(defaultName: String) -> AnyObject? {
-        let obj = self.objectForKey(defaultName) as? NSData
+    public func modelForKey(_ defaultName: String) -> AnyObject? {
+        let obj = self.object(forKey: defaultName) as? Data
         
         if let tmp = obj {
-            return NSKeyedUnarchiver.unarchiveObjectWithData(tmp)
+            return NSKeyedUnarchiver.unarchiveObject(with: tmp) as AnyObject?
         }
         
         return nil
     }
     
-    public func arrayModelForKey(defaultName: String) -> [AnyObject]? {
-        let obj = self.objectForKey(defaultName) as? [NSData]
+    public func arrayModelForKey(_ defaultName: String) -> [AnyObject]? {
+        let obj = self.object(forKey: defaultName) as? [Data]
         
         var result:[AnyObject]?
         
         if let _obj = obj {
             result = []
             for tmp in _obj {
-                let myModel = NSKeyedUnarchiver.unarchiveObjectWithData(tmp)
-                result?.append(myModel!)
+                let myModel = NSKeyedUnarchiver.unarchiveObject(with: tmp)
+                result?.append(myModel! as AnyObject)
             }
             return result
         }
         return nil
     }
     
-    public func setModel(value: AnyObject?, forKey defaultName: String){
+    public func setModel(_ value: AnyObject?, forKey defaultName: String){
         
         guard let _value = value else{
-            self.setObject(nil, forKey: defaultName)
+            self.set(nil, forKey: defaultName)
             return
         }
         
-        let modelData:NSData = NSKeyedArchiver.archivedDataWithRootObject(_value)
-        self.setObject(modelData, forKey: defaultName)
+        let modelData:Data = NSKeyedArchiver.archivedData(withRootObject: _value)
+        self.set(modelData, forKey: defaultName)
     }
     
-    public func setArrayModels(value: [AnyObject]?, forKey defaultName: String) {
+    public func setArrayModels(_ value: [AnyObject]?, forKey defaultName: String) {
         guard let _value = value else{
-            self.setObject(nil, forKey: defaultName)
+            self.set(nil, forKey: defaultName)
             return
         }
         
-        var data:[NSData] = []
+        var data:[Data] = []
         
         for v in _value {
-            data.append(NSKeyedArchiver.archivedDataWithRootObject(v))
+            data.append(NSKeyedArchiver.archivedData(withRootObject: v))
         }
         
-        self.setObject(data, forKey: defaultName)
+        self.set(data, forKey: defaultName)
     }
 }

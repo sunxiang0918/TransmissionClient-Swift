@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1524E84E591D220EAEA0E119 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8802B13EEE0EA093B197BCC7 /* Pods.framework */; };
+		811B44ADE1C5E9B1DAAE3D07 /* Pods_TransmissionClient_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65A60A940868D1728B8546BF /* Pods_TransmissionClient_Swift.framework */; };
 		A42620EC1C07533A009D5BA6 /* NewTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42620EB1C07533A009D5BA6 /* NewTaskController.swift */; };
 		A4967E4F1C040B43000ADF88 /* SiteInfoVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4967E4E1C040B43000ADF88 /* SiteInfoVO.swift */; };
 		A4967E511C0412B7000ADF88 /* NSUserDefaults+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4967E501C0412B7000ADF88 /* NSUserDefaults+Model.swift */; };
@@ -31,6 +31,7 @@
 		A4C7551E1C09F31D00BA29BC /* TaskDetailTrackerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C7551D1C09F31D00BA29BC /* TaskDetailTrackerTableViewCell.swift */; };
 		A4C755201C09FEEF00BA29BC /* TaskDetailFileTavleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4C7551F1C09FEEF00BA29BC /* TaskDetailFileTavleViewCell.xib */; };
 		A4C755221C09FEFB00BA29BC /* TaskDetailFileTavleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C755211C09FEFB00BA29BC /* TaskDetailFileTavleViewCell.swift */; };
+		A4C769141D923E1C002FE1A8 /* CustomParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C769131D923E1C002FE1A8 /* CustomParameterEncoding.swift */; };
 		A4D0CFFA1C0991FF007D18EC /* TaskDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */; };
 		A4D0CFFC1C09943F007D18EC /* TaskDetailVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */; };
 		A4D93BF01C04A4640019A068 /* StatusPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */; };
@@ -45,7 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8802B13EEE0EA093B197BCC7 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65A60A940868D1728B8546BF /* Pods_TransmissionClient_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransmissionClient_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A42620EB1C07533A009D5BA6 /* NewTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTaskController.swift; sourceTree = "<group>"; };
 		A42BA3841C06ABDA0062BC78 /* ObjectiveCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveCBridge.h; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 		A4C7551D1C09F31D00BA29BC /* TaskDetailTrackerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTrackerTableViewCell.swift; sourceTree = "<group>"; };
 		A4C7551F1C09FEEF00BA29BC /* TaskDetailFileTavleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDetailFileTavleViewCell.xib; sourceTree = "<group>"; };
 		A4C755211C09FEFB00BA29BC /* TaskDetailFileTavleViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailFileTavleViewCell.swift; sourceTree = "<group>"; };
+		A4C769131D923E1C002FE1A8 /* CustomParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomParameterEncoding.swift; sourceTree = "<group>"; };
 		A4D0CFF91C0991FF007D18EC /* TaskDetailInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailInfoViewController.swift; sourceTree = "<group>"; };
 		A4D0CFFB1C09943F007D18EC /* TaskDetailVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailVO.swift; sourceTree = "<group>"; };
 		A4D93BEF1C04A4640019A068 /* StatusPopupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusPopupView.xib; sourceTree = "<group>"; };
@@ -84,7 +86,9 @@
 		A4D93BFE1C0550DA0019A068 /* TaskVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskVO.swift; sourceTree = "<group>"; };
 		A4D93C001C0556C00019A068 /* SpeedStringFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedStringFormatter.swift; sourceTree = "<group>"; };
 		A4FD003F1C1479C300792256 /* ServiceAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
+		B889A67CBB58B3AA574B808F /* Pods-TransmissionClient-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransmissionClient-Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TransmissionClient-Swift/Pods-TransmissionClient-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		DC4054C4EA62FDF7F5E733B4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E30FA4E942253E552FBC319C /* Pods-TransmissionClient-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransmissionClient-Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TransmissionClient-Swift/Pods-TransmissionClient-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1524E84E591D220EAEA0E119 /* Pods.framework in Frameworks */,
+				811B44ADE1C5E9B1DAAE3D07 /* Pods_TransmissionClient_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +106,7 @@
 		4B34E7B0CABA80267F5A9666 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8802B13EEE0EA093B197BCC7 /* Pods.framework */,
+				65A60A940868D1728B8546BF /* Pods_TransmissionClient_Swift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -142,6 +146,7 @@
 				A4D93BF81C04B2FC0019A068 /* AppException.swift */,
 				A4D93C001C0556C00019A068 /* SpeedStringFormatter.swift */,
 				A4FD003F1C1479C300792256 /* ServiceAPI.swift */,
+				A4C769131D923E1C002FE1A8 /* CustomParameterEncoding.swift */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -229,6 +234,8 @@
 			children = (
 				DC4054C4EA62FDF7F5E733B4 /* Pods.debug.xcconfig */,
 				9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */,
+				E30FA4E942253E552FBC319C /* Pods-TransmissionClient-Swift.debug.xcconfig */,
+				B889A67CBB58B3AA574B808F /* Pods-TransmissionClient-Swift.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -240,12 +247,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A4C095D61C034DA30071F729 /* Build configuration list for PBXNativeTarget "TransmissionClient-Swift" */;
 			buildPhases = (
-				DE9E8797DD4B6C4D2E9A7953 /* Check Pods Manifest.lock */,
+				DE9E8797DD4B6C4D2E9A7953 /* [CP] Check Pods Manifest.lock */,
 				A4C095C01C034DA30071F729 /* Sources */,
 				A4C095C11C034DA30071F729 /* Frameworks */,
 				A4C095C21C034DA30071F729 /* Resources */,
-				472EE9D51091292354447524 /* Embed Pods Frameworks */,
-				6DF546DD291DF6FEB3366AE7 /* Copy Pods Resources */,
+				472EE9D51091292354447524 /* [CP] Embed Pods Frameworks */,
+				6DF546DD291DF6FEB3366AE7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -263,12 +270,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = SUN;
 				TargetAttributes = {
 					A4C095C31C034DA30071F729 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = KY2PPGYFJ7;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -310,49 +318,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		472EE9D51091292354447524 /* Embed Pods Frameworks */ = {
+		472EE9D51091292354447524 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TransmissionClient-Swift/Pods-TransmissionClient-Swift-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6DF546DD291DF6FEB3366AE7 /* Copy Pods Resources */ = {
+		6DF546DD291DF6FEB3366AE7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TransmissionClient-Swift/Pods-TransmissionClient-Swift-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DE9E8797DD4B6C4D2E9A7953 /* Check Pods Manifest.lock */ = {
+		DE9E8797DD4B6C4D2E9A7953 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -365,6 +373,7 @@
 				A4D93BF31C04A4930019A068 /* StatusPopupView.swift in Sources */,
 				A4D93C011C0556C00019A068 /* SpeedStringFormatter.swift in Sources */,
 				A4D93BFF1C0550DA0019A068 /* TaskVO.swift in Sources */,
+				A4C769141D923E1C002FE1A8 /* CustomParameterEncoding.swift in Sources */,
 				A4C755121C09A45D00BA29BC /* TaskDetailTrackerViewController.swift in Sources */,
 				A42620EC1C07533A009D5BA6 /* NewTaskController.swift in Sources */,
 				A4D0CFFA1C0991FF007D18EC /* TaskDetailInfoViewController.swift in Sources */,
@@ -425,8 +434,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -470,8 +481,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -490,6 +503,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -497,8 +511,9 @@
 		};
 		A4C095D71C034DA30071F729 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC4054C4EA62FDF7F5E733B4 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = E30FA4E942253E552FBC319C /* Pods-TransmissionClient-Swift.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "TransmissionClient-Swift/Info.plist";
@@ -506,13 +521,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.sunxiang0918.TransmissionClient-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TransmissionClient-Swift/ObjectiveCBridge.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		A4C095D81C034DA30071F729 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9AB295C6F61F448FF7F51DEC /* Pods.release.xcconfig */;
+			baseConfigurationReference = B889A67CBB58B3AA574B808F /* Pods-TransmissionClient-Swift.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "TransmissionClient-Swift/Info.plist";
@@ -520,6 +537,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.sunxiang0918.TransmissionClient-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TransmissionClient-Swift/ObjectiveCBridge.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

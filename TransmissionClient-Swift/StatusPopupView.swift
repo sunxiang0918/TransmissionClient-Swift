@@ -33,7 +33,7 @@ class StatusPopupView:UIView {
     }
 
     
-    @IBAction func doFilteAction(sender: UIButton) {
+    @IBAction func doFilteAction(_ sender: UIButton) {
         
         var oper : ((TaskVO)->Bool)? = nil
         let text = (sender.titleLabel?.text)!
@@ -73,6 +73,6 @@ class StatusPopupView:UIView {
     var cancelHandel:(()->Void)?
     
     /// 点击了过滤按钮后的事件处理
-    var doFilterStatusHandel:(((TaskVO)->Bool,String)->Void)!
+    var doFilterStatusHandel:((@escaping (TaskVO)->Bool,String)->Void)!
     
 }

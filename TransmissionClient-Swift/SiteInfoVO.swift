@@ -20,17 +20,17 @@ class SiteInfoVO : NSObject,NSCoding {
         self.url = url
     }
     
-    @objc internal func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(url, forKey: "url")
-        aCoder.encodeObject(userName, forKey: "userName")
-        aCoder.encodeObject(password, forKey: "password")
+    @objc internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(url, forKey: "url")
+        aCoder.encode(userName, forKey: "userName")
+        aCoder.encode(password, forKey: "password")
     }
     
     @objc internal required init?(coder aDecoder: NSCoder) {
-        url = aDecoder.decodeObjectForKey("url") as! String
+        url = aDecoder.decodeObject(forKey: "url") as! String
         
-        userName = aDecoder.decodeObjectForKey("userName") as? String
-        password = aDecoder.decodeObjectForKey("password") as? String
+        userName = aDecoder.decodeObject(forKey: "userName") as? String
+        password = aDecoder.decodeObject(forKey: "password") as? String
     }
     
     

@@ -10,7 +10,7 @@ import UIKit
 
 class TaskDetailPeerViewController : UITableViewController,TaskDetailProtocol {
     
-    private var _taskDetail:TaskDetailVO!
+    fileprivate var _taskDetail:TaskDetailVO!
     
     var taskDetail:TaskDetailVO {
         get{
@@ -23,10 +23,10 @@ class TaskDetailPeerViewController : UITableViewController,TaskDetailProtocol {
     
     override func viewDidLoad() {
         let nib=UINib(nibName: "TaskDetailPeerTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "taskDetailPeerTableViewCell")
+        self.tableView.register(nib, forCellReuseIdentifier: "taskDetailPeerTableViewCell")
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let _peers = _taskDetail.peers
         
         guard let peers = _peers else {
@@ -36,14 +36,14 @@ class TaskDetailPeerViewController : UITableViewController,TaskDetailProtocol {
         return peers.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var tmp = tableView.dequeueReusableCellWithIdentifier("taskDetailPeerTableViewCell") as? TaskDetailPeerTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var tmp = tableView.dequeueReusableCell(withIdentifier: "taskDetailPeerTableViewCell") as? TaskDetailPeerTableViewCell
         
         if (tmp == nil) {
-            tmp = TaskDetailPeerTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskDetailPeerTableViewCell")
+            tmp = TaskDetailPeerTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "taskDetailPeerTableViewCell")
         }
         
-        let _peer = _taskDetail.peers?[indexPath.row]
+        let _peer = _taskDetail.peers?[(indexPath as NSIndexPath).row]
         
         guard let peer = _peer else {
             return tmp!
@@ -59,7 +59,7 @@ class TaskDetailPeerViewController : UITableViewController,TaskDetailProtocol {
         return tmp!
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
 }

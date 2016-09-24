@@ -28,26 +28,26 @@ class AddSiteViewController : UIViewController {
     var onepasswordActionHandel:((UIButton)->Void)?
     
     
-    override func viewWillAppear(animated: Bool) {
-        onePasswordButton.hidden = !OnePasswordExtension.sharedExtension().isAppExtensionAvailable()
+    override func viewWillAppear(_ animated: Bool) {
+        onePasswordButton.isHidden = !OnePasswordExtension.shared().isAppExtensionAvailable()
     }
     
-    @IBAction func doOnePasswordAction(sender: UIButton) {
+    @IBAction func doOnePasswordAction(_ sender: UIButton) {
         onepasswordActionHandel?(sender)
     }
     
-    @IBAction func doAddSiteAction(sender: UIButton) {
+    @IBAction func doAddSiteAction(_ sender: UIButton) {
         
         let url = urlTextField.text
         
         if let _url = url {
             if _url == "" {
                 urlTextField.layer.borderWidth = 1
-                urlTextField.layer.borderColor = UIColor.redColor().CGColor
+                urlTextField.layer.borderColor = UIColor.red.cgColor
                 return
             }else{
                 urlTextField.layer.borderWidth = 0
-                urlTextField.layer.borderColor = UIColor.clearColor().CGColor
+                urlTextField.layer.borderColor = UIColor.clear.cgColor
             }
             let site = SiteInfoVO(url: _url)
             site.userName = userNameTextField.text == "" ? nil : userNameTextField.text
@@ -61,7 +61,7 @@ class AddSiteViewController : UIViewController {
                 cancelHandel?()
                 
                 //表示添加成功
-                self.navigationController?.popViewControllerAnimated(true)
+                self.navigationController?.popViewController(animated: true)
             }
         }
         

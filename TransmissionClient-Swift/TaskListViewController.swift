@@ -9,7 +9,7 @@
 import UIKit
 import CNPPopupController
 import Alamofire
-import SwiftyJSON
+import SwiftyJSON3
 import JCAlertView
 
 class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,UISearchBarDelegate {
@@ -26,15 +26,15 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     @IBOutlet weak var infoToolbarItem: UIBarButtonItem!        //底部的站点sessionInfo信息
     
-    private var popupController : CNPPopupController?
+    fileprivate var popupController : CNPPopupController?
     
-    private var tasks : [TaskVO] = []
+    fileprivate var tasks : [TaskVO] = []
     
-    private var filtered : [TaskVO] = []
+    fileprivate var filtered : [TaskVO] = []
     
-    private var searchActive : Bool = false
+    fileprivate var searchActive : Bool = false
     
-    private var statusFilter : ((TaskVO)->Bool)?
+    fileprivate var statusFilter : ((TaskVO)->Bool)?
     
     @IBOutlet weak var statusButton: UIBarButtonItem!
     
@@ -43,7 +43,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     override func viewDidLoad() {
         
         let nib=UINib(nibName: "TaskListTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "taskListTableViewCell")
+        self.tableView.register(nib, forCellReuseIdentifier: "taskListTableViewCell")
         
         searchBar.delegate = self
         
@@ -51,11 +51,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         initPopupController()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setToolbarHidden(true, animated: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         self.navigationItem.title = siteUrl
         self.navigationController?.setToolbarHidden(false, animated: true)
@@ -64,17 +64,17 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         loadTaskList()
     }
     
-    private func initPopupController(){
+    fileprivate func initPopupController(){
         
         /// 实例化SharePopupView 弹出视图
-        let view = UINib(nibName: "StatusPopupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as? StatusPopupView
+        let view = UINib(nibName: "StatusPopupView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? StatusPopupView
         /// 设置弹出视图的大小
-        view?.frame = CGRectMake(0, 0, self.view.frame.width, 100)
+        view?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 100)
         
         /// 设置弹出视图中 取消操作的 动作闭包
-        view?.cancelHandel = {self.popupController?.dismissPopupControllerAnimated(true)}
+        view?.cancelHandel = {self.popupController?.dismiss(animated: true)}
         
-        view?.doFilterStatusHandel = {(oper:(TaskVO)->Bool,title:String) ->Void in
+        view?.doFilterStatusHandel = {(oper:@escaping (TaskVO)->Bool,title:String) ->Void in
             //界面点了过滤后的处理
             
             //首先把界面的字给改了
@@ -96,11 +96,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         /// 实例化弹出控制器
         self.popupController = CNPPopupController(contents: [view!])
-        self.popupController!.theme = CNPPopupTheme.defaultTheme()
+        self.popupController!.theme = CNPPopupTheme.default()
         /// 设置点击背景取消弹出视图
         self.popupController!.theme.shouldDismissOnBackgroundTouch = true
-        self.popupController!.theme.popupStyle = CNPPopupStyle.ActionSheet
-        self.popupController!.theme.presentationStyle = CNPPopupPresentationStyle.SlideInFromTop
+        self.popupController!.theme.popupStyle = CNPPopupStyle.actionSheet
+        self.popupController!.theme.presentationStyle = CNPPopupPresentationStyle.slideInFromTop
         //设置最大宽度,否则可能会在IPAD上出现只显示一半的情况,因为默认就只有300宽
         self.popupController!.theme.maxPopupWidth = self.view.frame.width
         /// 设置视图的边框
@@ -112,7 +112,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     // MARK: - UITableView的实现
     
     //========================UITableViewDelegate的实现================================================
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(searchActive || statusFilter != nil) {
             return filtered.count
         }
@@ -120,15 +120,15 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     }
     
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var tmp = tableView.dequeueReusableCellWithIdentifier("taskListTableViewCell") as? TaskListTableViewCell
+        var tmp = tableView.dequeueReusableCell(withIdentifier: "taskListTableViewCell") as? TaskListTableViewCell
         
         if (tmp == nil) {
-            tmp = TaskListTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskListTableViewCell")
+            tmp = TaskListTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "taskListTableViewCell")
         }
         
-        let task = (searchActive || statusFilter != nil)  ? filtered[indexPath.row] : tasks[indexPath.row]
+        let task = (searchActive || statusFilter != nil)  ? filtered[(indexPath as NSIndexPath).row] : tasks[(indexPath as NSIndexPath).row]
         
         tmp?.nameLabel.text = task.name
         
@@ -138,19 +138,19 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         if task.error > 0 {
             desc = task.errorString!
             status = "文件大小\(SpeedStringFormatter.formatSpeedToString(task.totalSize)),已上传\(SpeedStringFormatter.formatSpeedToString(task.uploadedEver)) (比率 \(task.uploadRatio))"
-            tmp?.descLabel.textColor = UIColor.redColor()
-            tmp?.progressView.progressTintColor = UIColor.grayColor()
+            tmp?.descLabel.textColor = UIColor.red
+            tmp?.progressView.progressTintColor = UIColor.gray
         }else {
-            tmp?.descLabel.textColor = UIColor.grayColor()
+            tmp?.descLabel.textColor = UIColor.gray
             switch task.status {
             case 0 :
                 //暂停
-                tmp?.progressView.progressTintColor = UIColor.grayColor()
+                tmp?.progressView.progressTintColor = UIColor.gray
                 desc = "已暂停"
                 status = "已暂停"
             case 3,4 :
                 //下载
-                tmp?.progressView.progressTintColor = UIColor.blueColor()
+                tmp?.progressView.progressTintColor = UIColor.blue
                 desc = "从\(task.peersConnected)个peers进行下载 - ↓\(SpeedStringFormatter.formatSpeedToString(task.rateDownload))/s ↑\(SpeedStringFormatter.formatSpeedToString(task.rateUpload))/s"
                 status = "已下载\(SpeedStringFormatter.formatSpeedToString(task.totalSize-task.leftUntilDone)),总共大小\(SpeedStringFormatter.formatSpeedToString(task.totalSize))(\(task.percentDone*100)%) - 预计剩余\(SpeedStringFormatter.clcaultHoursToString(task.leftUntilDone, speed: task.rateDownload))"
             default :
@@ -167,12 +167,12 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         return tmp!
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let task = (self.searchActive || self.statusFilter != nil) ? self.filtered[indexPath.row] : self.tasks[indexPath.row]
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = (self.searchActive || self.statusFilter != nil) ? self.filtered[(indexPath as NSIndexPath).row] : self.tasks[(indexPath as NSIndexPath).row]
         
         loadTaskDetailAndPerformSegue(task)
     }
@@ -185,11 +185,11 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
      
      - returns:
      */
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let task = (self.searchActive || self.statusFilter != nil) ? self.filtered[indexPath.row] : self.tasks[indexPath.row]
+        let task = (self.searchActive || self.statusFilter != nil) ? self.filtered[(indexPath as NSIndexPath).row] : self.tasks[(indexPath as NSIndexPath).row]
         
-        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "删除") { (action, indexPath) -> Void in
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "删除") { (action, indexPath) -> Void in
             //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
             self.removeTaskFromView(task, indexPath: indexPath)
         }
@@ -197,12 +197,12 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         var action:UITableViewRowAction
         if task.status == 0 || task.error > 0 {
             //已经暂停了,那就是启动
-            action = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "恢复") { (action, indexPath) -> Void in
+            action = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "恢复") { (action, indexPath) -> Void in
                 self.startTaskFromView(task, indexPath: indexPath)
             }
         }else{
             //其他状态就是暂停
-            action = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "暂停") { (action, indexPath) -> Void in
+            action = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "暂停") { (action, indexPath) -> Void in
                 self.pauseTaskFromView(task, indexPath: indexPath)
             }
         }
@@ -214,7 +214,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     // MARK: - 私有方法实现
     //=======================私有方法的实现=======================================================
-    private func pauseTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
+    fileprivate func pauseTaskFromView(_ task:TaskVO,indexPath:IndexPath) {
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
         
@@ -222,27 +222,24 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             headers["Authorization"] = _author
         }
         
-        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
-            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
-            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"arguments\": {\"ids\": [ \(task.id) ]},\"method\": \"torrent-stop\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-            return (mutableRequest, nil)
-        }), headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
+        Alamofire.request(siteUrl + BASE_URL, method: .post, encoding: CustomParameterEncoding.default("{\"arguments\": {\"ids\": [ \(task.id) ]},\"method\": \"torrent-stop\"}"), headers: headers).responseJSON { response -> Void in
+            
+            switch response.result {
+            case .success(_):
                 //表示暂停成功
                 self.loadSessionInfo()
                 
                 //由于服务器是异步的,所以这里要适当的Sleep一下,否则任务状态还没有更新
-                NSThread.sleepForTimeInterval(0.5)
+                Thread.sleep(forTimeInterval: 0.5)
                 self.loadTaskList()
-            }else{
+            case .failure(_):
                 //暂停失败
-                JCAlertView.showOneButtonWithTitle("错误", message: "暂停任务\(task.name) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定", click: nil)
+                JCAlertView.showOneButton(withTitle: "错误", message: "暂停任务\(task.name) 失败", buttonType: JCAlertViewButtonType.default, buttonTitle: "确定", click: nil)
             }
         }
     }
     
-    private func startTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
+    fileprivate func startTaskFromView(_ task:TaskVO,indexPath:IndexPath) {
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
         
@@ -250,25 +247,24 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             headers["Authorization"] = _author
         }
         
-        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
-            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
-            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"arguments\": {\"ids\": [ \(task.id) ]},\"method\": \"torrent-start\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-            return (mutableRequest, nil)
-        }), headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
+        Alamofire.request(siteUrl + BASE_URL, method: .post, encoding:CustomParameterEncoding.default("{\"arguments\": {\"ids\": [ \(task.id) ]},\"method\": \"torrent-start\"}"), headers: headers).responseJSON { (response:DataResponse<Any>) in
+            
+            switch(response.result) {
+            case .success(_):
                 //表示暂停成功
                 self.loadSessionInfo()
                 self.loadTaskList()
-            }else{
+                break
+            case .failure(_):
                 //暂停失败
-                JCAlertView.showOneButtonWithTitle("错误", message: "启动任务\(task.name) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定", click: nil)
+                JCAlertView.showOneButton(withTitle: "错误", message: "启动任务\(task.name) 失败", buttonType: JCAlertViewButtonType.default, buttonTitle: "确定", click: nil)
+                break
             }
         }
     }
     
     
-    private func removeTaskFromView(task:TaskVO,indexPath:NSIndexPath) {
+    fileprivate func removeTaskFromView(_ task:TaskVO,indexPath:IndexPath) {
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
         
@@ -277,32 +273,31 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         }
         
         
-        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
-            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
-            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"arguments\": {\"ids\": [ \(task.id) ],\"delete-local-data\":true},\"method\": \"torrent-remove\"}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-            return (mutableRequest, nil)
-        }), headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
+        Alamofire.request(siteUrl + BASE_URL, method: .post, encoding:CustomParameterEncoding.default("{\"arguments\": {\"ids\": [ \(task.id) ],\"delete-local-data\":true},\"method\": \"torrent-remove\"}"), headers: headers).responseJSON { response -> Void in
+            
+            switch(response.result) {
+            case .success(_):
                 //表示删除成功
                 //一行的删除操作,先调用HTTP 删除任务,如果删除成功.那么就再删除界面
                 if (self.searchActive || self.statusFilter != nil) {
-                    self.filtered.removeAtIndex(indexPath.row)
-                    let index = self.tasks.indexOf({ (t:TaskVO) -> Bool in
+                    self.filtered.remove(at: indexPath.row)
+                    let index = self.tasks.index(where: { (t:TaskVO) -> Bool in
                         return t.id == task.id
                     })
                     if index != nil {
-                        self.tasks.removeAtIndex(index!)
+                        self.tasks.remove(at: index!)
                     }
                 }else{
-                    self.tasks.removeAtIndex(indexPath.row)
+                    self.tasks.remove(at: indexPath.row)
                 }
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 //重新加载一次sessionInfo
                 self.loadSessionInfo()
-            }else{
+                break
+            case .failure(_):
                 //删除失败
-                JCAlertView.showOneButtonWithTitle("错误", message: "删除任务\(task.name) 失败", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定", click: nil)
+                JCAlertView.showOneButton(withTitle: "错误", message: "删除任务\(task.name) 失败", buttonType: JCAlertViewButtonType.default, buttonTitle: "确定", click: nil)
+                break
             }
         }
     }
@@ -310,7 +305,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     /**
      加载会话的总体状态
      */
-    private func loadSessionInfo(){
+    fileprivate func loadSessionInfo(){
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
         
@@ -321,25 +316,28 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         var parameter:[String:String] = [:]
         parameter["method"] = "session-stats"
         
-        Alamofire.Manager.sharedInstance.request(Method.GET, siteUrl + BASE_URL, parameters: parameter, encoding: ParameterEncoding.URL, headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
-                if  let result = data.value {
-                    let json = JSON(result)
-                    
-                    var torrentCount = json["arguments"]["torrentCount"].intValue
-                    let downloadSpeed = json["arguments"]["downloadSpeed"].intValue
-                    let uploadSpeed = json["arguments"]["uploadSpeed"].intValue
-                    
-                    if self.statusFilter != nil {
-                        //表示有状态过滤
-                        torrentCount = self.filtered.count
-                    }
-                    
-                    self.infoToolbarItem.title = "一共\(torrentCount)个任务 - ↓\(SpeedStringFormatter.formatSpeedToString(downloadSpeed))/s  ↑\(SpeedStringFormatter.formatSpeedToString(uploadSpeed))/s"
-                    
-                    self.infoToolbarItem.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFontOfSize(12),NSForegroundColorAttributeName:UIColor.blackColor()], forState: UIControlState.Normal)
-                    
+        Alamofire.request(siteUrl + BASE_URL,parameters:parameter,headers: headers).responseJSON { response -> Void in
+            
+            switch response.result {
+            case .success(let result):
+                let json = JSON(result)
+            
+                var torrentCount = json["arguments"]["torrentCount"].intValue
+                let downloadSpeed = json["arguments"]["downloadSpeed"].intValue
+                let uploadSpeed = json["arguments"]["uploadSpeed"].intValue
+                
+                if self.statusFilter != nil {
+                    //表示有状态过滤
+                    torrentCount = self.filtered.count
                 }
+                
+                self.infoToolbarItem.title = "一共\(torrentCount)个任务 - ↓\(SpeedStringFormatter.formatSpeedToString(downloadSpeed))/s  ↑\(SpeedStringFormatter.formatSpeedToString(uploadSpeed))/s"
+                
+                self.infoToolbarItem.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFont(ofSize: 12),NSForegroundColorAttributeName:UIColor.black], for: UIControlState.normal)
+                 break
+            case .failure(let error) :
+                print("\(error.localizedDescription)")
+                break
             }
         }
     }
@@ -347,7 +345,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     /**
      加载任务列表
      */
-    private func loadTaskList(){
+    fileprivate func loadTaskList(){
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
         
@@ -355,22 +353,17 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             headers["Authorization"] = _author
         }
         
-        
-        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
-            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
-            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"isFinished\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\",\"rateDownload\",\"rateUpload\",\"leftUntilDone\"]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-            return (mutableRequest, nil)
-        }), headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
+        Alamofire.request(siteUrl + BASE_URL, method: .post, encoding: CustomParameterEncoding.default("{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"name\",\"error\",\"errorString\",\"isFinished\",\"peersConnected\",\"peersGettingFromUs\",\"percentDone\",\"sizeWhenDone\",\"totalSize\",\"status\",\"uploadRatio\",\"uploadedEver\",\"rateDownload\",\"rateUpload\",\"leftUntilDone\"]}}"), headers: headers).responseJSON { response -> Void in
+            
+            switch(response.result) {
+            case .success(let result):
                 self.tasks.removeAll()
-                if  let result = data.value {
-                    let json = JSON(result)
-                    let torrents = json["arguments"]["torrents"].array
+                
+                let json = JSON(result)
+                let torrents = json["arguments"]["torrents"].array
                     
-                    for torrent in torrents! {
-                        self.tasks.append(self.convertJson2TaskVO(torrent))
-                    }
+                for torrent in torrents! {
+                    self.tasks.append(self.convertJson2TaskVO(torrent))
                 }
                 
                 if self.statusFilter != nil {
@@ -380,12 +373,14 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
                 }
                 
                 self.tableView.reloadData()
+                break
+            case .failure(_):
+                break
             }
-            
         }
     }
     
-    private func loadTaskDetailAndPerformSegue(taskVO:TaskVO) {
+    fileprivate func loadTaskDetailAndPerformSegue(_ taskVO:TaskVO) {
         
         var headers:[String:String] = [:]
         headers["X-Transmission-Session-Id"] = sessionId
@@ -394,20 +389,16 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             headers["Authorization"] = _author
         }
         
-        Alamofire.Manager.sharedInstance.request(Method.POST, siteUrl + BASE_URL, parameters: [:], encoding: ParameterEncoding.Custom({ (convertible, params) -> (NSMutableURLRequest, NSError?) in
-            /// 这个地方是用来手动的设置POST消息体的,思路就是通过ParameterEncoding.Custom闭包来设置请求的HTTPBody
-            let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-            mutableRequest.HTTPBody = "{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"activityDate\",\"corruptEver\",\"desiredAvailable\",\"downloadedEver\",\"fileStats\",\"haveUnchecked\",\"haveValid\",\"peers\",\"startDate\",\"trackerStats\",\"comment\",\"creator\",\"dateCreated\",\"files\",\"hashString\",\"isPrivate\",\"pieceCount\",\"pieceSize\",\"downloadDir\",\"name\",\"rateDownload\",\"uploadedEver\"],\"ids\":[\(taskVO.id)]}}".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-            return (mutableRequest, nil)
-        }), headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
-                if  let result = data.value {
-                    let json = JSON(result)
-                    let taskDetail = TaskDetailVO(json: json,size:taskVO.totalSize,state: taskVO.status, error: taskVO.errorString)
-                    self.performSegueWithIdentifier("showTaskDetailSegue", sender: taskDetail)
-                }
-            }else{
+        Alamofire.request(siteUrl + BASE_URL,method: .post, encoding: CustomParameterEncoding.default("{\"method\":\"torrent-get\",\"arguments\":{\"fields\":[\"id\",\"activityDate\",\"corruptEver\",\"desiredAvailable\",\"downloadedEver\",\"fileStats\",\"haveUnchecked\",\"haveValid\",\"peers\",\"startDate\",\"trackerStats\",\"comment\",\"creator\",\"dateCreated\",\"files\",\"hashString\",\"isPrivate\",\"pieceCount\",\"pieceSize\",\"downloadDir\",\"name\",\"rateDownload\",\"uploadedEver\"],\"ids\":[\(taskVO.id)]}}"), headers: headers).responseJSON { response -> Void in
+            switch(response.result) {
+            case .success(let result):
+                let json = JSON(result)
+                let taskDetail = TaskDetailVO(json: json,size:taskVO.totalSize,state: taskVO.status, error: taskVO.errorString)
+                self.performSegue(withIdentifier: "showTaskDetailSegue", sender: taskDetail)
+                break
+            case .failure(_):
                 //TODO 抛出异常
+                break
             }
         }
         
@@ -420,7 +411,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
      
      - returns:
      */
-    private func convertJson2TaskVO(json:JSON) -> TaskVO {
+    fileprivate func convertJson2TaskVO(_ json:JSON) -> TaskVO {
         let id = json["id"].intValue
         let name = json["name"].stringValue
         
@@ -447,17 +438,17 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     // MARK: - 界面Button事件
     //========================UIButtonAction的实现================================================
-    @IBAction func doStatusAction(sender: UIBarButtonItem) {
-        self.popupController?.presentPopupControllerAnimated(true)
+    @IBAction func doStatusAction(_ sender: UIBarButtonItem) {
+        self.popupController?.present(animated: true)
     }
     
-    @IBAction func doRefreshAction(sender: UIBarButtonItem) {
+    @IBAction func doRefreshAction(_ sender: UIBarButtonItem) {
         
         loadSessionInfo()
         loadTaskList()
     }
     
-    @IBAction func doAddAction(sender: UIBarButtonItem) {
+    @IBAction func doAddAction(_ sender: UIBarButtonItem) {
         
         //这个地方的逻辑是查询一次当前磁盘的剩余,以及默认目标路径
         var headers:[String:String] = [:]
@@ -470,27 +461,27 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         var parameter:[String:String] = [:]
         parameter["method"] = "session-get"
         
-        Alamofire.Manager.sharedInstance.request(Method.GET, siteUrl + BASE_URL, parameters: parameter, encoding: ParameterEncoding.URL, headers: headers).responseJSON { (_, response, data) -> Void in
-            if response?.statusCode == 200 {
-                if  let result = data.value {
-                    let json = JSON(result)
-                    
-                    let downloadDir = json["arguments"]["download-dir"].stringValue
-                    let freeSpace = json["arguments"]["download-dir-free-space"].intValue
-                    
-                    self.performSegueWithIdentifier("addTaskSegue", sender: DefaultDownloadInfo(downloadDir: downloadDir, freeSpace: freeSpace))
-                }
-            }else{
-                //TODO 抛出异常
+        Alamofire.request(siteUrl + BASE_URL,parameters:parameter,headers: headers).responseJSON { response -> Void in
+            
+            switch response.result {
+            case .success(let result) :
+                let json = JSON(result)
+                
+                let downloadDir = json["arguments"]["download-dir"].stringValue
+                let freeSpace = json["arguments"]["download-dir-free-space"].intValue
+                
+                self.performSegue(withIdentifier: "addTaskSegue", sender: DefaultDownloadInfo(downloadDir: downloadDir, freeSpace: freeSpace))
+                break
+            case .failure(_):break
             }
         }
     }
     
     //========================UIButtonAction的实现================================================
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addTaskSegue" {
-            let newTaskController = segue.destinationViewController as! NewTaskController
+            let newTaskController = segue.destination as! NewTaskController
             let downloadInfo = sender as! DefaultDownloadInfo
             
             newTaskController.siteUrl = siteUrl
@@ -499,7 +490,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
             newTaskController.downloadDir = downloadInfo.downloadDir
             newTaskController.freeSpace = downloadInfo.freeSpace
         }else if segue.identifier == "showTaskDetailSegue" {
-            let taskDetailTabbarController = segue.destinationViewController as! TaskDetailTabbarController
+            let taskDetailTabbarController = segue.destination as! TaskDetailTabbarController
             
             let taskDetail = sender as! TaskDetailVO
             taskDetailTabbarController.taskDetail = taskDetail
@@ -514,15 +505,15 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
     
     // MARK: - UISearchBarDelegate实现
     //========================UISearchBarDelegate的实现================================================
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true;
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false;
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchActive = false;
         self.tableView.reloadData()
     }
@@ -531,7 +522,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
 //        searchActive = false;
 //    }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if  "" == searchText {
             searchActive = false
@@ -541,7 +532,7 @@ class TaskListViewController: UITableViewController,CNPPopupControllerDelegate,U
         
         filtered = tasks.filter { (taskVO) -> Bool in
             let tmp = taskVO.name
-            return tmp.containsString(searchText)
+            return tmp.contains(searchText)
         }
         
 //        if(filtered.count == 0){

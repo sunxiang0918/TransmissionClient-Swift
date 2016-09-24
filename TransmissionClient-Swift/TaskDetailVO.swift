@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SwiftyJSON
+import SwiftyJSON3
 
 class TaskDetailVO : NSObject {
     
@@ -35,12 +35,12 @@ class TaskDetailVO : NSObject {
     var error:String?
     
     var _activityDate : Int?
-    var activityDate : NSDate {
+    var activityDate : Date {
         get {
             if let date = _activityDate {
-                return NSDate(timeIntervalSince1970: Double(date))
+                return Date(timeIntervalSince1970: Double(date))
             }else{
-                return NSDate(timeIntervalSince1970: 0)
+                return Date(timeIntervalSince1970: 0)
             }
         }
     }
@@ -52,12 +52,12 @@ class TaskDetailVO : NSObject {
     var creator:String
     
     var _dateCreated:Int?
-    var dateCreated : NSDate {
+    var dateCreated : Date {
         get {
             if let date = _dateCreated {
-                return NSDate(timeIntervalSince1970: Double(date))
+                return Date(timeIntervalSince1970: Double(date))
             }else{
-                return NSDate(timeIntervalSince1970: 0)
+                return Date(timeIntervalSince1970: 0)
             }
         }
     }
@@ -82,12 +82,12 @@ class TaskDetailVO : NSObject {
     var pieceSize:Int = 0
     
     var _startDate:Int?
-    var startDate: NSDate {
+    var startDate: Date {
         get {
             if let date = _startDate {
-                return NSDate(timeIntervalSince1970: Double(date))
+                return Date(timeIntervalSince1970: Double(date))
             }else{
-                return NSDate(timeIntervalSince1970: 0)
+                return Date(timeIntervalSince1970: 0)
             }
         }
     }
@@ -156,7 +156,7 @@ class PeerVO : NSObject{
         self.port = port
     }
     
-    static func generatePeerVOs(json:JSON) -> [PeerVO]? {
+    static func generatePeerVOs(_ json:JSON) -> [PeerVO]? {
         
         let _peers=json["peers"].array
         
@@ -195,22 +195,22 @@ class TrackerStatVO : NSObject{
     var lastAnnouncePeerCount:Int = 0
     var lastAnnounceResult:String?
     var _lastAnnounceStartTime:Int?
-    var lastAnnounceStartTime:NSDate{
+    var lastAnnounceStartTime:Date{
         if let date = _lastAnnounceStartTime {
-            return NSDate(timeIntervalSince1970: Double(date))
+            return Date(timeIntervalSince1970: Double(date))
         }else{
-            return NSDate(timeIntervalSince1970: 0)
+            return Date(timeIntervalSince1970: 0)
         }
     }
     
     var lastAnnounceSucceeded:Bool = false
     
     var _lastAnnounceTime:Int?
-    var lastAnnounceTime:NSDate {
+    var lastAnnounceTime:Date {
         if let date = _lastAnnounceTime {
-            return NSDate(timeIntervalSince1970: Double(date))
+            return Date(timeIntervalSince1970: Double(date))
         }else{
-            return NSDate(timeIntervalSince1970: 0)
+            return Date(timeIntervalSince1970: 0)
         }
     }
     
@@ -221,20 +221,20 @@ class TrackerStatVO : NSObject{
     var seederCount:Int = 0
     
     var _nextAnnounceTime:Int?
-    var nextAnnounceTime:NSDate {
+    var nextAnnounceTime:Date {
         if let date = _nextAnnounceTime {
-            return NSDate(timeIntervalSince1970: Double(date))
+            return Date(timeIntervalSince1970: Double(date))
         }else{
-            return NSDate(timeIntervalSince1970: 0)
+            return Date(timeIntervalSince1970: 0)
         }
     }
     
     var _lastScrapeStartTime:Int?
-    var lastScrapeStartTime:NSDate {
+    var lastScrapeStartTime:Date {
         if let date = _lastScrapeStartTime {
-            return NSDate(timeIntervalSince1970: Double(date))
+            return Date(timeIntervalSince1970: Double(date))
         }else{
-            return NSDate(timeIntervalSince1970: 0)
+            return Date(timeIntervalSince1970: 0)
         }
     }
     
@@ -246,7 +246,7 @@ class TrackerStatVO : NSObject{
         self.announce = announce
     }
     
-    static func generateTrackerVOs(json:JSON) -> [TrackerStatVO]? {
+    static func generateTrackerVOs(_ json:JSON) -> [TrackerStatVO]? {
         
         let _trackerStats=json["trackerStats"].array
         
@@ -300,22 +300,23 @@ class FileVO : NSObject{
         self.length = length
     }
     
-    static func generateFileVOs(json:JSON) -> [FileVO]? {
+    static func generateFileVOs(_ json:JSON) -> [FileVO]? {
         
         let _files=json["files"].array
         
         let _fileStats=json["fileStats"].array
         
-        guard let files = _files,fileStats = _fileStats else {
+        guard let files = _files,let fileStats = _fileStats else {
             return nil
         }
 
         var fileVOs:[FileVO] = []
         
-        for (index,file) in files.enumerate() {
+        for (index,file) in files.enumerated() {
             let name = file["name"].stringValue
             let length = file["length"].intValue
-            let splits = name.componentsSeparatedByString("/")
+            
+            let splits = name.components(separatedBy: "/")
             
             var pid:String?
             if  splits.count > 1 {
@@ -344,7 +345,7 @@ class FileVO : NSObject{
             let fileVO = FileVO(name: splits.last!, length: length)
             fileVOs.append(fileVO)
             
-            fileVO.id = NSUUID().UUIDString
+            fileVO.id = NSUUID().uuidString
             fileVO.pid = pid
             fileVO.layer = splits.count
             fileVO.isLeaf = true
@@ -369,7 +370,7 @@ class FileVO : NSObject{
      
      - returns: 元组, 第一个是TotalLength,第二个是已下载大小
      */
-    private static func calcuateFileSize(file:FileVO,files:[FileVO]) -> (Int,Int,Bool) {
+    fileprivate static func calcuateFileSize(_ file:FileVO,files:[FileVO]) -> (Int,Int,Bool) {
         
         if  file.isLeaf {
             return (file.length,file.bytesCompleted,file.wanted)
@@ -394,10 +395,10 @@ class FileVO : NSObject{
         return (length,bytesCompleted,wanted)
     }
     
-    private static func createFileNode(name:String,parentNode:FileVO?) ->FileVO{
+    fileprivate static func createFileNode(_ name:String,parentNode:FileVO?) ->FileVO{
         
         let fileVO = FileVO(name: name, length: -1)
-        fileVO.id = NSUUID().UUIDString
+        fileVO.id = UUID().uuidString
         fileVO.pid = parentNode?.id
         fileVO.isLeaf = false
         fileVO.layer = parentNode==nil ? 1 : (parentNode!.layer + 1)

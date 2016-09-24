@@ -10,7 +10,7 @@ import UIKit
 
 class TaskDetailTrackerViewController : UITableViewController,TaskDetailProtocol {
     
-    private var _taskDetail:TaskDetailVO!
+    fileprivate var _taskDetail:TaskDetailVO!
     
     var taskDetail:TaskDetailVO {
         get{
@@ -23,10 +23,10 @@ class TaskDetailTrackerViewController : UITableViewController,TaskDetailProtocol
     
     override func viewDidLoad() {
         let nib=UINib(nibName: "TaskDetailTrackerTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "taskDetailTrackerTableViewCell")
+        self.tableView.register(nib, forCellReuseIdentifier: "taskDetailTrackerTableViewCell")
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let _trackers = _taskDetail.trackerStats
         
         guard let trackers = _trackers else {
@@ -36,30 +36,30 @@ class TaskDetailTrackerViewController : UITableViewController,TaskDetailProtocol
         return trackers.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var tmp = tableView.dequeueReusableCellWithIdentifier("taskDetailTrackerTableViewCell") as? TaskDetailTrackerTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var tmp = tableView.dequeueReusableCell(withIdentifier: "taskDetailTrackerTableViewCell") as? TaskDetailTrackerTableViewCell
         
         if (tmp == nil) {
-            tmp = TaskDetailTrackerTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskDetailTrackerTableViewCell")
+            tmp = TaskDetailTrackerTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "taskDetailTrackerTableViewCell")
         }
         
-        let _tracker = _taskDetail.trackerStats?[indexPath.row]
+        let _tracker = _taskDetail.trackerStats?[(indexPath as NSIndexPath).row]
         
         guard let tracker = _tracker else {
             return tmp!
         }
         
         tmp?.hostLabel.text = tracker.host
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         if tracker.lastAnnounceSucceeded {
-            tmp?.lastAnnounceLabel.text = formatter.stringFromDate(tracker.lastAnnounceTime)
+            tmp?.lastAnnounceLabel.text = formatter.string(from: tracker.lastAnnounceTime as Date)
         }else {
             tmp?.lastAnnounceLabel.text = "上次获取播报失败"
         }
         
-        let nextTime = Float(tracker.nextAnnounceTime.timeIntervalSinceDate(NSDate()))
+        let nextTime = Float(tracker.nextAnnounceTime.timeIntervalSince(Date()))
         if  nextTime < 0 {
             tmp?.nextAnnounceLabel.text = "播报已在队列"
         }else{
@@ -67,7 +67,7 @@ class TaskDetailTrackerViewController : UITableViewController,TaskDetailProtocol
         }
         
         
-        tmp?.lastScrapeLabel.text = formatter.stringFromDate(tracker.lastScrapeStartTime)
+        tmp?.lastScrapeLabel.text = formatter.string(from: tracker.lastScrapeStartTime as Date)
         
         tmp?.seedersLabel.text = "\(tracker.seederCount)"
         
@@ -78,7 +78,7 @@ class TaskDetailTrackerViewController : UITableViewController,TaskDetailProtocol
         return tmp!
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
 }

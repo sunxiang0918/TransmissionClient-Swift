@@ -10,7 +10,7 @@ import UIKit
 
 class TaskDetailInfoViewController : UIViewController,TaskDetailProtocol {
     
-    private var _taskDetail:TaskDetailVO!
+    fileprivate var _taskDetail:TaskDetailVO!
     
     var taskDetail:TaskDetailVO {
         get{
@@ -56,7 +56,7 @@ class TaskDetailInfoViewController : UIViewController,TaskDetailProtocol {
     @IBOutlet weak var commentLabel: UILabel!
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         nameLabel.text = _taskDetail.name
         idLabel.text = "\(_taskDetail.id)"
         var avaliability = Float(_taskDetail.downloadedEver) / Float(_taskDetail.size) * 100
@@ -65,7 +65,7 @@ class TaskDetailInfoViewController : UIViewController,TaskDetailProtocol {
         }
         let download = SpeedStringFormatter.formatSpeedToString(_taskDetail.downloadedEver)
         let totalSize = SpeedStringFormatter.formatSpeedToString(_taskDetail.size)
-        let now = NSDate()
+        let now = Date()
         
         avaliabilityLabel.text = "\(avaliability)%"
         if _taskDetail.downloadedEver < _taskDetail.size {
@@ -82,14 +82,14 @@ class TaskDetailInfoViewController : UIViewController,TaskDetailProtocol {
             runTimeLabel.text = _taskDetail.state
             remainingTimeLabel.text = "未知"
         }else if _taskDetail._state == 4 || _taskDetail._state == 5 {
-            runTimeLabel.text = SpeedStringFormatter.clcaultTimesToString(Float(now.timeIntervalSinceDate(_taskDetail.startDate)))
+            runTimeLabel.text = SpeedStringFormatter.clcaultTimesToString(Float(now.timeIntervalSince(_taskDetail.startDate)))
             remainingTimeLabel.text = SpeedStringFormatter.clcaultHoursToString((_taskDetail.size-_taskDetail.downloadedEver), speed: _taskDetail.downloadSpeed)
         }else {
-            runTimeLabel.text = SpeedStringFormatter.clcaultTimesToString(Float(now.timeIntervalSinceDate(_taskDetail.startDate)))
+            runTimeLabel.text = SpeedStringFormatter.clcaultTimesToString(Float(now.timeIntervalSince(_taskDetail.startDate)))
             remainingTimeLabel.text = "已完成"
         }
         
-        lastActivityLabel.text = SpeedStringFormatter.clcaultTimesToString(Float(now.timeIntervalSinceDate(_taskDetail.activityDate)))
+        lastActivityLabel.text = SpeedStringFormatter.clcaultTimesToString(Float(now.timeIntervalSince(_taskDetail.activityDate)))
         
         if let _error = _taskDetail.error {
             errorLabel.text = _error
@@ -108,9 +108,9 @@ class TaskDetailInfoViewController : UIViewController,TaskDetailProtocol {
         
         privacyLabel.text = "\(_taskDetail.isPrivate ? "Private" : "Public") to this tracker"
         
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        originLabel.text = "于\(formatter.stringFromDate(_taskDetail.dateCreated)) 由\(_taskDetail.creator)创建"
+        originLabel.text = "于\(formatter.string(from: _taskDetail.dateCreated as Date)) 由\(_taskDetail.creator)创建"
         
         if let comment = _taskDetail.comment {
             commentLabel.text = comment

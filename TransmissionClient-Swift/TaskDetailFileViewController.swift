@@ -10,7 +10,7 @@ import UIKit
 
 class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
     
-    private var _taskDetail:TaskDetailVO!
+    fileprivate var _taskDetail:TaskDetailVO!
     
     var taskDetail:TaskDetailVO {
         get{
@@ -35,10 +35,10 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
     
     override func viewDidLoad() {
         let nib=UINib(nibName: "TaskDetailFileTavleViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "taskDetailFileTavleViewCell")
+        self.tableView.register(nib, forCellReuseIdentifier: "taskDetailFileTavleViewCell")
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let _files = showFiles
         
         guard let files = _files else {
@@ -48,14 +48,14 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         return files.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var tmp = tableView.dequeueReusableCellWithIdentifier("taskDetailFileTavleViewCell") as? TaskDetailFileTavleViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var tmp = tableView.dequeueReusableCell(withIdentifier: "taskDetailFileTavleViewCell") as? TaskDetailFileTavleViewCell
         
         if (tmp == nil) {
-            tmp = TaskDetailFileTavleViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "taskDetailFileTavleViewCell")
+            tmp = TaskDetailFileTavleViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "taskDetailFileTavleViewCell")
         }
         
-        let _file = showFiles?[indexPath.row]
+        let _file = showFiles?[(indexPath as NSIndexPath).row]
         
         guard let file = _file else {
             return tmp!
@@ -75,65 +75,65 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         tmp?.statusLabel.text = "\(SpeedStringFormatter.formatSpeedToString(file.bytesCompleted)) of \(SpeedStringFormatter.formatSpeedToString(file.length)) (\(Float(file.bytesCompleted)/Float(file.length) * 100)%)"
         
         if !file.wanted {
-            tmp?.backgroundColor = UIColor.lightGrayColor()
+            tmp?.backgroundColor = UIColor.lightGray
         }else {
-            tmp?.backgroundColor = UIColor.clearColor()
+            tmp?.backgroundColor = UIColor.clear
         }
         
         switch file.priority {
         case -1:
-            tmp?.upButton.selected = false
-            tmp?.norButton.selected = false
-            tmp?.downButton.selected = true
+            tmp?.upButton.isSelected = false
+            tmp?.norButton.isSelected = false
+            tmp?.downButton.isSelected = true
             break
         case 0:
-            tmp?.upButton.selected = false
-            tmp?.norButton.selected = true
-            tmp?.downButton.selected = false
+            tmp?.upButton.isSelected = false
+            tmp?.norButton.isSelected = true
+            tmp?.downButton.isSelected = false
             break
         case 1:
-            tmp?.upButton.selected = true
-            tmp?.norButton.selected = false
-            tmp?.downButton.selected = false
+            tmp?.upButton.isSelected = true
+            tmp?.norButton.isSelected = false
+            tmp?.downButton.isSelected = false
             break
         default:
-            tmp?.upButton.selected = false
-            tmp?.norButton.selected = true
-            tmp?.downButton.selected = false
+            tmp?.upButton.isSelected = false
+            tmp?.norButton.isSelected = true
+            tmp?.downButton.isSelected = false
             break
         }
         
         return tmp!
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let parentNode = (showFiles?[indexPath.row])!
+        let parentNode = (showFiles?[(indexPath as NSIndexPath).row])!
         
         if  parentNode.isLeaf {
             //如果是叶子节点就直接返回了,既不能展开也不能收缩
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         
         //如果不是叶子节点,那么就能展开或收缩了
-        let startPosition = indexPath.row+1;
+        let startPosition = (indexPath as NSIndexPath).row+1;
         var endPosition = startPosition;
         
         var expand = false
         
         let files = (_taskDetail.files)!
         
-        for (_,file) in files.enumerate() {
+        for (_,file) in files.enumerated() {
             if  (file.pid != nil) && (file.pid == parentNode.id) {
                 file.expand = !file.expand
                 
                 if  file.expand {
-                    showFiles?.insert(file, atIndex: endPosition)
+                    showFiles?.insert(file, at: endPosition)
                     expand = true
                     endPosition += 1
                 }else {
@@ -145,17 +145,17 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         }
         
         //获得需要修正的indexPath
-        var indexPathArray:[NSIndexPath] = []
+        var indexPathArray:[IndexPath] = []
         for i in startPosition ..< endPosition {
-            let tempIndexPath = NSIndexPath(forRow: i, inSection: 0)
+            let tempIndexPath = IndexPath(row: i, section: 0)
             indexPathArray.append(tempIndexPath)
         }
         
 //        //插入或者删除相关节点
         if (expand) {
-            self.tableView.insertRowsAtIndexPaths(indexPathArray, withRowAnimation: .None)
+            self.tableView.insertRows(at: indexPathArray, with: .none)
         }else{
-            self.tableView.deleteRowsAtIndexPaths(indexPathArray, withRowAnimation: .None)
+            self.tableView.deleteRows(at: indexPathArray, with: .none)
         }
         
     }
@@ -167,13 +167,13 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
     *
     *  @return 邻接父节点的位置距离该父节点的长度，也就是该父节点下面所有的子孙节点的数量
     */
-    private func removeAllNodesAtParentNode(parentNode:FileVO) -> Int{
+    fileprivate func removeAllNodesAtParentNode(_ parentNode:FileVO) -> Int{
         
         guard var showFiles = self.showFiles else {
             return 0
         }
         
-        let startPosition = (showFiles.indexOf(parentNode))!
+        let startPosition = (showFiles.index(of: parentNode))!
         var endPosition = startPosition
         
         for file in showFiles[startPosition+1..<showFiles.count] {
@@ -192,7 +192,7 @@ class TaskDetailFileViewController : UITableViewController,TaskDetailProtocol {
         }
         
         if (endPosition>startPosition) {
-            self.showFiles?.removeRange(startPosition+1 ..< endPosition)
+            self.showFiles?.removeSubrange(startPosition+1 ..< endPosition)
         }
         return endPosition
         

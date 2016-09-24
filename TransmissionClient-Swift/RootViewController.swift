@@ -17,7 +17,7 @@ class RootViewController: UITableViewController{
     
     override func viewDidLoad() {
         //界面加载前,从存储中获取已经保存了的站点信息.
-        let defaultCache=NSUserDefaults.standardUserDefaults()
+        let defaultCache=UserDefaults.standard
         let siteInfos=defaultCache.arrayModelForKey("siteInfo") as? [SiteInfoVO]
         
         if let _siteInfos = siteInfos {
@@ -26,24 +26,24 @@ class RootViewController: UITableViewController{
         
     }
     
-    private func initAddSiteViewController(addSiteViewController:AddSiteViewController){
+    fileprivate func initAddSiteViewController(_ addSiteViewController:AddSiteViewController){
         
         /// 设置弹出视图中 取消操作的 动作闭包
 //        addSiteViewController.cancelHandel = {}
         addSiteViewController.addActionHandel = {(site:SiteInfoVO)->Bool in
             self.siteInfos.append(site)
-            NSUserDefaults.standardUserDefaults().setArrayModels(self.siteInfos, forKey: "siteInfo")
+            UserDefaults.standard.setArrayModels(self.siteInfos, forKey: "siteInfo")
             self.tableView.reloadData()
             return true
         }
         
         addSiteViewController.onepasswordActionHandel = {(sender:UIButton)->Void in
-            OnePasswordExtension.sharedExtension().findLoginForURLString("", forViewController: self, sender: sender) { (_loginDictionary, error) -> Void in
+            OnePasswordExtension.shared().findLogin(forURLString: "", for: self, sender: sender) { (_loginDictionary, error) -> Void in
                 guard let loginDictionary = _loginDictionary else {
                     return
                 }
                 if loginDictionary.count == 0 {
-                    if error!.code != Int(AppExtensionErrorCodeCancelledByUser) {
+                    if error!._code != Int(AppExtensionErrorCodeCancelledByUser) {
                         //TODO
                     }
                     return
@@ -56,73 +56,73 @@ class RootViewController: UITableViewController{
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.siteInfos.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var tmp = tableView.dequeueReusableCellWithIdentifier("rootTableViewCell")
+        var tmp = tableView.dequeueReusableCell(withIdentifier: "rootTableViewCell")
         
         if (tmp == nil) {
-            tmp = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "rootTableViewCell")
+            tmp = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "rootTableViewCell")
         }
         
-        tmp?.textLabel?.text = self.siteInfos[indexPath.row].url
+        tmp?.textLabel?.text = self.siteInfos[(indexPath as NSIndexPath).row].url
         
         return tmp!
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let siteInfo = self.siteInfos[indexPath.row]
+        let siteInfo = self.siteInfos[(indexPath as NSIndexPath).row]
         let author = self.generateAuthorizationString(siteInfo.userName, userPassword: siteInfo.password)
         let sessionId = getSessionID(siteInfo.url,author: author )
         
         if sessionId == nil {
-            JCAlertView.showOneButtonWithTitle("错误", message: "无法访问\(siteInfo.url)服务器", buttonType: JCAlertViewButtonType.Default, buttonTitle: "确定",click: nil)
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            JCAlertView.showOneButton(withTitle: "错误", message: "无法访问\(siteInfo.url)服务器", buttonType: JCAlertViewButtonType.default, buttonTitle: "确定",click: nil)
+            self.tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         
-        self.performSegueWithIdentifier("showTaskListSegue", sender: SiteInfo(sessionId: sessionId!, url: siteInfo.url, author: author))
+        self.performSegue(withIdentifier: "showTaskListSegue", sender: SiteInfo(sessionId: sessionId!, url: siteInfo.url, author: author))
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if  editingStyle == UITableViewCellEditingStyle.Delete {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if  editingStyle == UITableViewCellEditingStyle.delete {
             
-            self.siteInfos.removeAtIndex(indexPath.row)
-            NSUserDefaults.standardUserDefaults().setArrayModels(self.siteInfos, forKey: "siteInfo")
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            self.siteInfos.remove(at: (indexPath as NSIndexPath).row)
+            UserDefaults.standard.setArrayModels(self.siteInfos, forKey: "siteInfo")
+            self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
     }
     
     /**
      获取Session的ID
      */
-    func getSessionID(url:String,author:String?) -> String?{
+    func getSessionID(_ url:String,author:String?) -> String?{
         var u = url
-        if  !u.lowercaseStringWithLocale(NSLocale.currentLocale()).hasPrefix("http://") {
+        if  !u.lowercased(with: Locale.current).hasPrefix("http://") {
             u = "http://" + u
         }
-        let request = NSMutableURLRequest(URL: NSURL(string: u+BASE_URL)!)
+        let request = NSMutableURLRequest(url: URL(string: u+BASE_URL)!)
         if let _author = author{
             request.addValue(_author, forHTTPHeaderField: "Authorization")
         }
-        request.HTTPMethod = "GET"
+        request.httpMethod = "GET"
         
-        var response:NSURLResponse? = nil
+        var response:URLResponse? = nil
         
         do {
             // 设置默认的超时时间为20秒
-            let config = NSURLSessionConfiguration.defaultSessionConfiguration()//默认配置
+            let config = URLSessionConfiguration.default//默认配置
             config.timeoutIntervalForRequest = 10 //连接超时时间
-            try NSURLSession(configuration: config).sendSynchronousDataTaskWithRequest(request, returningResponse: &response)
+            try URLSession(configuration: config).sendSynchronousDataTaskWithRequest(request as URLRequest, returningResponse: &response)
         } catch _ {
             return nil
         }
         
-        let result = response as? NSHTTPURLResponse
+        let result = response as? HTTPURLResponse
         
         return result?.allHeaderFields["X-Transmission-Session-Id"] as? String
         
@@ -136,22 +136,22 @@ class RootViewController: UITableViewController{
      
      - returns:
      */
-    private func generateAuthorizationString(userName:String?,userPassword:String?) -> String? {
+    fileprivate func generateAuthorizationString(_ userName:String?,userPassword:String?) -> String? {
         guard let _userName = userName else {
             return nil
         }
         
         let s = _userName + ":" + (userPassword==nil ? "" : userPassword!)
         
-        let data = s.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = s.data(using: String.Encoding.utf8)
         
-        return "Basic " + data!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        return "Basic " + data!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }
 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showTaskListSegue" {
-            let taskListViewController = segue.destinationViewController as! TaskListViewController
+            let taskListViewController = segue.destination as! TaskListViewController
             
             let siteInfo = sender as? SiteInfo
             
@@ -159,12 +159,12 @@ class RootViewController: UITableViewController{
             taskListViewController.sessionId = siteInfo?.sessionId
             var url : String = (siteInfo?.url)!
             
-            if  !url.lowercaseStringWithLocale(NSLocale.currentLocale()).hasPrefix("http://") {
+            if  !url.lowercased(with: Locale.current).hasPrefix("http://") {
                 url = "http://" + url
             }
             taskListViewController.siteUrl = url
         }else if segue.identifier == "addSiteSegue" {
-            let addSiteViewController = segue.destinationViewController as! AddSiteViewController
+            let addSiteViewController = segue.destination as! AddSiteViewController
             
             if addSiteViewController.onepasswordActionHandel == nil || addSiteViewController.addActionHandel == nil {
                 initAddSiteViewController(addSiteViewController)
@@ -172,9 +172,9 @@ class RootViewController: UITableViewController{
         }
     }
     
-    @IBAction func addSiteAction(sender: UIBarButtonItem) {
+    @IBAction func addSiteAction(_ sender: UIBarButtonItem) {
         
-        self.performSegueWithIdentifier("addSiteSegue", sender: nil)
+        self.performSegue(withIdentifier: "addSiteSegue", sender: nil)
     }
     
 }
