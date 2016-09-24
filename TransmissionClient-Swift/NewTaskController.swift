@@ -92,7 +92,7 @@ class NewTaskController : UIViewController {
                         defaultCache.removeObject(forKey: "metainfo")
                     }
                     //表示添加成功
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                     break
                 case .failure(_):
                     //表示失败

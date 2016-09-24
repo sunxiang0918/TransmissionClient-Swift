@@ -356,7 +356,7 @@ class FileVO : NSObject{
         
         //这里还要递归的修正父节点的大小和状态
         if fileVOs.count > 0 {
-            calcuateFileSize(fileVOs[0], files: fileVOs)
+            _ = calcuateFileSize(fileVOs[0], files: fileVOs)
         }
         
         return fileVOs

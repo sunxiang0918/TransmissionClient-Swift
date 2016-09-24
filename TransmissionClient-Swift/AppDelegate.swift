@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         let encrypteddata = try? Data(contentsOf: url)
-        NSNotification.Name.UIApplicationDidBecomeActive
+        _ = NSNotification.Name.UIApplicationDidBecomeActive
         let base64 = encrypteddata!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         //这个值就是种子文件的内容
         

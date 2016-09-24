@@ -61,7 +61,7 @@ class AddSiteViewController : UIViewController {
                 cancelHandel?()
                 
                 //表示添加成功
-                self.navigationController?.popViewController(animated: true)
+                _ = self.navigationController?.popViewController(animated: true)
             }
         }
         

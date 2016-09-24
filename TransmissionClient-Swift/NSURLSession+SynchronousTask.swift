@@ -39,7 +39,7 @@ extension URLSession {
             semaphore.signal();
             }).resume()
         
-        semaphore.wait(timeout: DispatchTime.distantFuture);
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture);
         
         response = temp
         
@@ -79,7 +79,7 @@ extension URLSession {
             semaphore.signal();
             }) .resume()
         
-        semaphore.wait(timeout: DispatchTime.distantFuture);
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture);
         
         response = temp
         

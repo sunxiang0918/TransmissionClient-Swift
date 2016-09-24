@@ -117,7 +117,7 @@ class RootViewController: UITableViewController{
             // 设置默认的超时时间为20秒
             let config = URLSessionConfiguration.default//默认配置
             config.timeoutIntervalForRequest = 10 //连接超时时间
-            try URLSession(configuration: config).sendSynchronousDataTaskWithRequest(request as URLRequest, returningResponse: &response)
+            _ = try URLSession(configuration: config).sendSynchronousDataTaskWithRequest(request as URLRequest, returningResponse: &response)
         } catch _ {
             return nil
         }
